@@ -1,0 +1,27 @@
+
+
+<div class="container">
+    <table class="table table-striped">
+        <tr>
+            <td>
+                Naziv
+            </td>
+            <td>
+                Tekst
+            </td>
+            <td>
+                Datum
+            </td>
+            <td>
+                Tip
+            </td>
+        </tr>
+        <tr *ngFor = 'let notification of notifications'>
+            <td> {{notification.naziv}}</td>
+            <td> {{notification.tekst}}</td>
+            <td> {{notification.datum}}</td>
+            <td> {{notification.type}}</td>
+        </tr>
+    </table>
+
+</div>

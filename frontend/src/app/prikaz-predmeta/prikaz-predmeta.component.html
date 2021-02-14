@@ -1,0 +1,66 @@
+<div class="container">
+    <mat-tab-group>
+        <mat-tab label="Obavestenja">
+             <table class="table">
+                 <tr *ngFor= 'let o of obavestenja'>
+                    <td>
+                        <h4>{{o.naziv}}</h4>
+                        <p>{{o.tekst}}</p>
+                    </td>
+                 </tr>
+             </table>
+        </mat-tab>
+        <mat-tab label="Informacije o predmetu"> 
+            <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th colspan='4' scope="col" style="text-align: center;">{{predmet.naziv}}</th>
+                    
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Sifra</th>
+                    <td>{{predmet.akronim}}</td>
+                    <th scope="row">Semestar</th>
+                    <td>{{predmet.semestar}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Odsek</th>
+                    <td>{{predmet.katedra}}</td>
+                    <th scope="row">Tip</th>
+                    <td>{{predmet.tip}}</td>
+                    
+                  </tr>
+                  <tr>
+                    <th scope="row">Fond</th>
+                    <td>{{predmet.fondPred}} + {{predmet.fondVezbe}}</td>
+                    <th scope="row">ESPB</th>
+                    <td>{{predmet.ESPB}}</td>
+                    
+                  </tr>
+                  <tr>
+                    <th scope="row">Termin Predavanja</th>
+                    <td>{{predmet.terPred}}</td>
+                    <th scope="row">Termin Vezbi</th>
+                    <td>{{predmet.terVezbe}}</td>
+                    
+                  </tr>
+                  <tr>
+                    <th scope="row">Nastavnik</th>
+                    <td colspan="3"><a [routerLink]="['/prikaz-zaposlenog', predmet.nastavnik]">{{predmet.nastIme}}</a></td> 
+                  </tr>
+                  <tr>
+                    <th scope="row">Propozicije</th>
+                    <td colspan="3">{{predmet.propozicije}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Nacin polaganja</th>
+                    <td colspan="3">{{predmet.nacinPol}}</td> 
+                  </tr>
+                </tbody>
+              </table>
+        </mat-tab>
+        <mat-tab label="Third"> Content 3 </mat-tab>
+      </mat-tab-group>
+    </div>

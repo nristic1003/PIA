@@ -1,0 +1,37 @@
+
+
+<div class="container">
+
+    
+    <table class="table table-striped">
+            <tr>
+                <th colspan="3"> Semestar 1 </th>
+            </tr>
+        <tr>
+            <td>Naziv</td>
+            <td>Katedra</td>
+            <td>Nastavnik</td>
+        </tr>
+        <tr *ngFor='let sem1 of predmeti'>
+            <td *ngIf = 'sem1.semestar==1'><a class="nav-link" [routerLink]="['/prikaz-predmeta' ,sem1.akronim]">{{sem1.naziv}}</a></td>
+            <td *ngIf = 'sem1.semestar==1'>{{sem1.katedra}}</td>
+            <td *ngIf = 'sem1.semestar==1'>{{sem1.nastavnik}}</td>
+        </tr>
+    </table>
+
+    <table class="table table-striped">
+        <tr>
+            <th colspan="3"> Semestar 2 </th>
+        </tr>
+    <tr>
+        <td>Naziv</td>
+        <td>Katedra</td>
+        <td>Nastavnik</td>
+    </tr>
+    <tr *ngFor='let sem1 of predmeti'>
+        <td *ngIf = 'sem1.semestar==2'><a class="nav-link" [routerLink]="['/prikaz-predmeta' ,sem1.akronim]">  {{sem1.naziv}} </a></td>
+        <td *ngIf = 'sem1.semestar==2'>{{sem1.katedra}}</td>
+        <td *ngIf = 'sem1.semestar==2'>{{sem1.nastavnik}}</td>
+    </tr>
+</table>
+</div>

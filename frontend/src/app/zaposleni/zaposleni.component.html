@@ -1,0 +1,18 @@
+<div class="container">
+    <table class="table table-stripped"> 
+        <tr>
+            <td>Ime i prezime</td>
+            <td>Zvanje</td>
+            <td>Nastavni Kadar</td>
+        </tr>
+        <tr *ngFor = 'let zap of zaposleni'>
+            <td> <a class="nav-link" [routerLink]="['/prikaz-zaposlenog', zap.username]">{{zap.name}} {{zap.lastname}}</a></td>
+            <td>{{zap.degree}}</td>
+            <td>
+                    <div *ngFor='let predmet of zap.courses'>
+                        <span>{{predmet.name}} </span>
+                    </div>
+            </td>
+        </tr>
+    </table>
+    </div>
