@@ -52,6 +52,9 @@ let Courses = new Schema({
     nastIme:{
         type:String
     },
+    cilj:{
+        type:String
+    },
     labPodaci:{
         type:Array
     },

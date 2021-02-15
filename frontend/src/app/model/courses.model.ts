@@ -17,4 +17,5 @@ export class Courses{
     nastIme:String;
     labPodaci:Array<Object>;
     projekat:Array<Object>;
+    cilj: String;
 }

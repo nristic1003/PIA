@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Courses } from '../model/courses.model';
+import { Zaposleni } from '../model/zaposleni.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -59,5 +61,26 @@ getMaterials(data:String)
   return this.http.get(`${this.uri}/getMaterials/${data}` );
 }
 
+getPlan(data:String)
+{
+  return this.http.get(`${this.uri}/getPlan/${data}` );
+}
 
+updatePredmet(d:Courses)
+{
+  console.log(d);
+  let data = {
+    'data' : d
+  }
+  return this.http.post(`${this.uri}/updatePredmet`  , data);
+}
+
+updateInfoNastavnik(d:Zaposleni)
+{
+  console.log(d);
+  let data = {
+    'data' : d
+  }
+  return this.http.post(`${this.uri}/updateInfoNastavnik`  , data);
+}
 }

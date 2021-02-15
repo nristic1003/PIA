@@ -1,5 +1,9 @@
 
 
-.container .check{
-    margin-bottom: 100px;
-}
+.table td {
+    text-align: center;   
+ }
+
+ #tableInfo td{
+     text-align: left;
+ }

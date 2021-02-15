@@ -1,0 +1,243 @@
+<div class="container">
+    <mat-tab-group>
+        <mat-tab label="Predmeti">
+            <div class="row justify-content-center">
+                <h2 class="">Uredjivanje predmeta</h2>
+            </div>
+        
+            <form>
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <td colspan="2">Izaberite predmet</td>
+                        <td colspan="2"> 
+                            <select (change)="todo($event.target.value)">
+                                <option value="{{p.akronim}}" *ngFor = 'let p of myCourses'>{{p.naziv}} - {{p.akronim}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                
+                <tr>
+                <td colspan="4">
+                    <mat-tab-group mat-stretch-tabs>
+                        <td>
+                        <mat-tab label = "O predmetu">
+                            <table class="table table-striped"> 
+                            <tr>
+                                <td>Status predmeta:</td>
+                                <td>
+                                    <select>    
+                                        <option>izborni</option>
+                                        <option>obavezni</option>
+                                    </select>
+                                </td>
+                                <td>Sifra predmeta</td>
+                                <td><input name="predmet.akronim" [(ngModel)] = "predmet.akronim"  type="text" placeholder="sifra predmeta" /></td>
+                            </tr>
+                            <tr>
+                                <td>ESPB</td>
+                                <td colspan="3">  <input name="predmet.ESPB" [(ngModel)] = "predmet.ESPB" value="{{predmet.ESPB}}" type="number" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="4"> Uslov</td>
+                               
+                            </tr>
+                            <tr>
+                                <td colspan="4"> 
+                                    <textarea name = "predmet.nacinPol" [(ngModel)]="predmet.nacinPol" class="form-control rounded-1"  rows="5"></textarea>
+                
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4"> Cilj Predmeta</td>
+                               
+                            </tr>
+                            <tr>
+                                <td colspan="4"> 
+                                    <textarea name = "predmet.cilj" class="form-control rounded-1"  rows="5" [(ngModel)] = "predmet.cilj"></textarea>
+                
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4"> <button (click) = "updatePodataka()" value="Sacuvaj" class="btn btn-success">Sacuvaj</button> </td>
+                            </tr>
+
+                        </table>
+                        </mat-tab>
+                    
+                    </td>
+                    <td>
+                        <mat-tab label = "Predavanja">
+                            <form>
+                                <table class="table table-striped table-bordered">
+                                    <tr>
+                                        <td>Fajl</td>
+                                        <td>Ekstenzija</td>
+                                        <td>Nastavnik</td>
+                                        <td>Datum</td>
+                                        <td>Redosled</td>
+                                        <td>Ukloni</td>
+                                    </tr> 
+                                  
+                                        <tr *ngFor = 'let p of podaci.matPred'>
+                                            <td> Predavanje:<a href="http://localhost:4000/uploads/{{p.naziv}}" >{{p.naziv}}</a></td>
+                                            <td> {{p.type}}</td>
+                                            <td> {{p.nastavnik}}</td>
+                                            <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
+                                            <td> <input type="text" name = "p.redosled" [(ngModel)] = "p.redosled" /> </td>
+                                            <td> <button class="btn btn-danger" >Ukloni</button></td>
+                                        </tr>
+                                    
+                    
+                                </table>
+                            </form>
+
+                        </mat-tab>
+                    </td>
+                    <td>
+                        <mat-tab label = "Vezbe">
+                            <form>
+                                <table class="table table-striped table-bordered">
+                                    <tr>
+                                        <td>Fajl</td>
+                                        <td>Ekstenzija</td>
+                                        <td>Nastavnik</td>
+                                        <td>Datum</td>
+                                        <td>Redosled</td>
+                                        <td>Ukloni</td>
+                                    </tr> 
+                                  
+                                        <tr *ngFor = 'let p of podaci.matVezbe'>
+                                            <td> Predavanje:<a href="http://localhost:4000/uploads/{{p.naziv}}" >{{p.naziv}}</a></td>
+                                            <td> {{p.type}}</td>
+                                            <td> {{p.nastavnik}}</td>
+                                            <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
+                                            <td> <input type="text" name = "p.redosled" [(ngModel)] = "p.redosled" /> </td>
+                                            <td> <button class="btn btn-danger" >Ukloni</button></td>
+                                        </tr>
+                                    
+                    
+                                </table>
+                            </form>
+
+                        </mat-tab>
+                    </td>
+                    <td>
+                        <mat-tab label = "Ispitna pitanja">
+                            <form>
+                                <table class="table table-striped table-bordered">
+                                    <tr>
+                                        <td>Fajl</td>
+                                        <td>Ekstenzija</td>
+                                        <td>Nastavnik</td>
+                                        <td>Datum</td>
+                                        <td>Redosled</td>
+                                        <td>Ukloni</td>
+                                    </tr> 
+                                  
+                                        <tr *ngFor = 'let p of podaci.ispitnaPitanja'>
+                                            <td> Predavanje:<a href="http://localhost:4000/uploads/{{p.naziv}}" >{{p.naziv}}</a></td>
+                                            <td> {{p.type}}</td>
+                                            <td> {{p.nastavnik}}</td>
+                                            <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
+                                            <td> <input type="text" name = "p.redosled" [(ngModel)] = "p.redosled" /> </td>
+                                            <td> <button id="{{p.naziv}}" (click) = "deleteMaterial($event)" class="btn btn-danger" >Ukloni</button></td>
+                                        </tr>
+                                    
+                    
+                                </table>
+                            </form>
+
+                        </mat-tab>
+                    </td>
+                    </mat-tab-group>
+                </td>
+                </tr>
+               
+                    
+                    
+                </table>
+               
+            </form>
+        
+
+        </mat-tab>
+
+        <mat-tab label="Profil" mat-stretch-tabs>
+            <div class="container">
+    
+                <table class="table" id="tableInfo">
+                    <div class="row">
+                     <table class="table table-responsive-xl">
+                     <thead>
+                         <tr>
+                         <th scope="col" colspan="3" style="font-size: 25px;">Information about  </th>
+                         </tr>
+                     </thead>
+                     <tbody>
+                 
+                         <tr>
+                             <td rowspan="10" width="200">
+                                 <img src="assets\images\avatar.png" alt="sadd" width="200"/>
+                             </td>
+                         </tr>
+                 
+                         <tr>
+                         <td>Username</td>
+                         <td><input name="nastavnik.username" [(ngModel)]="nastavnik.username" type="input" ></td>
+                         </tr>
+                 
+                         <tr>
+                         <td>First Name</td>
+                         <td><input name="nastavnik.name" [(ngModel)]="nastavnik.name" type="input" ></td>
+                         </tr>
+                 
+                         <tr>
+                         <td>Last Name</td>
+                         <td><input name="nastavnik.lastname" [(ngModel)]="nastavnik.lastname" type="input" ></td>
+                         </tr>
+                 
+                         <tr>
+                         <td>About</td>
+                         <td> <textarea name = "nastavnik.about" class="form-control rounded-1"  rows="5" [(ngModel)] = "nastavnik.about"></textarea></td>
+                         </tr>
+                         
+                         <tr>
+                         <td>Address</td>
+                         <td><input name="nastavnik.address" [(ngModel)]="nastavnik.address" type="input" rows="10" ></td>
+                         </tr>
+                         
+                         <tr>
+                         <td>Degree</td>
+                         <td><input name="nastavnik.degree" [(ngModel)]="nastavnik.degree" type="input" ></td>
+                         </tr>
+                         <tr>
+                         <td>Room</td>
+                         <td><input name="nastavnik.room" [(ngModel)]="nastavnik.room" type="input" ></td>
+                         </tr>
+                         <tr>
+                        <td></td>
+                        <td><button (click) = "updateInfoNastavnik()" class="btn btn-success" > Save</button></td>
+                        </tr>
+                         
+                        
+                         
+                     </tbody>
+                     </table>
+                 </div>
+                 </table>
+            
+            
+            </div>
+
+        </mat-tab>
+
+        <mat-tab label="Predavanja" mat-stretch-tabs>
+           
+        </mat-tab>
+
+
+    </mat-tab-group>
+
+    
+
+</div>

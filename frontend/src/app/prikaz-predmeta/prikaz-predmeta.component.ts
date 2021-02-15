@@ -44,6 +44,7 @@ export class PrikazPredmetaComponent implements OnInit {
       const formData = new FormData();
       formData.set("file" , imageBlob);
       formData.set("id" , this.id);
+      formData.set("nastavnik" , localStorage.getItem('user'))
 
     this.serviceGet.sendDataToServer(formData).subscribe(
       (res) => console.log(res),

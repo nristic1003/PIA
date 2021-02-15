@@ -7,6 +7,7 @@ import user from './model/user';
 import notification from './model/notification';
 import courses from './model/courses';
 import materials from './model/materials';
+import plan from './model/plan';
 
 
 
@@ -16,6 +17,8 @@ const multer = require('multer');
 
 const conn = mongoose.connection;
 const fs = require('fs');
+
+const path = require('path');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -46,9 +49,14 @@ router.route("/upload").post(upload.single("file"), function(req, res) {
     //update
     let data = {
         naziv : req.file.filename,
-        nastavnik : "Neko",
-        datum : Date.now()
+        nastavnik : req.body.nastavnik,
+        datum : Date.now(),
+        size : req.file.size / 1000,
+        redosled : 0,
+        type : path.extname(req.file.filename)
     }
+
+    console.log(data)
 
     materials.findOne({akronim : req.body.id}, (err, mat) =>{
         if(err) console.log(err)
@@ -78,6 +86,17 @@ router.route("/upload").post(upload.single("file"), function(req, res) {
         res.send('File not found')
     }
   })
+
+
+  router.route('/getPlan/:id').get((req,res)=>{
+    const param = req.params.id;
+    plan.find( {'nastavnici.predavac': {​​​​$in : [param]}​​​​}, ((err,pl)=>{
+        if(err) console.log(err);
+        else res.json(pl);
+    })​)
+  })
+
+  
 
 router.route('/getMaterials/:id').get((req, res) =>{
     const param = req.params.id;
@@ -126,7 +145,16 @@ router.route('/getZaposleniByUsername').post((req, res)=>{
     })
 })
 
+router.route('/getZaposleniByUsername').post((req, res)=>{
+    let username = req.body.username;
+    user.findOne({username : username}, (err, user)=>{
+        if(err) console.log(err);
+        else res.json(user);
+    })
+})
+
 router.route('/getPredmeti').post((req, res)=>{
+    
     let katedra = req.body.katedra;
     const userRegex = new RegExp(katedra, 'i')
     courses.find({katedra: userRegex}, (err, courses)=>{
@@ -141,6 +169,23 @@ router.route('/getPredmetByAkronim').post((req, res)=>{
     courses.findOne({akronim: userRegex}, (err, courses)=>{
         if(err) console.log(err);
         else res.json(courses);
+    })
+})
+
+    router.route('/updatePredmet').post((req, res)=>{  
+        let data = req.body.data;
+        console.log(data)
+        courses.updateOne({akronim : data.akronim}, data, (err, courses)=>{
+            if(err) console.log(err);
+            else res.status(200);
+        })
+})
+
+router.route('/updateInfoNastavnik').post((req, res)=>{  
+    let data = req.body.data;
+    user.updateOne({username : data.username}, data, (err, courses)=>{
+        if(err) console.log(err);
+        else res.status(200);
     })
 })
 
