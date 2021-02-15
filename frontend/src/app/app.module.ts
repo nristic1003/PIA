@@ -23,6 +23,7 @@ import { PrikazPredmetaComponent } from './prikaz-predmeta/prikaz-predmeta.compo
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTabsModule} from '@angular/material/tabs';
+import { ProfesorComponent } from './profesor/profesor.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     RegisterComponent,
     StudentComponent,
     PrikazZaposlenogComponent,
-    PrikazPredmetaComponent
+    PrikazPredmetaComponent,
+    ProfesorComponent
   ],
   imports: [
     BrowserModule,

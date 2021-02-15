@@ -15,4 +15,6 @@ export class Courses{
     propozicije:string;
     obavestenja:Array<Object>;
     nastIme:String;
+    labPodaci:Array<Object>;
+    projekat:Array<Object>;
 }

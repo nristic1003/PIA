@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
         console.log(student.username);
         localStorage.setItem('user', student.username);
         if(student.type=='d') this.router.navigate(['/student']);
+        else  if(student.type=='z') this.router.navigate(['/profesor']);
       }
       else
       {

@@ -11,7 +11,7 @@
              </table>
         </mat-tab>
         <mat-tab label="Informacije o predmetu"> 
-            <table class="table table-bordered">
+            <table class="table table-bordered table-striped "> 
                 <thead>
                   <tr>
                     <th colspan='4' scope="col" style="text-align: center;">{{predmet.naziv}}</th>
@@ -61,6 +61,107 @@
                 </tbody>
               </table>
         </mat-tab>
-        <mat-tab label="Third"> Content 3 </mat-tab>
+        
+        <mat-tab label="Predavanja"> 
+          <div *ngIf = 'podaci.matPred; else loggedOut'>
+            <h2>Materijali Predavanja</h2>
+            <div *ngFor = 'let p of podaci.matPred'>
+              <p> Predavanje:<a href="http://localhost:4000/uploads/{{p.naziv}}" >{{p.naziv}}</a></p>
+            </div>
+        </div>
+
+        <ng-template #loggedOut>
+         <div> <span>Nema objavljenih materijala za ovaj predmet</span></div>
+        </ng-template>
+        </mat-tab>
+
+        <mat-tab label="Vezbe"> 
+          <div *ngIf = 'podaci.matVezbe?.length > 0; else matVezbe'>
+            <h2>Materijali Vezbe</h2>
+            <div *ngFor = 'let p of podaci.matVezbe'>
+              <p> Predavanje:<a href="http://localhost:4000/uploads/{{p.naziv}}" >{{p.naziv}}</a></p>
+            </div>
+        </div>
+
+        <ng-template #matVezbe>
+         <div> <span>Nema objavljenih materijala za ovaj predmet</span></div>
+        </ng-template>
+        </mat-tab>
+
+        <mat-tab label="Ispitna pitanja"> 
+          <div *ngIf = 'podaci.ispitnaPitanja?.length > 0; else ispitna'>
+            <h2>Materijali Vezbe</h2>
+            <div *ngFor = 'let p of podaci.matVezbe'>
+              <p> Predavanje:<a href="http://localhost:4000/uploads/{{p.naziv}}" >{{p.naziv}}</a></p>
+            </div>
+        </div>
+
+        <ng-template #ispitna>
+         <div> <span>Nema objavljenih materijala za ovaj predmet</span></div>
+        </ng-template>
+        </mat-tab>
+
+        <mat-tab label="Laboratorija"> 
+          <div *ngIf = 'predmet.labPodaci?.length > 0; else lab'>
+            <h2>Laboratorijske vezbe</h2>
+            <div *ngFor = 'let p of predmet.labPodaci'>
+                <table>
+                    <tr>
+                        <td>Naziv vezbe</td>
+                        <td>Opis</td>
+                        <td>Poeni</td>
+                    </tr>
+                    <tr>
+                      <td>{{p.nazivVezbe}}</td>
+                      <td>{{p.opis}}</td>
+                      <td>{{p.vrednost}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <ng-template #lab>
+          <div> <span>Nema objavljenih materijala za ovaj predmet</span></div>
+         </ng-template>
+
+        </mat-tab>
+
+        <mat-tab label="Projekat"> 
+          <div *ngIf = 'predmet.projekat?.length > 0; else projekat'>
+            <h2>Projekat</h2>
+            <div *ngFor = 'let p of predmet.projekat'>
+                <table>
+                    <tr>
+                        <td>Naziv vezbe</td>
+                        <td>Opis</td>
+                        <td>Poeni</td>
+                    </tr>
+                    <tr>
+                      <td>{{p.nazivVezbe}}</td>
+                      <td>{{p.opis}}</td>
+                      <td>{{p.vrednost}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <ng-template #projekat>
+         <div> <span>Nema objavljenih materijala za ovaj predmet</span></div>
+        </ng-template>
+        </mat-tab>
+
+
+        <!-- <mat-tab label="Third"> 
+          <form>      
+            <div>
+              <input type="file" #fileInput  />
+            </div>
+            <br>
+            <div>
+              <button type="submit"  (click)="onSubmit()">Upload</button>
+            </div>
+          </form>
+         
+        
+        </mat-tab> -->
       </mat-tab-group>
     </div>

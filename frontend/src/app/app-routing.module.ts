@@ -9,6 +9,7 @@ import { OsnovneComponent } from './osnovne/osnovne.component';
 import { PocetnaComponent } from './pocetna/pocetna.component';
 import { PrikazPredmetaComponent } from './prikaz-predmeta/prikaz-predmeta.component';
 import { PrikazZaposlenogComponent } from './prikaz-zaposlenog/prikaz-zaposlenog.component';
+import { ProfesorComponent } from './profesor/profesor.component';
 import { ProjektiComponent } from './projekti/projekti.component';
 import { RegisterComponent } from './register/register.component';
 import { StudentComponent } from './student/student.component';
@@ -28,7 +29,9 @@ const routes: Routes = [
   {path:"register" , component:RegisterComponent},
   {path:"student" , component:StudentComponent},
   {path:"prikaz-zaposlenog/:id" , component:PrikazZaposlenogComponent},
-  {path:"prikaz-predmeta/:id" , component:PrikazPredmetaComponent}
+  {path:"prikaz-predmeta/:id" , component:PrikazPredmetaComponent},
+  {path:"profesor" , component:ProfesorComponent}
+
 ];
 
 @NgModule({

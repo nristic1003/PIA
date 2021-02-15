@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Courses } from '../model/courses.model';
 import { GetDataService } from '../Services/get-data.service';
+import { LoginServiceService } from '../Services/login-service.service';
 @Component({
   selector: 'app-osnovne',
   templateUrl: './osnovne.component.html',
@@ -9,7 +10,7 @@ import { GetDataService } from '../Services/get-data.service';
 })
 export class OsnovneComponent implements OnInit {
 
-  constructor(private route : ActivatedRoute , private serviceGet:GetDataService) { }
+  constructor(private route : ActivatedRoute , private serviceGet:GetDataService, private loginService:LoginServiceService) { }
   id: string;
   private sub:any;
 
@@ -22,6 +23,11 @@ export class OsnovneComponent implements OnInit {
       })
       // In a real app: dispatch action to load the details here.
    });
+  }
+
+  checkLogged()
+  {
+      return this.loginService.isLoggedIn();
   }
 
   predmeti: Courses[];
