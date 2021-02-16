@@ -332,8 +332,48 @@
 
         </mat-tab>
 
-        <mat-tab label="Vesti" mat-stretch-tabs>
-           
+        <mat-tab label="Dodavanje Vesti" mat-stretch-tabs>
+            <form>
+                    <table class="table table-bordered">
+                        
+                        <tr>
+                            <td><h3>Naslov:</h3></td>
+                            <td><input  class="form-control" type="text" name="naslovVesti" [(ngModel)] = "naslovVesti"  /> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><span>Tekst vesti </span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <textarea class="form-control rounded-1"  rows="5" name="tekstVesti" [(ngModel)] = 'tekstVesti' ></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Izaberite predmete:</td>
+                            <td>
+                                <lable *ngFor = 'let p of myCourses'>
+                                    <input (change)='checkData($event)' type="checkbox"  name="{{p.akronim}}" value="{{p.akronim}}">
+                                    {{p.akronim}} &nbsp;
+                                </lable>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Izaberite datum:</td>
+                            <td> 
+                                <input type="date" class="form-control" name="datumObjave" [(ngModel)] = 'datumObjave'  />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Izaberite fajlove:
+                            </td>
+                            <input type="file" multiple #inputMultiple >
+                        </tr>
+                        <tr>
+                            <td colspan="2"><button class="btn btn-primary" (click)='uploadMultiple()'>Upload</button></td>
+                        </tr>
+                    </table>
+            </form>
         </mat-tab>
 
 

@@ -2,7 +2,6 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Courses } from '../model/courses.model';
 import { Materials } from '../model/materials.model';
 import { Plan } from '../model/plan.model';
-import { User } from '../model/user.model';
 import { Zaposleni } from '../model/zaposleni.model';
 import { GetDataService } from '../Services/get-data.service';
 
@@ -17,6 +16,7 @@ export class ProfesorComponent implements OnInit {
 
   @ViewChild('fileInput' , {static:false}) fileInput : ElementRef;
   @ViewChild('fileInput2' , {static:false}) fileInput2 : ElementRef;
+  @ViewChild('inputMultiple' , {static:false}) inputMultiple : ElementRef;
 
   ngOnInit(): void {
     let username =  localStorage.getItem('user');
@@ -85,6 +85,43 @@ export class ProfesorComponent implements OnInit {
     })
   }
 
+  uploadMultiple()
+  {
+      const formData = new FormData();
+
+      let niz = []
+
+      for(let index of this.inputMultiple.nativeElement.files)
+      {
+        niz.push(index.name)
+        formData.append("files" , index)
+      }
+         
+
+         let data = {
+           "naziv": this.naslovVesti,
+           "tekst" : this.tekstVesti,
+           "datum" : this.datumObjave,
+           "nazivFajla" : niz
+         }
+         
+
+      console.log(this.tekstVesti)
+      console.log(this.datumObjave)
+
+      this.service.uploadMultiple(formData).subscribe((r:any)=>{
+        console.log(r)
+      }) 
+
+
+         this.service.dodajObavestenja(data, this.niz).subscribe((s:any)=>{
+
+         })
+
+  
+  }
+
+
   onSubmit(event){
     console.log(event.target.value)
     let imageBlob;
@@ -109,8 +146,37 @@ export class ProfesorComponent implements OnInit {
   
 }
 
+checkData(event)
+{
+ 
+
+  if(event.target.checked)
+  { 
+    this.niz.push(event.target.value)
+    console.log("Pushed" + event.target.value)
+
+  }else
+  {
+    this.niz.forEach((element,index)=>{
+      if(element==event.target.value) {
+        this.niz.splice(index,1);
+        console.log("Poped at index" + index)
+      }
+   });
+  
+  }
+
+
+ //uradi ovo
+}
+
   myCourses:Plan[];
   predmet: Courses;
   nastavnik:Zaposleni;
   podaci:Materials;
+  naslovVesti:string;
+  tekstVesti:string;
+  datumObjave:string;
+  niz = [];
+  
 }

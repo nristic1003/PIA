@@ -51,6 +51,20 @@ sendDataToServer(formData :FormData)
  return  this.http.post<any>(`${this.uri}/upload`, formData);
 }
 
+uploadMultiple(formData :FormData)
+{
+ return  this.http.post<any>(`${this.uri}/uploadMultiple`, formData);
+}
+
+dodajObavestenja(d:any, niz:any)
+{
+  let data = {
+    "data" : d,
+    "niz" : niz
+  }
+  return this.http.post(`${this.uri}/dodajObavestenja` , data );
+}
+
 
 getMaterials(data:String)
 {
@@ -84,4 +98,6 @@ deleteMaterial(data: any)
 {
   return this.http.post(`${this.uri}/deleteMaterial` , data);
 }
+
+
 }

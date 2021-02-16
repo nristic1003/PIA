@@ -74,6 +74,28 @@ router.route("/upload").post(upload.single("file"), function(req, res) {
 
   });
 
+  router.route("/dodajObavestenja").post((req, res)=>{
+    console.log(req.body.data)
+    let data = req.body.data
+    let niz = req.body.niz;
+    console.log(req.body.formData)
+    courses.collection.updateMany({akronim : {$in :niz}}, {$push : { obavestenja: data}}) 
+})
+  
+
+
+router.route("/uploadMultiple").post(upload.array("files" , 10), function(req, res) {
+    //update
+    const files = req.files
+    console.log(files)
+    if (!files) {
+        const error = new Error('No File')
+        res.status(500);
+      }
+        res.status(200);
+
+  });
+
   router.route("/deleteMaterial").post((req, res)=>{
       let name = req.body.name; //filename
       let v = req.body.value; //Array Name in collection
@@ -211,8 +233,6 @@ router.route('/updateInfoNastavnik').post((req, res)=>{
         else res.status(200);
     })
 })
-
-
 
 
 

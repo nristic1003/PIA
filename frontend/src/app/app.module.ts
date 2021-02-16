@@ -25,6 +25,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatTabsModule} from '@angular/material/tabs';
 import { ProfesorComponent } from './profesor/profesor.component';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,8 +56,6 @@ import { ProfesorComponent } from './profesor/profesor.component';
     BrowserModule,
     MatButtonModule,
     MatTabsModule
-  
-    
   ],
   providers: [],
   bootstrap: [AppComponent]
