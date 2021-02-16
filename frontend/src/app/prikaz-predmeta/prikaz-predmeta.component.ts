@@ -51,14 +51,10 @@ export class PrikazPredmetaComponent implements OnInit {
       (err) => console.log(err)
     );
 
-    this.serviceGet.getDataFromServer().subscribe((Data:any)=>{
-      this.putanja = Data.file;
-      console.log(this.putanja);
-      console.log(Data);
-    })
+    
   }
 
-
+  
   putanja : String;
   predmet:Courses;
   podaci:Materials;

@@ -51,10 +51,6 @@ sendDataToServer(formData :FormData)
  return  this.http.post<any>(`${this.uri}/upload`, formData);
 }
 
-getDataFromServer()
-{
-  return this.http.get(`${this.uri}/getFiles`);
-}
 
 getMaterials(data:String)
 {
@@ -82,5 +78,10 @@ updateInfoNastavnik(d:Zaposleni)
     'data' : d
   }
   return this.http.post(`${this.uri}/updateInfoNastavnik`  , data);
+}
+
+deleteMaterial(data: any)
+{
+  return this.http.post(`${this.uri}/deleteMaterial` , data);
 }
 }

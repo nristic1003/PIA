@@ -14,6 +14,12 @@ let Materials = new Schema({
     },
     ispitnaPitanja:{
         type:Array
+    },
+    matLaboratorija:{
+        type:Array
+    },
+    matProjekat:{
+        type:Array
     }
 });
 

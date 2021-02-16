@@ -56,21 +56,30 @@ router.route("/upload").post(upload.single("file"), function(req, res) {
         type : path.extname(req.file.filename)
     }
 
-    console.log(data)
+    let arr = req.body.arr;
+
+    console.log(arr)
 
     materials.findOne({akronim : req.body.id}, (err, mat) =>{
         if(err) console.log(err)
         if(mat)
         {
             //update
-            materials.collection.updateOne({akronim: req.body.id} , {$push : {matPred: data} })
+            materials.collection.updateOne({akronim: req.body.id} , {$push : {[arr]: data} })
         }else{
             
-            materials.insertMany({akronim : req.body.id , matPred : new mongoose.Types.Array(data)})  
+            materials.insertMany({akronim : req.body.id , [arr] : new mongoose.Types.Array(data)})  
         }
     })
 
   });
+
+  router.route("/deleteMaterial").post((req, res)=>{
+      let name = req.body.name; //filename
+      let v = req.body.value; //Array Name in collection
+      let akr = req.body.akronim; //Akronim za selekciju
+      materials.collection.updateOne({akronim : akr}, {$pull : {[v]: {'naziv' : name}}})
+  })
 
 
   router.route("/uploads/:id").get((req, res)=>{
@@ -80,6 +89,20 @@ router.route("/upload").post(upload.single("file"), function(req, res) {
     if (fs.existsSync(path)) {
         res.contentType("application/pdf");
         fs.createReadStream(path).pipe(res)
+    } else {
+        res.status(500)
+        console.log('File not found')
+        res.send('File not found')
+    }
+  })
+
+  router.route("/download/:id").get((req, res)=>{
+    const testFolder = './uploads';
+    const param = req.params.id;
+    const path = './uploads/' + param;
+    if (fs.existsSync(path)) {
+        res.contentType("application/pdf");
+        res.download(path);
     } else {
         res.status(500)
         console.log('File not found')
