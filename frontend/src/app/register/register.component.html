@@ -1,6 +1,49 @@
-
 <div class="container">
 
+    <h1 align="center">Register</h1>
+    <div class="row justify-content-center">
+        <div class="col-xl-4">
+            <form>
+              
+                <div class="form-group">
+                    <label>Ime:</label>
+                    <input type="text" name="username" class="form-control" [(ngModel)]="username" />
+                
+                   
+                </div>
+                <div class="form-group">
+                    <label>Prezime</label>
+                    <input type="text" name="user.name" class="form-control" [(ngModel)]="user.lastname" />
+                </div>
+                <div class="form-group">
+                    <label >Vrsta studija</label>
+                     <select name="user.type" class="form-control" [(ngModel)]="user.type">
+                        <option value="d">Osnovne studije</option>
+                        <option value="m">Master studije</option>
+                        <option value="p">Doktorske</option>
+                    </select>
+                  
+                </div>
+                <div class="form-group">
+                    <label >Korisnicko ime: </label>
+                    <input type="text" placeholder="U obliku:  piGGGGBBx@student.etf.rs" name="user.username" class="form-control" [(ngModel)]="user.username" />
+               
+                </div>
+                <div class="form-group">
+                    <label  class="control-label">Sifra</label>
+                    <input name="user.password"  class="form-control" [(ngModel)]="user.password" />
+                  
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Broj Indeksa</label>
+                    <input type="text" name="user.indexNumber" placeholder="U obliku: GGGG/BBBB" class="form-control" [(ngModel)]="user.indexNumber" />
+                  
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" (click)='register()' >Posalji</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-   
 </div>

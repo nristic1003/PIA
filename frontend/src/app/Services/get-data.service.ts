@@ -66,6 +66,35 @@ dodajObavestenja(d:any, niz:any)
 }
 
 
+deleteVest(id:number)
+{
+    let data = {
+      "id" : id
+    }
+    return this.http.post(`${this.uri}/deleteVest/` , data);
+}
+
+dodajLabVezbu(akronim : string , d:any)
+{
+    let data = {
+      "akronim" : akronim,
+      "data" : d 
+    }
+
+    return this.http.post(`${this.uri}/dodajLabVezbu/` , data);
+
+}
+
+dodajProjekatVezbu(akronim : string , d:any)
+{
+  let data = {
+    "akronim" : akronim,
+    "data" : d 
+  }
+
+  return this.http.post(`${this.uri}/dodajProjekatVezbu/` , data);
+}
+
 getMaterials(data:String)
 {
   return this.http.get(`${this.uri}/getMaterials/${data}` );

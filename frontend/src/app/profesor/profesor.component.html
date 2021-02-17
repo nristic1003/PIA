@@ -23,19 +23,21 @@
                             <mat-tab label = "O predmetu">
                                 <table class="table table-striped"> 
                                 <tr>
-                                    <td>Status predmeta:</td>
+                                    <td><b>Status predmeta:</b></td>
                                     <td>
                                         <select>    
                                             <option>izborni</option>
                                             <option>obavezni</option>
                                         </select>
                                     </td>
-                                    <td>Sifra predmeta</td>
+                                    <td><b>Sifra predmeta</b></td>
                                     <td><input name="predmet.akronim" [(ngModel)] = "predmet.akronim"  type="text" placeholder="sifra predmeta" /></td>
                                 </tr>
                                 <tr>
-                                    <td>ESPB</td>
-                                    <td colspan="3">  <input name="predmet.ESPB" [(ngModel)] = "predmet.ESPB" value="{{predmet.ESPB}}" type="number" /></td>
+                                    <td><b>ESPB</b></td>
+                                    <td >  <input name="predmet.ESPB" [(ngModel)] = "predmet.ESPB" value="{{predmet.ESPB}}" type="number" /></td>
+                                    <td><b>Lab vezbe iz predmeta:</b></td>
+                                    <td >  <input name="predmet.lab" [(ngModel)] = "predmet.lab" value="{{predmet.lab}}" type="text" /></td>
                                 </tr>
                                 <tr>
                                     <td colspan="4"> Uslov</td>
@@ -80,7 +82,7 @@
                                         </tr> 
                                     
                                             <tr *ngFor = 'let p of podaci.matPred'>
-                                                <td> Predavanje:<a href="http://localhost:4000/uploads/{{p.naziv}}" >{{p.naziv}}</a></td>
+                                                <td> Predavanje:<br /><a href="http://localhost:4000/uploads/{{p.naziv}}" >{{p.naziv}}</a></td>
                                                 <td> {{p.type}}</td>
                                                 <td> {{p.nastavnik}}</td>
                                                 <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
@@ -158,46 +160,73 @@
                         </td>
                         <td>
                             <mat-tab label = "Laboratorija">
-                              <form>  
-                                    <table class="table table-striped table-bordered">
-                                        <tr>
-                                            <td>Izaberite fajl</td>
-                                            <td>Upload</td>
-                                        </tr>
-
-                                        <tr>
-                                            <td><input type="file" #fileInput  /></td>
-                                            <td> <button class="btn btn-primary"  value="matLaboratorija" type="submit"  (click)="onSubmit($event)">Upload</button></td>
-                                        </tr>
-
-                                    </table>
-
-                                    <table class="table table-striped table-bordered">
-                                        <tr>
-                                            <td>Fajl</td>
-                                            <td>Ekstenzija</td>
-                                            <td>Nastavnik</td>
-                                            <td>Datum</td>
-                                            <td>Redosled</td>
-                                            <td>Velicina u KB</td>
-                                            <td>Ukloni</td>
-                                        </tr> 
+                             <div *ngIf = 'predmet.lab=="DA"; else NemaLabVezbi'>
+                                <form>  
                                     
-                                            <tr *ngFor = 'let p of podaci.matLaboratorija'>
-                                                <td> Predavanje:<a href="http://localhost:4000/uploads/{{p.naziv}}" >{{p.naziv}}</a></td>
-                                                <td> {{p.type}}</td>
-                                                <td> {{p.nastavnik}}</td>
-                                                <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
-                                                <td> <input type="text" name = "p.redosled" [(ngModel)] = "p.redosled" /> </td>
-                                                <td>{{p.size}}</td>
-                                                <td> <button value="ispitnaPitanja" id="{{p.naziv}}" (click) = "deleteMaterial($event)" class="btn btn-danger" >Ukloni</button></td>
+                                        <table class="table table-striped table-bordered">
+                                            <tr>
+                                                <th><span>Naslov lab vezbe:</span></th>
+                                                <td><input  class="form-control" type="text" name="naslovLab" [(ngModel)] = "naslovLab"  /> </td>
                                             </tr>
+                                            <tr>
+                                                <th><span>Vrednost u poenima</span></th>
+                                                <td><input  class="form-control" type="number" name="vrednostLab" [(ngModel)] = "vrednostLab"  /> </td>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="2"><span>Tekst lab vezbe </span></th>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <textarea class="form-control rounded-1"  rows="5" name="tekstLab" [(ngModel)] = 'tekstLab' ></textarea>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"> <button class="btn btn-success" (click) = "objaviLabVest()">Objavi </button></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Izaberite fajl</td>
+                                                <td>Upload</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><input type="file" #fileInput  /></td>
+                                                <td> <button class="btn btn-primary"  value="matLaboratorija" type="submit"  (click)="onSubmit($event)">Upload</button></td>
+                                            </tr>
+
+                                        </table>
+
+                                        <table class="table table-striped table-bordered">
+                                            <tr>
+                                                <td>Fajl</td>
+                                                <td>Ekstenzija</td>
+                                                <td>Nastavnik</td>
+                                                <td>Datum</td>
+                                                <td>Redosled</td>
+                                                <td>Velicina u KB</td>
+                                                <td>Ukloni</td>
+                                            </tr> 
                                         
-                        
-                                    </table>
-                                    
-                                    
-                                </form>
+                                                <tr *ngFor = 'let p of podaci.matLaboratorija'>
+                                                    <td> Predavanje:<a href="http://localhost:4000/uploads/{{p.naziv}}" >{{p.naziv}}</a></td>
+                                                    <td> {{p.type}}</td>
+                                                    <td> {{p.nastavnik}}</td>
+                                                    <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
+                                                    <td> <input type="text" name = "p.redosled" [(ngModel)] = "p.redosled" /> </td>
+                                                    <td>{{p.size}}</td>
+                                                    <td> <button value="ispitnaPitanja" id="{{p.naziv}}" (click) = "deleteMaterial($event)" class="btn btn-danger" >Ukloni</button></td>
+                                                </tr>
+                                            
+                            
+                                        </table>
+                                        
+                                        
+                                    </form>
+                                    </div>
+
+                                    <ng-template #NemaLabVezbi>
+                                        <h3>Nema lab vezbi iz ovog predmeta</h3>
+                                    </ng-template>
 
                             </mat-tab>
                             
@@ -205,7 +234,26 @@
                         <td>
                             <mat-tab label = "Projekat">
                                 <form>  
-                                    <table class="table table-striped table-bordered">
+                                        <table class="table table-striped table-bordered">
+                                            <tr>
+                                                <th><span>Naslov projekat:</span></th>
+                                                <td><input  class="form-control" type="text" name="naslovProjekat" [(ngModel)] = "naslovProjekat"  /> </td>
+                                            </tr>
+                                            <tr>
+                                                <th><span>Vrednost u poenima</span></th>
+                                                <td><input  class="form-control" type="number" name="vrednostProjekat" [(ngModel)] = "vrednostProjekat"  /> </td>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="2"><span>Tekst Projekat  </span></th>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <textarea class="form-control rounded-1"  rows="5" name="tekstProjekat" [(ngModel)] = 'tekstProjekat' ></textarea>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"> <button class="btn btn-success" (click) = "objaviProjekatVest()">Objavi </button></td>
+                                            </tr>
                                         <tr>
                                             <td>Izaberite fajl</td>
                                             <td>Upload</td>
@@ -374,6 +422,30 @@
                         </tr>
                     </table>
             </form>
+        </mat-tab>
+
+        <mat-tab label="Sve vesti">
+           <h2>Vesti na predmetu {{predmet.naziv}}</h2>
+           <div *ngFor = 'let v of predmet.obavestenja'>
+                <table class="table table-bordered"> 
+                    <tr>
+                        <th colspan="3">{{v.naziv}}</th>
+                    </tr>
+                    <tr>
+                        <td style="width: 70%;">{{v.tekst}}</td>
+                    
+                        <td><button class="btn btn-primary" value="{{v.id}}" (click) = "azurirajVest($event)">Azuriraj</button></td>
+                        
+                       <td *ngIf ='v.kreator === profesor;  else elseBlock '> 
+                        <button class="btn btn-danger" value="{{v.id}}" (click) = "deleteVest($event)">Izbrisi</button>
+                        <ng-template #elseBlock></ng-template>
+                       </td>
+
+                    </tr>
+                </table>
+           </div>
+          
+
         </mat-tab>
 
 

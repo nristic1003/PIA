@@ -22,12 +22,16 @@ export class ProfesorComponent implements OnInit {
     let username =  localStorage.getItem('user');
     this.service.getPlan(username).subscribe((plan:Plan[])=>{
       this.myCourses = plan;
-      console.log(this.myCourses)
       this.todo(this.myCourses[0].akronim);
       this.dohvatiNastavnika(username);
    
     })
+
+
   }
+
+
+
 
   dohvatiNastavnika(username:String)
   {
@@ -97,30 +101,33 @@ export class ProfesorComponent implements OnInit {
         formData.append("files" , index)
       }
          
+     let  date = Date.now().toString()
+     console.log(date)
 
          let data = {
+           "id" :  date,
            "naziv": this.naslovVesti,
            "tekst" : this.tekstVesti,
            "datum" : this.datumObjave,
-           "nazivFajla" : niz
+           "nazivFajla" : niz,
+           "kreator" : localStorage.getItem('user')
          }
          
-
-      console.log(this.tekstVesti)
-      console.log(this.datumObjave)
-
+         
       this.service.uploadMultiple(formData).subscribe((r:any)=>{
         console.log(r)
       }) 
-
 
          this.service.dodajObavestenja(data, this.niz).subscribe((s:any)=>{
 
          })
 
-  
   }
 
+  azurirajVest(event)
+  {
+
+  }
 
   onSubmit(event){
     console.log(event.target.value)
@@ -146,6 +153,45 @@ export class ProfesorComponent implements OnInit {
   
 }
 
+
+deleteVest(event)
+{
+  
+   let id = event.target.value
+  console.log(id)
+   this.service.deleteVest(id).subscribe((a:any)=>{
+
+   })
+}
+
+objaviLabVest()
+{
+    let d = {
+      "naslovLab" : this.naslovLab,
+      "tekstLab" : this.tekstLab,
+      "vrednost" : this.vrednostLab
+    }
+
+   this.service.dodajLabVezbu(this.predmet.akronim , d).subscribe((a:any)=>{
+
+   })
+
+}
+
+objaviProjekatVest()
+{
+  let d = {
+    "nazivVezbe" : this.naslovProjekat,
+    "opis" : this.tekstProjekat,
+    "vrednost" : this.vrednostProjekat
+  }
+
+ this.service.dodajProjekatVezbu(this.predmet.akronim , d).subscribe((a:any)=>{
+
+ })
+
+}
+
 checkData(event)
 {
  
@@ -169,7 +215,6 @@ checkData(event)
 
  //uradi ovo
 }
-
   myCourses:Plan[];
   predmet: Courses;
   nastavnik:Zaposleni;
@@ -177,6 +222,14 @@ checkData(event)
   naslovVesti:string;
   tekstVesti:string;
   datumObjave:string;
+  naslovLab:string;
+  tekstLab:string;
+  vrednostLab:number
+  naslovProjekat:string;
+  vrednostProjekat:number;
+  tekstProjekat:string
   niz = [];
+  profesor = localStorage.getItem('user');
+
   
 }

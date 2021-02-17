@@ -81,7 +81,28 @@ router.route("/upload").post(upload.single("file"), function(req, res) {
     console.log(req.body.formData)
     courses.collection.updateMany({akronim : {$in :niz}}, {$push : { obavestenja: data}}) 
 })
+
+router.route("/dodajLabVezbu").post((req, res)=>{
   
+    let data = req.body.data
+    let akr = req.body.akronim;
+    console.log(req.body.formData)
+    courses.collection.updateOne({akronim : akr}, {$push : { labPodaci: data}}) 
+})
+router.route("/dodajProjekatVezbu").post((req, res)=>{
+  
+    let data = req.body.data
+    let akr = req.body.akronim;
+    console.log(req.body.formData)
+    courses.collection.updateOne({akronim : akr}, {$push : { projekat: data}}) 
+})
+  
+router.route("/deleteVest").post((req, res)=>{
+    console.log(req.body.id)
+    let idOb = req.body.id;
+    courses.collection.updateOne({'obavestenja.id' : idOb}, {$pull: {obavestenja : {id : idOb }}})
+
+})
 
 
 router.route("/uploadMultiple").post(upload.array("files" , 10), function(req, res) {
