@@ -261,6 +261,20 @@
 
         <mat-tab label="Spisak"> 
 
+          <div *ngIf = 'potrebanFajl'>
+            <form>
+              <table class="table table-striped"> 
+                <tr>
+                    <td>izaberite fajl</td>
+                    <td><input type="file"  #fileInput class="form-control"></td>
+                </tr>
+                <tr>
+                  <td colspan="2"><button class="btn btn-primary" (click) = 'onSubmit()'>Posalji</button></td>
+                </tr>
+
+              </table>
+          </form>
+          </div>
           
             <div *ngFor = 'let s of students'>
               <form>
@@ -277,11 +291,11 @@
                 </tr>
                 <tr>
                   <td>
-                     <button class="btn btn-success" >Dodaj me </button>
+                     <button value = "{{s.naziv}}" class="btn btn-success" (click) = "dodajMe($event)"  >Dodaj me </button>
                   </td>
                 </tr>
                 <tr *ngFor = 'let student of s.studenti'>
-                  <td>{{student.indexNumber}}</td>
+                  <td>{{student.username}}</td>
                 </tr>
 
                 </table>

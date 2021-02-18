@@ -38,7 +38,15 @@ export class PrikazPredmetaComponent implements OnInit {
   {
     this.serviceGet.dohvatiSpisakStudenata(this.id).subscribe((s:StudentsList[])=>{
       this.students = s;
-      console.log(s)
+      
+      for(let index of s)
+        if(index.potrebanFajl)
+        {
+          this.potrebanFajl = true
+          return;
+        }
+      
+        this.potrebanFajl = false;
      })
   }
 
@@ -48,28 +56,43 @@ export class PrikazPredmetaComponent implements OnInit {
      this.podaci = m;
     })
   }
+  dodajMe(event)
+  {
+    let naziv = event.target.value;
+    let student = localStorage.getItem('user');
+
+    this.serviceGet.dodajNaSpisak(naziv, student).subscribe((a:any)=>{
+      
+    })
+
+  }
 
 
   onSubmit(){
+
       const imageBlob =this.fileInput.nativeElement.files[0];
       const formData = new FormData();
+
+      // TODO ubacvi proveru za ZIP, 7z
+      
       formData.set("file" , imageBlob);
       formData.set("id" , this.id);
-      formData.set("nastavnik" , localStorage.getItem('user'))
-
-    this.serviceGet.sendDataToServer(formData).subscribe(
+      formData.set("studentName" , localStorage.getItem('user'))
+    this.serviceGet.uploadSpisak(formData).subscribe(
       (res) => console.log(res),
       (err) => console.log(err)
     );
 
+  
     
   }
 
-  
+  message:string;
   putanja : String;
   predmet:Courses;
   podaci:Materials;
   students: StudentsList[];
+  potrebanFajl : boolean
 
 
   obavestenja:Array<Object>;

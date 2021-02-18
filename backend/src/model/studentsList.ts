@@ -29,6 +29,9 @@ let StudentsList = new Schema({
     },
     limit:{
         type:Number
+    },
+    trenutniBroj:{
+        type:Number
     }
 });
 

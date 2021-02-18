@@ -198,7 +198,7 @@ createList()
   console.log(this.datumOdrzavanja)
 
   let data = {
-    "akronim " : this.predmet.akronim,
+    "akronim" : this.predmet.akronim,
     "naziv" : this.nazivSpiska,
     "otvoren" : this.otvorenaPrijava,
     "termin" : this.datumOdrzavanja,

@@ -35,8 +35,9 @@ export class LoginComponent implements OnInit {
         {
           console.log(student.username);
           localStorage.setItem('user', student.username);
-          if(student.type=='d') this.router.navigate(['/student']);
+          if(student.type=='d' || student.type=='m' || student.type=='p' ) this.router.navigate(['/student']);
           else  if(student.type=='z') this.router.navigate(['/profesor']);
+          else this.router.navigate(['/admin'])
         }
        
       }

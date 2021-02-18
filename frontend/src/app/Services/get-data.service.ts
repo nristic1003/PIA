@@ -54,8 +54,35 @@ sendDataToServer(formData :FormData)
 
  return  this.http.post<any>(`${this.uri}/upload`, formData , {headers : headers})
   
+}
+
+uploadSpisak(formData :FormData)
+{
+  var id;
+   id = formData.get('id')
+  var studentName;
+  studentName = formData.get('studentName')
+  console.log(id)
+  console.log(studentName)
+
+  const headers = { 'akronim':id ,  'studentName' : studentName };
+
+ return  this.http.post<any>(`${this.uri}/uploadDataList`, formData , {headers : headers})
+  
+}
+
+dodajNaSpisak(naziv :string, username : string)
+{
+  let data = 
+  {
+    "naziv" : naziv,
+    "username" : username
+  }
+
+  return  this.http.post<any>(`${this.uri}/addToList`, data)
 
 }
+
 
 uploadMultiple(formData :FormData)
 {

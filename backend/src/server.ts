@@ -53,9 +53,35 @@ const storage = multer.diskStorage({
     }
 });
 
+const storageSpiskovi = multer.diskStorage({
+    destination: function (req: any, file: any, cb: (arg0: any, arg1: string) => void) {
+        const data = req.header("akronim");
+        console.log(data)
+        const directory = `./spiskovi/${data}`
+        fs.exists(directory, (exist: any) =>{
+            if(!exist){
+                return fs.mkdir(directory , (error: any) =>cb(error , directory))
+            }
+            cb(null, directory)
+        })
+       
+    },
+   
+    
+    filename: function (req: any, file: any, cb: any) {
+        cb(null, file.originalname + '-' + req.header("studentName"))
+    }
+});
+
+const uploadDataList = multer({storage: storageSpiskovi})
+
 const upload = multer({storage:storage})
 
 const router = express.Router();
+
+router.route("/uploadDataList").post(uploadDataList.single("file"), function(req, res) {
+    console.log("hi")
+  });
 
 router.route("/upload").post(upload.single("file"), function(req, res) {
     //update
@@ -100,6 +126,7 @@ router.route("/upload").post(upload.single("file"), function(req, res) {
   router.route("/register").post((req, res)=>{
   
     let data = req.body.data
+    console.log(data)
     
     user.find({username : data.username}, (err, u)=>{
         if(err) console.log(err);
@@ -120,6 +147,9 @@ router.route("/upload").post(upload.single("file"), function(req, res) {
     })
     
 })
+
+
+
   router.route("/changePass").post((req, res)=>{
   
     user.collection.updateOne({username :req.body.username}, {$set: {password : req.body.pass , status : "aktivan"}}, (err, u)=>{
@@ -129,6 +159,15 @@ router.route("/upload").post(upload.single("file"), function(req, res) {
    
     
 })
+
+  router.route("/addToList").post((req, res)=>{
+    studentsList.collection.updateOne({naziv : req.body.naziv , trenutniBroj : {$lte : 25} , studenti : {$ne : {'username': req.body.username}}},
+     {$push : {studenti : {'username' : req.body.username}}, $inc : {'trenutniBroj' : 1}}, (err: any, u: any)=>{
+        if(err) res.status(400).json({"status" : "err"})
+        else res.status(200).json({"status" : "OK"})
+    })
+});
+   
 
 
   router.route("/dodajObavestenja").post((req, res)=>{
@@ -179,6 +218,10 @@ router.route("/uploadMultiple").post(upload.array("files" , 10), function(req, r
       let v = req.body.value; //Array Name in collection
       let akr = req.body.akronim; //Akronim za selekciju
       materials.collection.updateOne({akronim : akr}, {$pull : {[v]: {'naziv' : name}}})
+  })
+
+  router.route("/removeUser").post((req, res)=>{
+      user.collection.deleteOne({username : req.body.username})
   })
 
 
@@ -275,6 +318,14 @@ router.route('/notification').get((req,res)=>{
     );
   })
 
+  router.route('/getStudenti').get((req,res)=>{
+    user.find({type : {$in : ['d' , 'm' , 'p']} }, (err,user)=>{
+        if(err) console.log(err);
+        else res.json(user);
+     }
+    );
+  })
+
 router.route('/getZaposleniByUsername').post((req, res)=>{
     let username = req.body.username;
     user.findOne({username : username}, (err, user)=>{
@@ -308,6 +359,25 @@ router.route('/getPredmetByAkronim').post((req, res)=>{
         if(err) console.log(err);
         else res.json(courses);
     })
+})
+router.route('/kreirajPlan').post((req, res)=>{
+     let data = req.body.data
+     plan.find({akronim : data.akronim}, ((err, p)=>{
+         if(err) res.send(err)
+         if(p)
+         {
+             //obrisi stari plan 
+             plan.remove({akronim : data.akronim})
+         }
+         plan.collection.insertOne(data);
+         res.send("OK")
+     }))
+  
+})
+router.route('/kreirajPredmet').post((req, res)=>{
+     let data = req.body.data
+         courses.collection.insertOne(data);
+        
 })
 
     router.route('/updatePredmet').post((req, res)=>{  

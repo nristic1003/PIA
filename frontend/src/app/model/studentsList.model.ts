@@ -6,6 +6,7 @@ export class StudentsList{
     mesto:string;
     limit:number;
     potrebanFajl:boolean;
+    trenutniBroj:number;
     vremeKraja:Date;
     studenti: Array<Object>;
   
