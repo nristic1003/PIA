@@ -11,6 +11,7 @@ import { PrikazPredmetaComponent } from './prikaz-predmeta/prikaz-predmeta.compo
 import { PrikazZaposlenogComponent } from './prikaz-zaposlenog/prikaz-zaposlenog.component';
 import { ProfesorComponent } from './profesor/profesor.component';
 import { ProjektiComponent } from './projekti/projekti.component';
+import { PromenaLozinkeComponent } from './promena-lozinke/promena-lozinke.component';
 import { RegisterComponent } from './register/register.component';
 import { StudentComponent } from './student/student.component';
 import { ZaposleniComponent } from './zaposleni/zaposleni.component';
@@ -24,6 +25,7 @@ const routes: Routes = [
   {path:"obavestenja" , component:ObavestenjaComponent},
   {path:"nauka" , component:NaukaComponent},
   {path:"master-studije" , component:MasterStudijeComponent},
+  {path:"promena-loznike" , component:PromenaLozinkeComponent},
   {path:"kontakt" , component:KontaktComponent},
   {path:"login" , component:LoginComponent},
   {path:"register" , component:RegisterComponent},

@@ -12,6 +12,9 @@ export class Courses{
     terVezbe:string;
     lab:string;
     nacinPol:string;
+    ispitVidljiv:boolean;
+    labVidljiv:boolean;
+    projekatVidljiv:boolean;
     propozicije:string;
     obavestenja:Array<Object>;
     nastIme:String;

@@ -19,7 +19,7 @@
         <tr *ngFor = 'let notification of notifications'>
             <td> {{notification.naziv}}</td>
             <td> {{notification.tekst}}</td>
-            <td> {{notification.datum}}</td>
+            <td> {{notification.datum | date}} </td>
             <td> {{notification.type}}</td>
         </tr>
     </table>

@@ -40,7 +40,7 @@
                                     <td >  <input name="predmet.lab" [(ngModel)] = "predmet.lab" value="{{predmet.lab}}" type="text" /></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4"> Uslov</td>
+                                    <td colspan="4"><b> Uslov</b></td>
                                 
                                 </tr>
                                 <tr>
@@ -50,7 +50,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4"> Cilj Predmeta</td>
+                                    <td colspan="4"><b> Cilj Predmeta</b></td>
                                 
                                 </tr>
                                 <tr>
@@ -82,7 +82,7 @@
                                         </tr> 
                                     
                                             <tr *ngFor = 'let p of podaci.matPred'>
-                                                <td> Predavanje:<br /><a href="http://localhost:4000/uploads/{{p.naziv}}" >{{p.naziv}}</a></td>
+                                                <td> Predavanje:<br /><a href="http://localhost:4000/uploads/{{predmet.akronim}}/{{p.naziv}}" >{{p.naziv}}</a></td>
                                                 <td> {{p.type}}</td>
                                                 <td> {{p.nastavnik}}</td>
                                                 <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
@@ -112,7 +112,7 @@
                                         </tr> 
                                     
                                             <tr *ngFor = 'let p of podaci.matVezbe'>
-                                                <td> Predavanje:<a href="http://localhost:4000/uploads/{{p.naziv}}" >{{p.naziv}}</a></td>
+                                                <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/{{p.naziv}}" >{{p.naziv}}</a></td>
                                                 <td> {{p.type}}</td>
                                                 <td> {{p.nastavnik}}</td>
                                                 <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
@@ -142,7 +142,7 @@
                                         </tr> 
                                     
                                             <tr *ngFor = 'let p of podaci.ispitnaPitanja'>
-                                                <td> Predavanje:<a href="http://localhost:4000/uploads/{{p.naziv}}" >{{p.naziv}}</a></td>
+                                                <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/{{p.naziv}}" >{{p.naziv}}</a></td>
                                                 <td> {{p.type}}</td>
                                                 <td> {{p.nastavnik}}</td>
                                                 <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
@@ -208,7 +208,7 @@
                                             </tr> 
                                         
                                                 <tr *ngFor = 'let p of podaci.matLaboratorija'>
-                                                    <td> Predavanje:<a href="http://localhost:4000/uploads/{{p.naziv}}" >{{p.naziv}}</a></td>
+                                                    <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/{{p.naziv}}" >{{p.naziv}}</a></td>
                                                     <td> {{p.type}}</td>
                                                     <td> {{p.nastavnik}}</td>
                                                     <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
@@ -279,7 +279,7 @@
                                             </tr> 
                                         
                                                 <tr *ngFor = 'let p of podaci.matProjekat'>
-                                                    <td> Predavanje:<a href="http://localhost:4000/uploads/{{p.naziv}}" >{{p.naziv}}</a></td>
+                                                    <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/{{p.naziv}}" >{{p.naziv}}</a></td>
                                                     <td> {{p.type}}</td>
                                                     <td> {{p.nastavnik}}</td>
                                                     <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
@@ -445,6 +445,45 @@
                 </table>
            </div>
           
+
+        </mat-tab>
+
+
+        <mat-tab label="Spisak">
+
+            <h2>Spisak za predmet {{predmet.naziv}}</h2>
+        <form>
+            <table class="table table-bordered"> 
+                <tr>
+                    <td><b>Limit</b></td>
+                    <td><input type="number" placeholder="maksimalni broj studenata" class="form-control" name="limit" [(ngModel)]="limit" /> </td>
+                    <td><b>Datum odrzavanja:  </b></td>
+                    <td><input name="datumOdrzavanja" [(ngModel)]= "datumOdrzavanja" type="datetime-local" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td >  <b>Otvori prijavu</b></td>
+                    <td >  <input name="otvorenaPrijava" [(ngModel)]= "otvorenaPrijava"  type="checkbox" class="form-control"></td>
+              
+                   <td><b>Datum kraja prijave:  </b></td>
+                    <td><input name="datumKraja" [(ngModel)]= "datumKraja" type="datetime-local" class="form-control"></td>
+                </tr>
+                <tr> 
+                    <td><b>Mesto </b></td>
+                    <td><input name="mestoOdrzavanja" [(ngModel)]= "mestoOdrzavanja" type="text" class="form-control" ></td>
+                    <td><b>Potreban fajl?</b></td>
+                    <td colspan="2">  <input name="potrebanFajl" [(ngModel)]= "potrebanFajl" type="checkbox" class="form-control"></td>
+                </tr>
+               
+                <tr>
+                    <td colspan="2"><b>Naziv spiska</b></td>
+                    <td colspan="2"><input name="nazivSpiska" [(ngModel)]= "nazivSpiska" type="text" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td colspan="4"> <button class="btn btn-success" (click) = 'createList()' >Otvori Spisak</button> </td>
+                </tr>
+
+            </table>
+        </form>
 
         </mat-tab>
 

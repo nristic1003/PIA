@@ -27,10 +27,18 @@ export class LoginComponent implements OnInit {
     this.service.login(this.username, this.password).subscribe((student:User)=>{
       if(student)
       {
-        console.log(student.username);
-        localStorage.setItem('user', student.username);
-        if(student.type=='d') this.router.navigate(['/student']);
-        else  if(student.type=='z') this.router.navigate(['/profesor']);
+        if(student.status=="neaktivan")
+        { 
+          localStorage.setItem('username' ,student.username)
+          this.router.navigate(['/promena-loznike']);
+        }else
+        {
+          console.log(student.username);
+          localStorage.setItem('user', student.username);
+          if(student.type=='d') this.router.navigate(['/student']);
+          else  if(student.type=='z') this.router.navigate(['/profesor']);
+        }
+       
       }
       else
       {

@@ -76,12 +76,12 @@
               </tr> 
           
                   <tr *ngFor = 'let p of podaci.matPred'>
-                      <td> Predavanje:<a href="http://localhost:4000/uploads/{{p.naziv}}" >{{p.naziv}}</a></td>
+                      <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/{{p.naziv}}" >{{p.naziv}}</a></td>
                       <td> {{p.type}}</td>
                       <td> {{p.nastavnik}}</td>
                       <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>              
                       <td>{{p.size}}</td>
-                      <td><a mat-button href="http://localhost:4000/download/{{p.naziv}}" target="_blank">Download</a></td>
+                      <td><a mat-button href="http://localhost:4000/download/{{predmet.akronim}}/{{p.naziv}}" target="_blank">Download</a></td>
                   </tr>
               
 
@@ -107,12 +107,12 @@
               </tr> 
           
                   <tr *ngFor = 'let p of podaci.matVezbe'>
-                      <td> Predavanje:<a href="http://localhost:4000/uploads/{{p.naziv}}" >{{p.naziv}}</a></td>
+                      <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/{{p.naziv}}" >{{p.naziv}}</a></td>
                       <td> {{p.type}}</td>
                       <td> {{p.nastavnik}}</td>
                       <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
                       <td>{{p.size}}</td>
-                      <td><a mat-button href="http://localhost:4000/download/{{p.naziv}}" target="_blank">Download</a></td>
+                      <td><a mat-button href="http://localhost:4000/download/{{predmet.akronim}}/{{p.naziv}}" target="_blank">Download</a></td>
                   </tr>
               
 
@@ -124,132 +124,172 @@
         </ng-template>
         </mat-tab>
 
-        <mat-tab label="Ispitna pitanja"> 
-          <div *ngIf = 'podaci.ispitnaPitanja?.length > 0; else ispitna'>
-            <h2>Materijali Vezbe</h2>
-            <table class="table table-striped table-bordered">
-              <tr>
-                  <td>Fajl</td>
-                  <td>Ekstenzija</td>
-                  <td>Nastavnik</td>
-                  <td>Datum</td>
-                
-                  <td>Velicina u KB</td>
-                  <td>Preuzimanje</td>
-              </tr> 
-          
-                  <tr *ngFor = 'let p of podaci.ispitnaPitanja'>
-                      <td> Predavanje:<a href="http://localhost:4000/uploads/{{p.naziv}}" >{{p.naziv}}</a></td>
-                      <td> {{p.type}}</td>
-                      <td> {{p.nastavnik}}</td>
-                      <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
-                      <td>{{p.size}}</td>
-                      <td><a mat-button href="http://localhost:4000/download/{{p.naziv}}" target="_blank">Download</a></td>
-                  </tr>
-              
 
-          </table>
-        </div>
+     
+          <mat-tab label="Ispitna pitanja"> 
+            <div *ngIf = "predmet.ispitVidljiv; else ispitNedostupan">
+                      <div *ngIf = 'podaci.ispitnaPitanja?.length > 0; else ispitna'>
+                        <h2>Materijali Vezbe</h2>
+                        <table class="table table-striped table-bordered">
+                          <tr>
+                              <td>Fajl</td>
+                              <td>Ekstenzija</td>
+                              <td>Nastavnik</td>
+                              <td>Datum</td>
+                            
+                              <td>Velicina u KB</td>
+                              <td>Preuzimanje</td>
+                          </tr> 
+                      
+                              <tr *ngFor = 'let p of podaci.ispitnaPitanja'>
+                                  <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/{{p.naziv}}" >{{p.naziv}}</a></td>
+                                  <td> {{p.type}}</td>
+                                  <td> {{p.nastavnik}}</td>
+                                  <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
+                                  <td>{{p.size}}</td>
+                                  <td><a mat-button href="http://localhost:4000/download/{{predmet.akronim}}/{{p.naziv}}" target="_blank">Download</a></td>
+                              </tr>
+                          
 
-        <ng-template #ispitna>
-         <div> <span>Nema objavljenih materijala za ovaj predmet</span></div>
-        </ng-template>
-        </mat-tab>
+                      </table>
+                    </div>
+
+                      <ng-template #ispitna>
+                      <div> <span>Nema objavljenih materijala za ovaj predmet</span></div>
+                      </ng-template>
+                </div>
+              <ng-template #ispitNedostupan>
+                 <div> <span>Materijali nisu dostupni</span></div>
+              </ng-template>
+          </mat-tab>
+      
+
+    
+
 
         <mat-tab label="Laboratorija"> 
-          <div *ngIf = 'predmet.labPodaci?.length > 0; else lab'>
-            <h2>Laboratorijske vezbe</h2>
-            <div *ngFor = 'let p of predmet.labPodaci'>
+          <div *ngIf = "predmet.labVidljiv; else labNedostupan">
+              <div *ngIf = 'predmet.labPodaci?.length > 0; else lab'>
+                <h2>Laboratorijske vezbe</h2>
+                <div *ngFor = 'let p of predmet.labPodaci'>
+                    <table class="table table-striped table-bordered">
+                        <tr>
+                            <td>Naziv vezbe</td>
+                            <td>Opis</td>
+                            <td>Poeni</td>
+                        </tr>
+                        <tr>
+                          <td>{{p.nazivVezbe}}</td>
+                          <td>{{p.opis}}</td>
+                          <td>{{p.vrednost}}</td>
+                        </tr>
+                    </table>
+                  
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    <h3>Materijali potrebni za izradu vezbi:</h3>
+                  </div>
+                
+                </div>
+
                 <table class="table table-striped table-bordered">
-                    <tr>
-                        <td>Naziv vezbe</td>
-                        <td>Opis</td>
-                        <td>Poeni</td>
-                    </tr>
-                    <tr>
-                      <td>{{p.nazivVezbe}}</td>
-                      <td>{{p.opis}}</td>
-                      <td>{{p.vrednost}}</td>
-                    </tr>
-                </table>
+                  <tr>
+                      <td>Fajl</td>
+                      <td>Ekstenzija</td>
+                      <td>Nastavnik</td>
+                      <td>Datum</td>
+                      <td>Redosled</td>
+                      <td>Velicina u KB</td>
+                      <td>Preuzimanje</td>
+                  </tr> 
               
+                      <tr *ngFor = 'let p of podaci.matLaboratorija'>
+                          <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/{{p.naziv}}" >{{p.naziv}}</a></td>
+                          <td> {{p.type}}</td>
+                          <td> {{p.nastavnik}}</td>
+                          <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
+                          <td> <input type="text" name = "p.redosled" [(ngModel)] = "p.redosled" /> </td>
+                          <td>{{p.size}}</td>
+                          <td><a mat-button href="http://localhost:4000/download/{{predmet.akronim}}/{{p.naziv}}" target="_blank">Download</a></td>
+                      </tr>
+                  
+
+              </table>
+
             </div>
-
-            <div class="row">
-              <div class="col">
-                <h3>Materijali potrebni za izradu vezbi:</h3>
-              </div>
-            
-            </div>
-
-            <table class="table table-striped table-bordered">
-              <tr>
-                  <td>Fajl</td>
-                  <td>Ekstenzija</td>
-                  <td>Nastavnik</td>
-                  <td>Datum</td>
-                  <td>Redosled</td>
-                  <td>Velicina u KB</td>
-                  <td>Preuzimanje</td>
-              </tr> 
-          
-                  <tr *ngFor = 'let p of podaci.matLaboratorija'>
-                      <td> Predavanje:<a href="http://localhost:4000/uploads/{{p.naziv}}" >{{p.naziv}}</a></td>
-                      <td> {{p.type}}</td>
-                      <td> {{p.nastavnik}}</td>
-                      <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
-                      <td> <input type="text" name = "p.redosled" [(ngModel)] = "p.redosled" /> </td>
-                      <td>{{p.size}}</td>
-                      <td><a mat-button href="http://localhost:4000/download/{{p.naziv}}" target="_blank">Download</a></td>
-                  </tr>
-              
-
-          </table>
-
-        </div>
-        <ng-template #lab>
-          <div> <span>Nema objavljenih materijala za ovaj predmet</span></div>
-         </ng-template>
+            <ng-template #lab>
+              <div> <span>Nema objavljenih materijala za ovaj predmet</span></div>
+            </ng-template>
+          </div>
+            <ng-template #labNedostupan>
+              <div> <span>Materijali nisu dostupni</span></div>
+             </ng-template>
 
         </mat-tab>
 
         <mat-tab label="Projekat"> 
-          <div *ngIf = 'predmet.projekat?.length > 0; else projekat'>
-            <h2>Projekat</h2>
-            <div *ngFor = 'let p of predmet.projekat'>
-                <table>
-                    <tr>
-                        <td>Naziv vezbe</td>
-                        <td>Opis</td>
-                        <td>Poeni</td>
-                    </tr>
-                    <tr>
-                      <td>{{p.nazivVezbe}}</td>
-                      <td>{{p.opis}}</td>
-                      <td>{{p.vrednost}}</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+          <div *ngIf = "predmet.projekatVidljiv; else projekatNedostupan">
+                  <div *ngIf = 'predmet.projekat?.length > 0; else projekat'>
+                    <h2>Projekat</h2>
+                    <div *ngFor = 'let p of predmet.projekat'>
+                        <table>
+                            <tr>
+                                <td>Naziv vezbe</td>
+                                <td>Opis</td>
+                                <td>Poeni</td>
+                            </tr>
+                            <tr>
+                              <td>{{p.nazivVezbe}}</td>
+                              <td>{{p.opis}}</td>
+                              <td>{{p.vrednost}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
 
-        <ng-template #projekat>
-         <div> <span>Nema objavljenih materijala za ovaj predmet</span></div>
-        </ng-template>
+                <ng-template #projekat>
+                <div> <span>Nema objavljenih materijala za ovaj predmet</span></div>
+                </ng-template>
+            </div>
+          <ng-template #projekatNedostupan>
+              <div> <span>Materijali nisu dostupni</span></div>
+           </ng-template>
         </mat-tab>
 
 
-        <mat-tab label="Third"> 
+        <mat-tab label="Spisak"> 
 
-          <form>      
-            <div>
-              <input type="file" #fileInput  />
-            </div>
-            <br>
-            <div>
-              <button type="submit"  (click)="onSubmit()">Upload</button>
-            </div>
-          </form>
-         
+          
+            <div *ngFor = 'let s of students'>
+              <form>
+                <table class="table table-striped table-bordered"> 
+                  <tr>
+                  <td>
+                    {{s.naziv}} , {{s.mesto}}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    {{s.termin | date}}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                     <button class="btn btn-success" >Dodaj me </button>
+                  </td>
+                </tr>
+                <tr *ngFor = 'let student of s.studenti'>
+                  <td>{{student.indexNumber}}</td>
+                </tr>
+
+                </table>
+              </form>
+            </div> 
+
+
+          
         
         </mat-tab>
       </mat-tab-group>

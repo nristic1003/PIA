@@ -34,4 +34,23 @@ export class LoginServiceService {
     if(this.userName) return true;
     return false;
   }
+
+  register(data:any)
+  {
+    let d = {
+      "data" : data
+    }
+    return this.http.post(`${this.uri}/register`, d)
+  }
+
+  changePass(newPass : string)
+  {
+    let data = 
+    {
+      "pass" : newPass,
+      "username" : localStorage.getItem('username')
+    }
+    return this.http.post(`${this.uri}/changePass`, data)
+  }
+
 }

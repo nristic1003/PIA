@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Courses } from '../model/courses.model';
 import { Zaposleni } from '../model/zaposleni.model';
 @Injectable({
@@ -48,7 +48,13 @@ getPredmetByAkronim(akronim: String)
 
 sendDataToServer(formData :FormData)
 {
- return  this.http.post<any>(`${this.uri}/upload`, formData);
+  var id;
+   id = formData.get('id')
+  const headers = { 'akronim':id };
+
+ return  this.http.post<any>(`${this.uri}/upload`, formData , {headers : headers})
+  
+
 }
 
 uploadMultiple(formData :FormData)
@@ -127,6 +133,20 @@ deleteMaterial(data: any)
 {
   return this.http.post(`${this.uri}/deleteMaterial` , data);
 }
+createList(data: any)
+{
+  let d = {
+    "data" : data
+  }
+  return this.http.post(`${this.uri}/createList` , d);
+}
+
+dohvatiSpisakStudenata(data : string)
+{
+  return this.http.get(`${this.uri}/dohvatiSpiskove/${data}`)
+}
+
+
 
 
 }

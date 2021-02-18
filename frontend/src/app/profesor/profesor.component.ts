@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Courses } from '../model/courses.model';
 import { Materials } from '../model/materials.model';
 import { Plan } from '../model/plan.model';
+import { StudentsList } from '../model/studentsList.model';
 import { Zaposleni } from '../model/zaposleni.model';
 import { GetDataService } from '../Services/get-data.service';
 
@@ -192,6 +193,30 @@ objaviProjekatVest()
 
 }
 
+createList()
+{
+  console.log(this.datumOdrzavanja)
+
+  let data = {
+    "akronim " : this.predmet.akronim,
+    "naziv" : this.nazivSpiska,
+    "otvoren" : this.otvorenaPrijava,
+    "termin" : this.datumOdrzavanja,
+    "vremeKraja" : this.datumKraja,
+    "mesto" : this.mestoOdrzavanja,
+    "limit" : this.limit,
+    "potrebanFajl" :this.potrebanFajl,
+    "studenti" : []
+  }
+
+  this.service.createList(data).subscribe((a:any)=>{
+    
+  })
+
+
+}
+
+
 checkData(event)
 {
  
@@ -230,6 +255,17 @@ checkData(event)
   tekstProjekat:string
   niz = [];
   profesor = localStorage.getItem('user');
+  spisak:StudentsList;
+
+  nazivSpiska:string;
+  datumOdrzavanja:Date;
+  otvorenaPrijava:boolean;
+  potrebanFajl:boolean;
+  datumKraja:Date;
+  mestoOdrzavanja:String;
+  limit:number;
+
+
 
   
 }

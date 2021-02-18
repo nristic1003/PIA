@@ -8,6 +8,8 @@ import notification from './model/notification';
 import courses from './model/courses';
 import materials from './model/materials';
 import plan from './model/plan';
+import e from 'express';
+import studentsList from './model/studentsList';
 
 
 
@@ -33,8 +35,18 @@ conn.once('open', ()=>{
 
 const storage = multer.diskStorage({
     destination: function (req: any, file: any, cb: (arg0: any, arg1: string) => void) {
-        cb(null, './uploads/')
+        const data = req.header("akronim");
+        console.log(data)
+        const directory = `./uploads/${data}`
+        fs.exists(directory, (exist: any) =>{
+            if(!exist){
+                return fs.mkdir(directory , (error: any) =>cb(error , directory))
+            }
+            cb(null, directory)
+        })
+       
     },
+   
     
     filename: function (req: any, file: any, cb: any) {
         cb(null, file.originalname)
@@ -73,6 +85,51 @@ router.route("/upload").post(upload.single("file"), function(req, res) {
     })
 
   });
+
+
+  router.route("/createList").post((req, res)=>{
+  
+    let data = req.body.data
+    console.log(data)
+    
+    studentsList.collection.insertOne(data);
+        
+    })
+
+
+  router.route("/register").post((req, res)=>{
+  
+    let data = req.body.data
+    
+    user.find({username : data.username}, (err, u)=>{
+        if(err) console.log(err);
+
+        console.log(u)
+        if(u.length!=0)
+        {
+            console.log("nasao usera")
+            return res.status(400);
+
+        } 
+        else
+        {
+            user.collection.insertOne(data)
+            return res.json(200);
+        }
+        
+    })
+    
+})
+  router.route("/changePass").post((req, res)=>{
+  
+    user.collection.updateOne({username :req.body.username}, {$set: {password : req.body.pass , status : "aktivan"}}, (err, u)=>{
+        if(err) res.status(400).json({"status" : "err"})
+        else res.status(200).json({"status" : "OK"})
+    })
+   
+    
+})
+
 
   router.route("/dodajObavestenja").post((req, res)=>{
     console.log(req.body.data)
@@ -125,10 +182,13 @@ router.route("/uploadMultiple").post(upload.array("files" , 10), function(req, r
   })
 
 
-  router.route("/uploads/:id").get((req, res)=>{
+  router.route("/uploads/:folder/:fileName").get((req, res)=>{
     const testFolder = './uploads';
-    const param = req.params.id;
-    const path = './uploads/' + param;
+    const folder = req.params.folder;
+    const fileName = req.params.fileName;
+    console.log(folder)
+    const path = './uploads/' + folder + '/' + fileName;
+    console.log(path)
     if (fs.existsSync(path)) {
         res.contentType("application/pdf");
         fs.createReadStream(path).pipe(res)
@@ -139,10 +199,13 @@ router.route("/uploadMultiple").post(upload.array("files" , 10), function(req, r
     }
   })
 
-  router.route("/download/:id").get((req, res)=>{
+  router.route("/download/:folder/:fileName").get((req, res)=>{
     const testFolder = './uploads';
-    const param = req.params.id;
-    const path = './uploads/' + param;
+    const folder = req.params.folder;
+    const fileName = req.params.fileName;
+    console.log(folder)
+    const path = './uploads/' + folder + '/' + fileName;
+    console.log(path)
     if (fs.existsSync(path)) {
         res.contentType("application/pdf");
         res.download(path);
@@ -157,6 +220,15 @@ router.route("/uploadMultiple").post(upload.array("files" , 10), function(req, r
   router.route('/getPlan/:id').get((req,res)=>{
     const param = req.params.id;
     plan.find( {'nastavnici.predavac': {​​​​$in : [param]}​​​​}, ((err,pl)=>{
+        if(err) console.log(err);
+        else res.json(pl);
+    })​)
+  })
+
+  router.route('/dohvatiSpiskove/:id').get((req,res)=>{
+    const param = req.params.id;
+    console.log(param)
+    studentsList.find( {akronim : param​​​​}, ((err,pl)=>{
         if(err) console.log(err);
         else res.json(pl);
     })​)

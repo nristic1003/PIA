@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Courses } from '../model/courses.model';
 import { Materials } from '../model/materials.model';
+import { StudentsList } from '../model/studentsList.model';
 import { GetDataService } from '../Services/get-data.service';
 
 @Component({
@@ -27,8 +28,18 @@ export class PrikazPredmetaComponent implements OnInit {
         this.obavestenja = this.predmet.obavestenja;
       })
       this.dohvatiPredavanja();
+      this.dohvatiSpisakStudenata();
       // In a real app: dispatch action to load the details here.
    });
+  }
+
+
+  dohvatiSpisakStudenata()
+  {
+    this.serviceGet.dohvatiSpisakStudenata(this.id).subscribe((s:StudentsList[])=>{
+      this.students = s;
+      console.log(s)
+     })
   }
 
   dohvatiPredavanja()
@@ -58,6 +69,7 @@ export class PrikazPredmetaComponent implements OnInit {
   putanja : String;
   predmet:Courses;
   podaci:Materials;
+  students: StudentsList[];
 
 
   obavestenja:Array<Object>;

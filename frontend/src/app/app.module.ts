@@ -24,6 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTabsModule} from '@angular/material/tabs';
 import { ProfesorComponent } from './profesor/profesor.component';
+import { PromenaLozinkeComponent } from './promena-lozinke/promena-lozinke.component';
 
 
 
@@ -45,7 +46,8 @@ import { ProfesorComponent } from './profesor/profesor.component';
     StudentComponent,
     PrikazZaposlenogComponent,
     PrikazPredmetaComponent,
-    ProfesorComponent
+    ProfesorComponent,
+    PromenaLozinkeComponent
   ],
   imports: [
     BrowserModule,

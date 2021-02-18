@@ -55,6 +55,15 @@ let Courses = new Schema({
     cilj:{
         type:String
     },
+    ispitVidljiv:{
+        type:Boolean
+    },
+    labVidljiv:{
+        type:Boolean
+    },
+    projekatVidljiv:{
+        type:Boolean
+    },
     labPodaci:{
         type:Array
     },
