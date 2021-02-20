@@ -24,7 +24,7 @@ export class PrikazPredmetaComponent implements OnInit {
     
       this.serviceGet.getPredmetByAkronim(this.id).subscribe((zap:Courses)=>{
         this.predmet = zap;
-       
+       console.log(this.predmet)
         this.obavestenja = this.predmet.obavestenja;
       })
       this.dohvatiPredavanja();
@@ -60,6 +60,8 @@ export class PrikazPredmetaComponent implements OnInit {
   {
     let naziv = event.target.value;
     let student = localStorage.getItem('user');
+    console.log("Naziv je  : " + naziv)
+    console.log("Student je "  + student)
 
     this.serviceGet.dodajNaSpisak(naziv, student).subscribe((a:any)=>{
       

@@ -20,6 +20,7 @@ export class OsnovneComponent implements OnInit {
       this.serviceGet.getPredmeti(this.id).subscribe((pred:Courses[])=>{
         this.predmeti = pred;
         this.predmeti.sort((a, b) => a.semestar - b.semestar)
+        console.log(this.predmeti)
       })
       // In a real app: dispatch action to load the details here.
    });
@@ -31,6 +32,7 @@ export class OsnovneComponent implements OnInit {
   }
 
   predmeti: Courses[];
+  
 
 
 }

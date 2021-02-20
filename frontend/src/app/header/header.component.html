@@ -32,11 +32,16 @@
             <a class="nav-link" routerLink="/master-studije">Master Studije</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/projekti">Projekti</a>
+            <a class="nav-link" routerLink="/projekti-katedra">Projekti</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/nauka">Nauka</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Nauka </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item"  routerLink= "/istrazivanja" >Istrazivanja</a>
+              <a class="dropdown-item"  routerLink= "/projekti">Projekti</a>
+            </div>
           </li>
+
           <li class="nav-item">
             <a class="nav-link" routerLink="/kontakt">Kontakt</a>
           </li>

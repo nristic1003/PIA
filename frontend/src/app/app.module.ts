@@ -26,6 +26,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { ProfesorComponent } from './profesor/profesor.component';
 import { PromenaLozinkeComponent } from './promena-lozinke/promena-lozinke.component';
 import { AdminComponent } from './admin/admin.component';
+import { IstrazivanjaComponent } from './istrazivanja/istrazivanja.component';
+import { ProjektiKatedraComponent } from './projekti-katedra/projekti-katedra.component';
 
 
 
@@ -49,7 +51,9 @@ import { AdminComponent } from './admin/admin.component';
     PrikazPredmetaComponent,
     ProfesorComponent,
     PromenaLozinkeComponent,
-    AdminComponent
+    AdminComponent,
+    IstrazivanjaComponent,
+    ProjektiKatedraComponent
   ],
   imports: [
     BrowserModule,

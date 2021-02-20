@@ -49,8 +49,10 @@ getPredmetByAkronim(akronim: String)
 sendDataToServer(formData :FormData)
 {
   var id;
+  var folder;
+   folder = formData.get('folderName')
    id = formData.get('id')
-  const headers = { 'akronim':id };
+  const headers = { 'akronim':id, 'folderName' : folder };
 
  return  this.http.post<any>(`${this.uri}/upload`, formData , {headers : headers})
   
@@ -86,7 +88,12 @@ dodajNaSpisak(naziv :string, username : string)
 
 uploadMultiple(formData :FormData)
 {
- return  this.http.post<any>(`${this.uri}/uploadMultiple`, formData);
+  var id;
+  var folder;
+   id = formData.get('id')
+   
+  const headers = { 'akronim':id, 'folderName' : folder };
+ return  this.http.post<any>(`${this.uri}/uploadMultiple`, formData, {headers : headers});
 }
 
 dodajObavestenja(d:any, niz:any)

@@ -36,8 +36,9 @@ conn.once('open', ()=>{
 const storage = multer.diskStorage({
     destination: function (req: any, file: any, cb: (arg0: any, arg1: string) => void) {
         const data = req.header("akronim");
-        console.log(data)
-        const directory = `./uploads/${data}`
+        const folder = req.header("folderName")
+        console.log(folder)
+        const directory = `./uploads/${data}/${folder}`
         fs.exists(directory, (exist: any) =>{
             if(!exist){
                 return fs.mkdir(directory , (error: any) =>cb(error , directory))
@@ -161,8 +162,10 @@ router.route("/upload").post(upload.single("file"), function(req, res) {
 })
 
   router.route("/addToList").post((req, res)=>{
+      console.log(req.body.naziv)
+      console.log(req.body.username)
     studentsList.collection.updateOne({naziv : req.body.naziv , trenutniBroj : {$lte : 25} , studenti : {$ne : {'username': req.body.username}}},
-     {$push : {studenti : {'username' : req.body.username}}, $inc : {'trenutniBroj' : 1}}, (err: any, u: any)=>{
+     {$push : {studenti : {'username' : req.body.username}}, $inc : {trenutniBroj : 1}}, (err: any, u: any)=>{
         if(err) res.status(400).json({"status" : "err"})
         else res.status(200).json({"status" : "OK"})
     })
@@ -176,6 +179,24 @@ router.route("/upload").post(upload.single("file"), function(req, res) {
     let niz = req.body.niz;
     console.log(req.body.formData)
     courses.collection.updateMany({akronim : {$in :niz}}, {$push : { obavestenja: data}}) 
+})
+  router.route("/dodajKurseveProfesoru").post((req, res)=>{
+    let profesori = req.body.data.profesori
+
+    let d = [];
+
+    let nastavnici = req.body.data.nastavnici
+
+    // console.log(nastavnici)
+    let akronim = req.body.data.akronim
+    console.log(req.body.data.materijali)
+    user.collection.updateMany({username : {$in :profesori}}, {$push : { courses:{'name' : akronim}}}) 
+    courses.collection.updateOne({akronim : akronim} , {$push : {nastavnik : {$each :nastavnici}}})
+    materials.find({akronim : akronim} , ((err, m)=>{
+        if(err) res.send(err)
+        materials.collection.insertOne(req.body.data.materijali)
+    }))
+    // res.send("OK")
 })
 
 router.route("/dodajLabVezbu").post((req, res)=>{
@@ -225,12 +246,13 @@ router.route("/uploadMultiple").post(upload.array("files" , 10), function(req, r
   })
 
 
-  router.route("/uploads/:folder/:fileName").get((req, res)=>{
+  router.route("/uploads/:folder/:subFolder/:fileName").get((req, res)=>{
     const testFolder = './uploads';
     const folder = req.params.folder;
     const fileName = req.params.fileName;
+    const subFolder = req.params.subFolder;
     console.log(folder)
-    const path = './uploads/' + folder + '/' + fileName;
+    const path = './uploads/' + folder + '/' + subFolder+ '/' + fileName;
     console.log(path)
     if (fs.existsSync(path)) {
         res.contentType("application/pdf");
@@ -242,12 +264,13 @@ router.route("/uploadMultiple").post(upload.array("files" , 10), function(req, r
     }
   })
 
-  router.route("/download/:folder/:fileName").get((req, res)=>{
+  router.route("/download/:folder/:subFolder/:fileName").get((req, res)=>{
     const testFolder = './uploads';
     const folder = req.params.folder;
     const fileName = req.params.fileName;
+    const subFolder = req.params.subFolder;
     console.log(folder)
-    const path = './uploads/' + folder + '/' + fileName;
+    const path = './uploads/' + folder + '/' + subFolder +'/' + fileName;
     console.log(path)
     if (fs.existsSync(path)) {
         res.contentType("application/pdf");
@@ -262,6 +285,7 @@ router.route("/uploadMultiple").post(upload.array("files" , 10), function(req, r
 
   router.route('/getPlan/:id').get((req,res)=>{
     const param = req.params.id;
+    console.log("Get plan param " + param)
     plan.find( {'nastavnici.predavac': {​​​​$in : [param]}​​​​}, ((err,pl)=>{
         if(err) console.log(err);
         else res.json(pl);
@@ -372,6 +396,8 @@ router.route('/kreirajPlan').post((req, res)=>{
          plan.collection.insertOne(data);
          res.send("OK")
      }))
+
+    
   
 })
 router.route('/kreirajPredmet').post((req, res)=>{

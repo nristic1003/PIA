@@ -75,7 +75,8 @@ export class AdminComponent implements OnInit {
       "site" : this.site,
       "status" : "aktivan",
       "contact" : this.contact,
-      "type" : "z"
+      "type" : "z",
+      "courses" : []
     }
     console.log(data);
      this.service.dodajProfesora(data).subscribe((a:Response)=>{
@@ -94,7 +95,8 @@ export class AdminComponent implements OnInit {
         "fondPredavanja" : this.fondPredavanja,
         "fondVezbe" : this.fondVezbe,
         "ESPB" : this.ESPB,
-        "naziv":this.naziv
+        "naziv":this.naziv,
+        "nastavnik" : []
       }
       this.service.kreirajPredmet(data).subscribe((a:any)=>{
        
@@ -107,6 +109,8 @@ export class AdminComponent implements OnInit {
   {
       let grupa = []
      let  nastavnici = []
+
+
       let i = 1;
       for( let index of this.naPredmetu )
       {
@@ -117,16 +121,44 @@ export class AdminComponent implements OnInit {
       }
 
 
-      console.log(nastavnici)
+      let materials = {
+        "matPred" : [],
+        "matVezbe" : [],
+        "ispitnaPitanja" : [],
+         "matLaboratorija" : [],
+         "akronim" : this.akronim
+     }
+ 
+
+      //kuresevi
+     let d = {
+       "profesori" : this.naPredmetu,
+       "akronim" : this.akronim,
+        "nastavnici" : nastavnici,
+        "materijali" : materials
+     }
+
+     this.service.dodajKurseveProfesoru(d).subscribe((a:any)=>{
+
+     })
+
+
+      // console.log(nastavnici)
       let data = {
         "nastavnici" : nastavnici,
         "akronim"  : this.akronim,
         "grupa" : grupa,
-        "naziv" : this.naziv
+        "naziv" : this.naziv,
+      
       }
+
+      
       this.service.kreirajPlan(data).subscribe((a:any)=>{
 
       })
+
+
+  
       
   }
 

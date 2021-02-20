@@ -13,7 +13,7 @@ let Courses = new Schema({
         type: String
     },
     nastavnik:{
-        type: String
+        type: Array
     },
     
     akronim:{

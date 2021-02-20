@@ -2,10 +2,10 @@ export class Courses{
     naziv:string;
     semestar:number;
     katedra:string;
-    nastavnik:string;
+    nastavnik:Array<Object>;
     akronim:string;
     tip:string;
-    fondPred:number;
+    fondPredavanja:number;
     fondVezbe:number;
     ESPB:number;
     terPred:string;

@@ -1,16 +1,22 @@
 <div class="container">
     <mat-tab-group dynamicHeight>
         <mat-tab label="Obavestenja">
-             <table class="table">
+          <h2 style="margin-top: 50px">Obavestenja </h2>
+         
+             <table class="table table-bordered">
                  <tr *ngFor= 'let o of obavestenja'>
                     <td>
-                        <h4>{{o.naziv}}</h4>
-                        <p>{{o.tekst}}</p>
+                        <h3>{{o.naziv}}</h3>
+                        <p style="font-size: 16px;"> {{o.tekst}}</p> <br/>
+                        <span *ngFor='let n of o.nazivFajla'> <a class="btn btn-link" href="http://localhost:4000/uploads/{{predmet.akronim}}/{{n}}" >Link</a> </span> &nbsp;
+                        
                     </td>
                  </tr>
              </table>
         </mat-tab>
         <mat-tab label="Informacije o predmetu"> 
+          <h2 style="margin-top: 50px">Informacije o predmetu </h2>
+          <hr>
             <table class="table table-bordered table-striped "> 
                 <thead>
                   <tr>
@@ -34,21 +40,22 @@
                   </tr>
                   <tr>
                     <th scope="row">Fond</th>
-                    <td>{{predmet.fondPred}} + {{predmet.fondVezbe}}</td>
+                    <td>{{predmet.fondPredavanja + predmet.fondVezbe}}</td>
                     <th scope="row">ESPB</th>
                     <td>{{predmet.ESPB}}</td>
                     
                   </tr>
                   <tr>
                     <th scope="row">Termin Predavanja</th>
-                    <td>{{predmet.terPred}}</td>
+                    <td>{{predmet.terPred |  date:'medium'}}</td>
                     <th scope="row">Termin Vezbi</th>
-                    <td>{{predmet.terVezbe}}</td>
+                    <td>{{predmet.terVezbe |  date:'medium'}}</td>
                     
                   </tr>
                   <tr>
                     <th scope="row">Nastavnik</th>
-                    <td colspan="3"><a [routerLink]="['/prikaz-zaposlenog', predmet.nastavnik]">{{predmet.nastIme}}</a></td> 
+
+                    <td colspan="3"><span *ngFor='let n of predmet.nastavnik'><a [routerLink]="['/prikaz-zaposlenog', n.predavac]">{{n.predavac}}</a></span></td> 
                   </tr>
                   <tr>
                     <th scope="row">Propozicije</th>
@@ -64,7 +71,8 @@
         
         <mat-tab label="Predavanja"> 
           <div *ngIf = 'podaci.matPred; else loggedOut'>
-            <h2>Materijali Predavanja</h2>
+            <h2 style="margin-top: 50px">Predavanja</h2>
+            <hr>
             <table class="table table-striped table-bordered">
               <tr>
                   <td>Fajl</td>
@@ -76,12 +84,12 @@
               </tr> 
           
                   <tr *ngFor = 'let p of podaci.matPred'>
-                      <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/{{p.naziv}}" >{{p.naziv}}</a></td>
+                      <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/Predavanja/{{p.naziv}}" >{{p.naziv}}</a></td>
                       <td> {{p.type}}</td>
                       <td> {{p.nastavnik}}</td>
                       <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>              
                       <td>{{p.size}}</td>
-                      <td><a mat-button href="http://localhost:4000/download/{{predmet.akronim}}/{{p.naziv}}" target="_blank">Download</a></td>
+                      <td><a mat-button href="http://localhost:4000/download/{{predmet.akronim}}/Predavanja/{{p.naziv}}" target="_blank">Download</a></td>
                   </tr>
               
 
@@ -89,13 +97,15 @@
         </div>
 
         <ng-template #loggedOut>
-         <div> <span>Nema objavljenih materijala za ovaj predmet</span></div>
+         <div>  <h2 style="margin-top: 50px">Nema objavljenih materijala </h2>
+          <hr></div>
         </ng-template>
         </mat-tab>
 
         <mat-tab label="Vezbe"> 
           <div *ngIf = 'podaci.matVezbe?.length > 0; else matVezbe'>
-            <h2>Materijali Vezbe</h2>
+            <h2 style="margin-top: 50px">Vezbe </h2>
+            <hr>
             <table class="table table-striped table-bordered">
               <tr>
                   <td>Fajl</td>
@@ -107,12 +117,12 @@
               </tr> 
           
                   <tr *ngFor = 'let p of podaci.matVezbe'>
-                      <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/{{p.naziv}}" >{{p.naziv}}</a></td>
+                      <td> Vezbe:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/Vezbe/{{p.naziv}}" >{{p.naziv}}</a></td>
                       <td> {{p.type}}</td>
                       <td> {{p.nastavnik}}</td>
                       <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
                       <td>{{p.size}}</td>
-                      <td><a mat-button href="http://localhost:4000/download/{{predmet.akronim}}/{{p.naziv}}" target="_blank">Download</a></td>
+                      <td><a mat-button href="http://localhost:4000/download/{{predmet.akronim}}/Vezbe/{{p.naziv}}" target="_blank">Download</a></td>
                   </tr>
               
 
@@ -120,7 +130,8 @@
         </div>
 
         <ng-template #matVezbe>
-         <div> <span>Nema objavljenih materijala za ovaj predmet</span></div>
+         <div>  <h2 style="margin-top: 50px">Nema objavljenih materijala </h2>
+          <hr></div>
         </ng-template>
         </mat-tab>
 
@@ -129,7 +140,8 @@
           <mat-tab label="Ispitna pitanja"> 
             <div *ngIf = "predmet.ispitVidljiv; else ispitNedostupan">
                       <div *ngIf = 'podaci.ispitnaPitanja?.length > 0; else ispitna'>
-                        <h2>Materijali Vezbe</h2>
+                        <h2 style="margin-top: 50px">Materijali Ispit </h2>
+                        <hr>
                         <table class="table table-striped table-bordered">
                           <tr>
                               <td>Fajl</td>
@@ -142,12 +154,12 @@
                           </tr> 
                       
                               <tr *ngFor = 'let p of podaci.ispitnaPitanja'>
-                                  <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/{{p.naziv}}" >{{p.naziv}}</a></td>
+                                  <td> Ispit:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/{{p.naziv}}" >{{p.naziv}}</a></td>
                                   <td> {{p.type}}</td>
                                   <td> {{p.nastavnik}}</td>
                                   <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
                                   <td>{{p.size}}</td>
-                                  <td><a mat-button href="http://localhost:4000/download/{{predmet.akronim}}/{{p.naziv}}" target="_blank">Download</a></td>
+                                  <td><a mat-button href="http://localhost:4000/download/{{predmet.akronim}}/Ispit/{{p.naziv}}" target="_blank">Download</a></td>
                               </tr>
                           
 
@@ -155,11 +167,13 @@
                     </div>
 
                       <ng-template #ispitna>
-                      <div> <span>Nema objavljenih materijala za ovaj predmet</span></div>
+                      <div>  <h2 style="margin-top: 50px">Nema objavljenih materijala </h2>
+                        <hr></div>
                       </ng-template>
                 </div>
               <ng-template #ispitNedostupan>
-                 <div> <span>Materijali nisu dostupni</span></div>
+                 <div>  <h2 style="margin-top: 50px">Materijali nisu dostupni</h2>
+                  <hr></div>
               </ng-template>
           </mat-tab>
       
@@ -170,7 +184,8 @@
         <mat-tab label="Laboratorija"> 
           <div *ngIf = "predmet.labVidljiv; else labNedostupan">
               <div *ngIf = 'predmet.labPodaci?.length > 0; else lab'>
-                <h2>Laboratorijske vezbe</h2>
+                <h2 style="margin-top: 50px">Materijali laboratorija </h2>
+                 <hr>
                 <div *ngFor = 'let p of predmet.labPodaci'>
                     <table class="table table-striped table-bordered">
                         <tr>
@@ -206,13 +221,13 @@
                   </tr> 
               
                       <tr *ngFor = 'let p of podaci.matLaboratorija'>
-                          <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/{{p.naziv}}" >{{p.naziv}}</a></td>
+                          <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/Laboratorija/{{p.naziv}}" >{{p.naziv}}</a></td>
                           <td> {{p.type}}</td>
                           <td> {{p.nastavnik}}</td>
                           <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
                           <td> <input type="text" name = "p.redosled" [(ngModel)] = "p.redosled" /> </td>
                           <td>{{p.size}}</td>
-                          <td><a mat-button href="http://localhost:4000/download/{{predmet.akronim}}/{{p.naziv}}" target="_blank">Download</a></td>
+                          <td><a mat-button href="http://localhost:4000/download/{{predmet.akronim}}/Laboratorija/{{p.naziv}}" target="_blank">Download</a></td>
                       </tr>
                   
 
@@ -220,11 +235,13 @@
 
             </div>
             <ng-template #lab>
-              <div> <span>Nema objavljenih materijala za ovaj predmet</span></div>
+              <div>  <h2 style="margin-top: 50px">Nema objavljenih materijala</h2>
+                <hr></div>
             </ng-template>
           </div>
             <ng-template #labNedostupan>
-              <div> <span>Materijali nisu dostupni</span></div>
+              <div>  <h2 style="margin-top: 50px">Materijali nisu dostupni</h2>
+                <hr></div>
              </ng-template>
 
         </mat-tab>
@@ -232,9 +249,10 @@
         <mat-tab label="Projekat"> 
           <div *ngIf = "predmet.projekatVidljiv; else projekatNedostupan">
                   <div *ngIf = 'predmet.projekat?.length > 0; else projekat'>
-                    <h2>Projekat</h2>
+                    <h2 style="margin-top: 50px">Materijali projekat </h2>
+                    <hr>
                     <div *ngFor = 'let p of predmet.projekat'>
-                        <table>
+                        <table class="table table-bordered">
                             <tr>
                                 <td>Naziv vezbe</td>
                                 <td>Opis</td>
@@ -247,20 +265,48 @@
                             </tr>
                         </table>
                     </div>
+
+
+                    <table class="table table-striped table-bordered">
+                      <tr>
+                          <td>Fajl</td>
+                          <td>Ekstenzija</td>
+                          <td>Nastavnik</td>
+                          <td>Datum</td>
+                          <td>Redosled</td>
+                          <td>Velicina u KB</td>
+                          <td>Preuzimanje</td>
+                      </tr> 
+                  
+                          <tr *ngFor = 'let p of podaci.matProjekat'>
+                              <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/Projekat/{{p.naziv}}" >{{p.naziv}}</a></td>
+                              <td> {{p.type}}</td>
+                              <td> {{p.nastavnik}}</td>
+                              <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
+                              <td> <input type="text" name = "p.redosled" [(ngModel)] = "p.redosled" /> </td>
+                              <td>{{p.size}}</td>
+                              <td><a mat-button href="http://localhost:4000/download/{{predmet.akronim}}/Projekat/{{p.naziv}}" target="_blank">Download</a></td>
+                          </tr>
+                      
+    
+                  </table>
                 </div>
 
                 <ng-template #projekat>
-                <div> <span>Nema objavljenih materijala za ovaj predmet</span></div>
+                <div>  <h2 style="margin-top: 50px">Nema objavljenih materijala </h2>
+                  <hr></div>
                 </ng-template>
             </div>
           <ng-template #projekatNedostupan>
-              <div> <span>Materijali nisu dostupni</span></div>
+              <div>  <h2 style="margin-top: 50px">Materijali nisu dostupni </h2>
+                <hr></div>
            </ng-template>
         </mat-tab>
 
 
         <mat-tab label="Spisak"> 
-
+          <h2 style="margin-top: 50px">Spiskovi </h2>
+          <hr>
           <div *ngIf = 'potrebanFajl'>
             <form>
               <table class="table table-striped"> 
@@ -286,7 +332,7 @@
                 </tr>
                 <tr>
                   <td>
-                    {{s.termin | date}}
+                    {{s.termin | date : 'short'}}
                   </td>
                 </tr>
                 <tr>

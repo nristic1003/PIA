@@ -15,6 +15,8 @@ export class ZaposleniComponent implements OnInit {
   ngOnInit(): void {
     this.service.getZaposleni().subscribe((zap : Zaposleni[])=>{
       this.zaposleni = zap;
+
+      
     });
   }
 

@@ -17,15 +17,21 @@ export class ProfesorComponent implements OnInit {
 
   @ViewChild('fileInput' , {static:false}) fileInput : ElementRef;
   @ViewChild('fileInput2' , {static:false}) fileInput2 : ElementRef;
+  @ViewChild('fileInput3' , {static:false}) fileInput3 : ElementRef;
+  @ViewChild('fileInput4' , {static:false}) fileInput4 : ElementRef;
+  @ViewChild('fileInput5' , {static:false}) fileInput5 : ElementRef;
   @ViewChild('inputMultiple' , {static:false}) inputMultiple : ElementRef;
 
   ngOnInit(): void {
     let username =  localStorage.getItem('user');
     this.service.getPlan(username).subscribe((plan:Plan[])=>{
       this.myCourses = plan;
+      for (let index of this.myCourses)
+        console.log(index)
       this.todo(this.myCourses[0].akronim);
       this.dohvatiNastavnika(username);
-   
+      
+      
     })
 
 
@@ -45,17 +51,19 @@ export class ProfesorComponent implements OnInit {
 
   todo(value:String)
   {
-    console.log(value);
+    console.log( " Vrednost je: " +  value);
 
     this.service.getPredmetByAkronim(value).subscribe((cr:Courses)=>{
       this.predmet = cr;
+     console.log(this.predmet)
     })
     this.dohvatiMaterijale(value);
   }
 
   updatePodataka()
   {
-
+    console.log("Update predmeta")
+    console.log(this.predmet)
     this.service.updatePredmet(this.predmet).subscribe((c:any)=>{
 
     });
@@ -72,6 +80,7 @@ export class ProfesorComponent implements OnInit {
   {
     this.service.getMaterials(value).subscribe((m:Materials)=>{
      this.podaci = m;
+     console.log("My materials" +m )
     })
   }
 
@@ -101,6 +110,8 @@ export class ProfesorComponent implements OnInit {
         niz.push(index.name)
         formData.append("files" , index)
       }
+
+      formData.append("id" , this.predmet.akronim)
          
      let  date = Date.now().toString()
      console.log(date)
@@ -112,6 +123,7 @@ export class ProfesorComponent implements OnInit {
            "datum" : this.datumObjave,
            "nazivFajla" : niz,
            "kreator" : localStorage.getItem('user')
+           
          }
          
          
@@ -133,18 +145,43 @@ export class ProfesorComponent implements OnInit {
   onSubmit(event){
     console.log(event.target.value)
     let imageBlob;
-    if(event.target.value==="matProjekat")
+    let folder;
+    switch(event.target.value)
     {
-       imageBlob =this.fileInput2.nativeElement.files[0];
-    }else
-    {
-       imageBlob =this.fileInput.nativeElement.files[0];
+      case "matPred":{
+        imageBlob =this.fileInput3.nativeElement.files[0];
+        folder = "Predavanja"
+        break;
+      }
+      case "matVezbe":{
+        imageBlob =this.fileInput4.nativeElement.files[0];
+        folder = "Vezbe"
+        break;
+      }
+      case "ispitnaPitanja":{
+        imageBlob =this.fileInput5.nativeElement.files[0];
+        folder = "Ipit"
+        break;
+      }
+      case "matProjekat":{
+        imageBlob =this.fileInput2.nativeElement.files[0];
+        folder = "Projekat"
+        break;
+      }
+      case "matLaboratorija":{
+        imageBlob =this.fileInput.nativeElement.files[0];
+        folder = "Laboratorija"
+        break;
+      }
     }
+
+
     const formData = new FormData();
     formData.set("file" , imageBlob);
     formData.set("id" , this.predmet.akronim);
     formData.set("nastavnik" , localStorage.getItem('user'));
     formData.set("arr" , event.target.value);
+    formData.set("folderName", folder);
 
   this.service.sendDataToServer(formData).subscribe(
     (res) => console.log(res),
@@ -206,7 +243,8 @@ createList()
     "mesto" : this.mestoOdrzavanja,
     "limit" : this.limit,
     "potrebanFajl" :this.potrebanFajl,
-    "studenti" : []
+    "studenti" : [],
+    "trenutniBroj" : 0
   }
 
   this.service.createList(data).subscribe((a:any)=>{

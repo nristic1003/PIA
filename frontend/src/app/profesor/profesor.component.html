@@ -25,19 +25,36 @@
                                 <tr>
                                     <td><b>Status predmeta:</b></td>
                                     <td>
-                                        <select>    
+                                        <select class="form-control" name="predmet.tip" [(ngModel)] ="predmet.tip">    
                                             <option>izborni</option>
                                             <option>obavezni</option>
                                         </select>
                                     </td>
                                     <td><b>Sifra predmeta</b></td>
-                                    <td><input name="predmet.akronim" [(ngModel)] = "predmet.akronim"  type="text" placeholder="sifra predmeta" /></td>
+                                    <td><input name="{{predmet.akronim}}" [(ngModel)] = "predmet.akronim"  type="text" placeholder="sifra predmeta" /></td>
                                 </tr>
                                 <tr>
                                     <td><b>ESPB</b></td>
                                     <td >  <input name="predmet.ESPB" [(ngModel)] = "predmet.ESPB" value="{{predmet.ESPB}}" type="number" /></td>
                                     <td><b>Lab vezbe iz predmeta:</b></td>
-                                    <td >  <input name="predmet.lab" [(ngModel)] = "predmet.lab" value="{{predmet.lab}}" type="text" /></td>
+                                    <td >  
+                                        <select class="form-control"  name="predmet.lab" [(ngModel)] = "predmet.lab">
+                                            <option value="DA">DA</option>
+                                            <option value="NE">NE</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Vidljivost materijala</b></td>
+                                    <td><input type="checkbox" class="form-control" name="predmet.ispitVidljiv" [(ngModel)]='predmet.ispitVidljiv'/> Ispit</td>
+                                    <td><input type="checkbox" class="form-control" name="predmet.labVidljiv" [(ngModel)]='predmet.labVidljiv'/> Lab</td>
+                                    <td><input type="checkbox" class="form-control" name="predmet.projekatVidljiv" [(ngModel)]='predmet.projekatVidljiv'/> Projekat</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Termin Predavanja: </b></td>
+                                    <td >  <input name="predmet.terPred" [(ngModel)] = "predmet.terPred"  type="datetime-local" /></td>
+                                    <td><b>Termin vezbe:</b></td>
+                                    <td><input name="predmet.terVezbe" [(ngModel)] = "predmet.terVezbe"  type="datetime-local" /></td>
                                 </tr>
                                 <tr>
                                     <td colspan="4"><b> Uslov</b></td>
@@ -70,6 +87,16 @@
                         <td>
                             <mat-tab label = "Predavanja">
                                 <form>
+
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <td><input type="file" #fileInput3  /></td>
+                                            <td> <button class="btn btn-primary" name="Predavanja"  value="matPred" type="submit"  (click)="onSubmit($event)">Upload</button></td>
+                                        </tr>
+                                    </table>
+
+
+                                
                                     <table class="table table-striped table-bordered">
                                         <tr>
                                             <td>Fajl</td>
@@ -82,7 +109,7 @@
                                         </tr> 
                                     
                                             <tr *ngFor = 'let p of podaci.matPred'>
-                                                <td> Predavanje:<br /><a href="http://localhost:4000/uploads/{{predmet.akronim}}/{{p.naziv}}" >{{p.naziv}}</a></td>
+                                                <td> Predavanje:<br /><a href="http://localhost:4000/uploads/{{predmet.akronim}}/Predavanja/{{p.naziv}}" >{{p.naziv}}</a></td>
                                                 <td> {{p.type}}</td>
                                                 <td> {{p.nastavnik}}</td>
                                                 <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
@@ -100,6 +127,15 @@
                         <td>
                             <mat-tab label = "Vezbe">
                                 <form>
+                                    
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <td><input type="file" #fileInput4  /></td>
+                                            <td> <button class="btn btn-primary"  value="matVezbe" type="submit"  (click)="onSubmit($event)">Upload</button></td>
+                                        </tr>
+                                    </table>
+
+
                                     <table class="table table-striped table-bordered">
                                         <tr>
                                             <td>Fajl</td>
@@ -112,7 +148,7 @@
                                         </tr> 
                                     
                                             <tr *ngFor = 'let p of podaci.matVezbe'>
-                                                <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/{{p.naziv}}" >{{p.naziv}}</a></td>
+                                                <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/Vezbe/{{p.naziv}}" >{{p.naziv}}</a></td>
                                                 <td> {{p.type}}</td>
                                                 <td> {{p.nastavnik}}</td>
                                                 <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
@@ -130,6 +166,13 @@
                         <td>
                             <mat-tab  label = "Ispitna pitanja">
                                 <form>
+                                    
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <td><input type="file" #fileInput5  /></td>
+                                            <td> <button class="btn btn-primary"  value="ispitnaPitanja" type="submit"  (click)="onSubmit($event)">Upload</button></td>
+                                        </tr>
+                                    </table>
                                     <table class="table table-striped table-bordered">
                                         <tr>
                                             <td>Fajl</td>
@@ -142,7 +185,7 @@
                                         </tr> 
                                     
                                             <tr *ngFor = 'let p of podaci.ispitnaPitanja'>
-                                                <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/{{p.naziv}}" >{{p.naziv}}</a></td>
+                                                <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/Ispit/{{p.naziv}}" >{{p.naziv}}</a></td>
                                                 <td> {{p.type}}</td>
                                                 <td> {{p.nastavnik}}</td>
                                                 <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
@@ -208,7 +251,7 @@
                                             </tr> 
                                         
                                                 <tr *ngFor = 'let p of podaci.matLaboratorija'>
-                                                    <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/{{p.naziv}}" >{{p.naziv}}</a></td>
+                                                    <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/Laboratorija/{{p.naziv}}" >{{p.naziv}}</a></td>
                                                     <td> {{p.type}}</td>
                                                     <td> {{p.nastavnik}}</td>
                                                     <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
@@ -279,7 +322,7 @@
                                             </tr> 
                                         
                                                 <tr *ngFor = 'let p of podaci.matProjekat'>
-                                                    <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/{{p.naziv}}" >{{p.naziv}}</a></td>
+                                                    <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/Projekat/{{p.naziv}}" >{{p.naziv}}</a></td>
                                                     <td> {{p.type}}</td>
                                                     <td> {{p.nastavnik}}</td>
                                                     <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>

@@ -50,6 +50,14 @@ export class AdminService {
     return this.http.post(`${this.uri}/kreirajPlan` , d)
   }
 
+  dodajKurseveProfesoru(data:any)
+  { 
+    let d = {
+      "data" : data
+    }
+    return this.http.post(`${this.uri}/dodajKurseveProfesoru` , d)
+  }
+
   kreirajPredmet(data : any)
   {
     let d = {
