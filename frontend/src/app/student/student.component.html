@@ -1,1 +1,21 @@
-<p>student works!</p>
+<div class="container">
+    <h2 style="margin-top: 50px;">Moji predmeti</h2>
+    <hr>
+
+    <table class="table table-striped table-bordered">
+        <tr>
+            <td>#</td>
+            <td>Sifra</td>
+            <td>Naziv</td>
+        </tr>
+        <tr *ngFor = 'let p of predmeti; let i=index'>
+            <td>{{i}}</td>
+            <td>{{p.akronim}}</td>
+            
+                <td>
+                    <a class="nav-link" [routerLink]="['/prikaz-predmeta' ,p.akronim]">{{p.naziv}}</a> 
+                </td>
+           
+        </tr>
+    </table>
+</div>

@@ -18,14 +18,35 @@ export class HeaderComponent implements OnInit {
 
  userLoggedIn:boolean = false;
 
+
+ checkStudent()
+ {
+  let data = JSON.parse(localStorage.getItem('user'));
+  if(data==null || (data.type!='d' && data!='p' && data!='m')) return false;
+  return true
+ }
+ checkAdmin()
+ {
+  let data = JSON.parse(localStorage.getItem('user'));
+  if(data==null || data.type!='a') return false;
+  return true
+ }
+
  checkLogged()
  {
      return this.service.isLoggedIn();
  }
 
+ checkType()
+ {
+    let data = JSON.parse(localStorage.getItem('user'));
+    if(data==null || data.type!='z') return false;
+    return true
+ }
+
  getUsername()
  {
-   return localStorage.getItem('user');
+   return  JSON.parse(localStorage.getItem('user')).username;
  }
 
  logout()

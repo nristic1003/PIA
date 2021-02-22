@@ -28,6 +28,7 @@ import { PromenaLozinkeComponent } from './promena-lozinke/promena-lozinke.compo
 import { AdminComponent } from './admin/admin.component';
 import { IstrazivanjaComponent } from './istrazivanja/istrazivanja.component';
 import { ProjektiKatedraComponent } from './projekti-katedra/projekti-katedra.component';
+import { AzuriranjeVestiComponent } from './azuriranje-vesti/azuriranje-vesti.component';
 
 
 
@@ -53,7 +54,8 @@ import { ProjektiKatedraComponent } from './projekti-katedra/projekti-katedra.co
     PromenaLozinkeComponent,
     AdminComponent,
     IstrazivanjaComponent,
-    ProjektiKatedraComponent
+    ProjektiKatedraComponent,
+    AzuriranjeVestiComponent
   ],
   imports: [
     BrowserModule,

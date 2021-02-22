@@ -1,0 +1,43 @@
+<div class="container">
+    <h2 style="margin-top: 50px;">Azuriranje vesti</h2>
+    <hr>
+<table class="table table-bordered">
+                        
+    <tr>
+        <td><h3>Naslov:</h3></td>
+        <td><input  class="form-control" type="text" name="obavestenje.naziv" [(ngModel)] = "obavestenje.naziv"  /> </td>
+    </tr>
+    <tr>
+        <td colspan="2"><span>Tekst vesti </span></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <textarea class="form-control rounded-1"  rows="5" name="obavestenje.tekstVesti" [(ngModel)] = 'obavestenje.tekst' ></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td>Izaberite predmete:</td>
+        <td>
+            <lable *ngFor = 'let p of obavestenje.predmeti'>
+                <input (change)='checkData($event)' type="checkbox"  name="{{p}}" value="{{p}}">
+                {{p}} &nbsp;
+            </lable>
+        </td>
+    </tr>
+    <tr>
+        <td>Izaberite datum:</td>
+        <td> 
+            <input type="date" class="form-control" name="obavestenje.datum" [(ngModel)] = 'obavestenje.datum'  />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Izaberite fajlove:
+        </td>
+        <input type="file" multiple #inputMultiple >
+    </tr>
+    <tr>
+        <td colspan="2"><button class="btn btn-primary" (click)='azuriraj()'>Upload</button></td>
+    </tr>
+</table>
+</div>

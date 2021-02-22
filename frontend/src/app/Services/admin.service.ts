@@ -35,6 +35,10 @@ export class AdminService {
   {
     return this.http.get(`${this.uri}/getZaposleni`)
   }
+  dohvatiSvePredmete()
+  {
+    return this.http.get(`${this.uri}/dohvatiSvePredmete`)
+  }
   obrisiStudenta( username : string)
   {
     let data = {
@@ -64,6 +68,13 @@ export class AdminService {
       "data" : data
     }
     return this.http.post(`${this.uri}/kreirajPredmet` , d)
+  }
+  studentPredmet(data)
+  {
+    let d = {
+      "data" : data
+    }
+    return this.http.post(`${this.uri}/studentPredmet` , d)
   }
 
 

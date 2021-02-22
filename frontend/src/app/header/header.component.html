@@ -46,7 +46,13 @@
             <a class="nav-link" routerLink="/kontakt">Kontakt</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/profesor">Profesor</a>
+            <a *ngIf='checkType()' class="nav-link" routerLink="/profesor">Profesor</a>
+          </li>
+          <li class="nav-item">
+            <a *ngIf='checkAdmin()' class="nav-link" routerLink="/admin">Admin</a>
+          </li>
+          <li class="nav-item">
+            <a *ngIf='checkStudent()' class="nav-link" routerLink="/student">Student</a>
           </li>
 
       </ul>

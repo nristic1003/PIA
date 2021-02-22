@@ -1,6 +1,8 @@
+import { Predavanja } from "./predavanja.model";
+
 export class Materials{
     akronim:string;
-    matPred: Array<Object>;
+    matPred: Array<Predavanja>;
     matVezbe: Array<Object>;
     ispitnaPitanja: Array<Object>;
     matLaboratorija: Array<Object>;

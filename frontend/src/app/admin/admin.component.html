@@ -6,6 +6,9 @@
             <h1 align="center">Dodavanje studenta</h1>
             <div class="row justify-content-center">
                 <div class="col-xl-4">
+                    <div class="form-group">
+                        <label>{{message}}</label>       
+                    </div>
                     <form>
                       
                         <div class="form-group">
@@ -25,11 +28,6 @@
                                 <option value="p">Doktorske</option>
                             </select>
                           
-                        </div>
-                        <div class="form-group">
-                            <label >Korisnicko ime: </label>
-                            <input type="text" placeholder="U obliku:  piGGGGBBx@student.etf.rs" name="username" class="form-control" [(ngModel)]="username" />
-                       
                         </div>
                         <div class="form-group">
                             <label  class="control-label">Sifra</label>
@@ -216,6 +214,42 @@
                     </form>
                 </div>
             </div>
+        </mat-tab>
+
+        <mat-tab label = "Studenti predmeti">
+            <h1 style="margin-top: 50px;" align="center">Studenti predmeti</h1>
+           <hr>
+
+           <table class="table table-bordered table-striped">
+            <tr>
+                <td>#</td>
+                <td>Korisnicko ime</td>
+                <td>Izaberi</td>
+            </tr>
+            <tbody>
+
+            <tr *ngFor = 'let s of students; let i=index'>
+                <td>{{i+1}}</td>
+                <td>{{s.username}}</td>
+                <td><input type="checkbox" (change)='checkData($event)'  value="{{s.username}}" class="form-control" ></td>
+
+            </tr>
+            </tbody>
+
+           </table>
+
+           <div class="form-group">
+            <label  class="control-label">Nastavnici</label>
+           <select class="form-control" name="izabranPredmet" multiple [(ngModel)]='izabranPredmet'>
+                <option *ngFor = 'let c of sviPredmeti' value="{{c.akronim}}" >{{c.akronim}}</option>
+           </select>
+          
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" (click) = 'studentPredmet()' >Posalji</button>
+        </div>
+
+
         </mat-tab>
 
 

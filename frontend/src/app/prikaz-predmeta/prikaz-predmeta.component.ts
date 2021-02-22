@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Courses } from '../model/courses.model';
 import { Materials } from '../model/materials.model';
+import { Obavestenje } from '../model/obavestenje';
 import { StudentsList } from '../model/studentsList.model';
 import { GetDataService } from '../Services/get-data.service';
 
@@ -19,6 +20,12 @@ export class PrikazPredmetaComponent implements OnInit {
  @ViewChild('fileInput' , {static:false}) fileInput : ElementRef;
 
   ngOnInit(): void {
+
+    
+
+
+
+
     this.sub = this.route.params.subscribe(params => {
       this.id = params['id']; // (+) converts string 'id' to a number
     
@@ -26,6 +33,13 @@ export class PrikazPredmetaComponent implements OnInit {
         this.predmet = zap;
        console.log(this.predmet)
         this.obavestenja = this.predmet.obavestenja;
+        this.obavestenja.sort((a, b)=>{
+          let d1 =  Number.parseInt(a.id)
+          let d2 =  Number.parseInt(b.id)
+          return d2- d1;
+         
+        })
+        
       })
       this.dohvatiPredavanja();
       this.dohvatiSpisakStudenata();
@@ -33,7 +47,13 @@ export class PrikazPredmetaComponent implements OnInit {
    });
   }
 
-
+  checkDate( o : Obavestenje)
+  {
+      let d1 = new Date(o.datum).getDate();
+      let dateNow = new Date().getDate();
+      if(dateNow - d1 > 7) return false
+      return true
+  }
   dohvatiSpisakStudenata()
   {
     this.serviceGet.dohvatiSpisakStudenata(this.id).subscribe((s:StudentsList[])=>{
@@ -54,12 +74,13 @@ export class PrikazPredmetaComponent implements OnInit {
   {
     this.serviceGet.getMaterials(this.id).subscribe((m:Materials)=>{
      this.podaci = m;
+     this.podaci.matPred.sort((a,b)=> a.redosled-b.redosled)
     })
   }
   dodajMe(event)
   {
     let naziv = event.target.value;
-    let student = localStorage.getItem('user');
+    let student = JSON.parse(localStorage.getItem('user')).username;
     console.log("Naziv je  : " + naziv)
     console.log("Student je "  + student)
 
@@ -97,5 +118,5 @@ export class PrikazPredmetaComponent implements OnInit {
   potrebanFajl : boolean
 
 
-  obavestenja:Array<Object>;
+  obavestenja:Array<Obavestenje>;
 }

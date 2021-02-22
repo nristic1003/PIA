@@ -91,9 +91,10 @@ uploadMultiple(formData :FormData)
   var id;
   var folder;
    id = formData.get('id')
+   console.log("hello")
    
-  const headers = { 'akronim':id, 'folderName' : folder };
- return  this.http.post<any>(`${this.uri}/uploadMultiple`, formData, {headers : headers});
+  // const headers = { 'akronim':id, 'folderName' : folder };
+ return  this.http.post<any>(`${this.uri}/uploadMultiple`, formData);
 }
 
 dodajObavestenja(d:any, niz:any)
@@ -103,6 +104,22 @@ dodajObavestenja(d:any, niz:any)
     "niz" : niz
   }
   return this.http.post(`${this.uri}/dodajObavestenja` , data );
+}
+updateObavestenja(d:any, niz:any)
+{
+  let data = {
+    "data" : d,
+    "niz" : niz
+  }
+  return this.http.post(`${this.uri}/updateObavestenja` , data );
+}
+
+promeniRedosled(d:any)
+{
+  let data = {
+    "data" : d,
+  }
+  return this.http.post(`${this.uri}/promeniRedosled` , data );
 }
 
 
@@ -138,6 +155,19 @@ dodajProjekatVezbu(akronim : string , d:any)
 getMaterials(data:String)
 {
   return this.http.get(`${this.uri}/getMaterials/${data}` );
+}
+
+getMojePredmete(data:String)
+{
+  return this.http.get(`${this.uri}/getMojePredmete/${data}` );
+}
+getMyCourses(data)
+{
+  let d = 
+  {
+    "data" : data
+  }
+  return this.http.post(`${this.uri}/getMyCourses` , d );
 }
 
 getPlan(data:String)

@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Courses } from '../model/courses.model';
 import { User } from '../model/user.model';
 import { Zaposleni } from '../model/zaposleni.model';
 import { AdminService } from '../Services/admin.service';
@@ -18,14 +19,27 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
 
+    let data = JSON.parse(localStorage.getItem('user'));
+    if(data===null || data.type!="a")
+    {
+      console.log("usao")
+      this.router.navigate(['/pocetna'])
+    }
+      
+
+
     this.service.dohvatiStudente().subscribe((s:User[])=>{
       this.students = s;
-      console.log(s)
+     
     })
 
     this.service.dohvatiZaposlene().subscribe((z:Zaposleni[])=>{
       this.zaposleni = z;
-      console.log(z)
+      
+    })
+
+    this.service.dohvatiSvePredmete().subscribe((a:Courses[])=>{
+      this.sviPredmeti = a;
     })
 
 
@@ -42,9 +56,35 @@ export class AdminComponent implements OnInit {
 
   dodajStudenta()
   {
+
+    var reg = new RegExp('^[1-2][0-9]{3}[\/][0-9]{4}$')
+
+    let flag = reg.test(this.indexNumber)
+    if(!flag){
+      this.message = "Index nije u ispravnom obliku";
+      return
+    }
+    console.log(this.lastname)
+    if(this.name== undefined || this.lastname==undefined || this.password==undefined || this.type==undefined) {
+      this.message = "Svi podaci moraju biti uneti";
+      return
+    }
+
+    
+
+    let username = this.lastname.charAt(0) + this.name.charAt(0) + 
+    this.indexNumber.charAt(2)+this.indexNumber.charAt(3)+ +this.indexNumber.charAt(5)+ +this.indexNumber.charAt(6)+ +this.indexNumber.charAt(7)+
+    +this.indexNumber.charAt(8)
+    + this.type + "@student.etf.rs"
+
+    username = username.toLowerCase()
+    console.log(username)
+
+
+
     console.log(this.username)
     let data = {
-      "username" : this.username,
+      "username" : username,
       "name" : this.name,
       "lastname" : this.lastname,
       "password" : this.password,
@@ -162,6 +202,63 @@ export class AdminComponent implements OnInit {
       
   }
 
+  checkData(event)
+{
+ 
+  if(event.target.checked)
+  { 
+    this.nizStudenata.push(event.target.value)
+    console.log(" Pushed " + event.target.value)
+
+  }else
+  {
+    this.nizStudenata.forEach((element,index)=>{
+      if(element==event.target.value) {
+        this.nizStudenata.splice(index,1);
+        console.log(" Poped at index " + index)
+      }
+   });
+  
+  }
+
+}
+
+studentPredmet()
+{
+  console.log(this.izabranPredmet)
+  console.log(this.nizStudenata)
+
+  let dataArray = []
+
+  for(let predmet of this.izabranPredmet )
+  {
+    for(let student of this.nizStudenata )
+    {
+      let d = {
+        "username" : student,
+        "akronim" : predmet
+      }
+
+      dataArray.push(d)
+    }
+  }
+
+  console.log(dataArray)
+
+  this.service.studentPredmet(dataArray).subscribe((a:any)=>{
+    
+  })
+
+
+}
+
+sviPredmeti:Courses[];
+izabranPredmet:string[]
+
+
+nizStudenata = []
+
+message:string;
 
 username:string;
 name:string;

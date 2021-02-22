@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Courses } from '../model/courses.model';
 import { Materials } from '../model/materials.model';
+import { Obavestenje } from '../model/obavestenje';
 import { Plan } from '../model/plan.model';
 import { StudentsList } from '../model/studentsList.model';
 import { Zaposleni } from '../model/zaposleni.model';
@@ -13,7 +15,7 @@ import { GetDataService } from '../Services/get-data.service';
 })
 export class ProfesorComponent implements OnInit {
 
-  constructor(private service:GetDataService) { }
+  constructor(private service:GetDataService, private router : Router) { }
 
   @ViewChild('fileInput' , {static:false}) fileInput : ElementRef;
   @ViewChild('fileInput2' , {static:false}) fileInput2 : ElementRef;
@@ -23,13 +25,22 @@ export class ProfesorComponent implements OnInit {
   @ViewChild('inputMultiple' , {static:false}) inputMultiple : ElementRef;
 
   ngOnInit(): void {
-    let username =  localStorage.getItem('user');
-    this.service.getPlan(username).subscribe((plan:Plan[])=>{
+    let user =  JSON.parse(localStorage.getItem('user'))
+
+    if(user===null || user.type!="z")
+    {
+      console.log("usao")
+      this.router.navigate(['/pocetna'])
+    }
+
+    this.profesor =  user.username
+
+    this.service.getPlan(this.profesor).subscribe((plan:Plan[])=>{
       this.myCourses = plan;
       for (let index of this.myCourses)
         console.log(index)
       this.todo(this.myCourses[0].akronim);
-      this.dohvatiNastavnika(username);
+      this.dohvatiNastavnika(this.profesor);
       
       
     })
@@ -80,6 +91,7 @@ export class ProfesorComponent implements OnInit {
   {
     this.service.getMaterials(value).subscribe((m:Materials)=>{
      this.podaci = m;
+     this.podaci.matPred.sort((a,b)=> a.redosled-b.redosled)
      console.log("My materials" +m )
     })
   }
@@ -122,24 +134,30 @@ export class ProfesorComponent implements OnInit {
            "tekst" : this.tekstVesti,
            "datum" : this.datumObjave,
            "nazivFajla" : niz,
-           "kreator" : localStorage.getItem('user')
+           "kreator" : JSON.parse(localStorage.getItem('user')).username,
+           "predmeti" : this.niz
            
          }
          
-         
-      this.service.uploadMultiple(formData).subscribe((r:any)=>{
-        console.log(r)
-      }) 
+
+         this.service.uploadMultiple(formData).subscribe((r:any)=>{
+
+        }) 
 
          this.service.dodajObavestenja(data, this.niz).subscribe((s:any)=>{
-
-         })
+          
+    
+        })
+         
+   
+      
 
   }
 
-  azurirajVest(event)
+  azurirajVest(o : Obavestenje)
   {
-
+      localStorage.setItem("obavestenje" , JSON.stringify(o))
+      this.router.navigate(['azuriranje-vesti'])
   }
 
   onSubmit(event){
@@ -179,7 +197,7 @@ export class ProfesorComponent implements OnInit {
     const formData = new FormData();
     formData.set("file" , imageBlob);
     formData.set("id" , this.predmet.akronim);
-    formData.set("nastavnik" , localStorage.getItem('user'));
+    formData.set("nastavnik" , JSON.parse(localStorage.getItem('user')).username),
     formData.set("arr" , event.target.value);
     formData.set("folderName", folder);
 
@@ -275,9 +293,15 @@ checkData(event)
   
   }
 
-
- //uradi ovo
 }
+
+
+redosled(){
+  this.service.promeniRedosled(this.podaci).subscribe((a:any)=>{
+
+  })
+}
+
   myCourses:Plan[];
   predmet: Courses;
   nastavnik:Zaposleni;
@@ -292,7 +316,7 @@ checkData(event)
   vrednostProjekat:number;
   tekstProjekat:string
   niz = [];
-  profesor = localStorage.getItem('user');
+  profesor;
   spisak:StudentsList;
 
   nazivSpiska:string;

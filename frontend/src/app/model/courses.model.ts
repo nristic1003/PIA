@@ -1,3 +1,5 @@
+import { Obavestenje } from "./obavestenje";
+
 export class Courses{
     naziv:string;
     semestar:number;
@@ -16,7 +18,7 @@ export class Courses{
     labVidljiv:boolean;
     projekatVidljiv:boolean;
     propozicije:string;
-    obavestenja:Array<Object>;
+    obavestenja:Array<Obavestenje>;
     nastIme:String;
     labPodaci:Array<Object>;
     projekat:Array<Object>;

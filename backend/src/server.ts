@@ -10,6 +10,7 @@ import materials from './model/materials';
 import plan from './model/plan';
 import e from 'express';
 import studentsList from './model/studentsList';
+import studentCourse from './model/studentCourse';
 
 
 
@@ -37,11 +38,16 @@ const storage = multer.diskStorage({
     destination: function (req: any, file: any, cb: (arg0: any, arg1: string) => void) {
         const data = req.header("akronim");
         const folder = req.header("folderName")
-        console.log(folder)
-        const directory = `./uploads/${data}/${folder}`
+        let subDirectory;
+     if(folder) {
+         subDirectory = `./uploads/${data}/${folder}`
+
+     }else subDirectory = `./uploads/zajednicki`
+     
+        const directory = subDirectory
         fs.exists(directory, (exist: any) =>{
             if(!exist){
-                return fs.mkdir(directory , (error: any) =>cb(error , directory))
+                return fs.mkdir(directory , {recursive : true},(error: any) =>cb(error , directory))
             }
             cb(null, directory)
         })
@@ -171,6 +177,16 @@ router.route("/upload").post(upload.single("file"), function(req, res) {
     })
 });
    
+router.route("/updateObavestenja").post((req, res)=>{
+    console.log(req.body.data)
+    let data = req.body.data
+    let niz = req.body.niz;
+    let idOb =data.id
+    console.log(req.body.formData)
+    // courses.collection.updateMany({}, {$pull: {obavestenja : {id : idOb }}})
+    courses.collection.updateMany({akronim : {$in :niz}, "obavestenja.id" : idOb }, {$set : {"obavestenja.$" : data}}) 
+   
+})
 
 
   router.route("/dodajObavestenja").post((req, res)=>{
@@ -179,6 +195,13 @@ router.route("/upload").post(upload.single("file"), function(req, res) {
     let niz = req.body.niz;
     console.log(req.body.formData)
     courses.collection.updateMany({akronim : {$in :niz}}, {$push : { obavestenja: data}}) 
+})
+  router.route("/promeniRedosled").post((req, res)=>{
+    console.log(req.body.data)
+    let data = req.body.data
+   
+    materials.collection.updateMany({akronim : data.akronim}, {$set : { matPred: data.matPred}}) 
+    res.send("OK")
 })
   router.route("/dodajKurseveProfesoru").post((req, res)=>{
     let profesori = req.body.data.profesori
@@ -217,7 +240,7 @@ router.route("/dodajProjekatVezbu").post((req, res)=>{
 router.route("/deleteVest").post((req, res)=>{
     console.log(req.body.id)
     let idOb = req.body.id;
-    courses.collection.updateOne({'obavestenja.id' : idOb}, {$pull: {obavestenja : {id : idOb }}})
+    courses.collection.updateMany({'obavestenja.id' : idOb}, {$pull: {obavestenja : {id : idOb }}})
 
 })
 
@@ -253,6 +276,21 @@ router.route("/uploadMultiple").post(upload.array("files" , 10), function(req, r
     const subFolder = req.params.subFolder;
     console.log(folder)
     const path = './uploads/' + folder + '/' + subFolder+ '/' + fileName;
+    console.log(path)
+    if (fs.existsSync(path)) {
+        res.contentType("application/pdf");
+        fs.createReadStream(path).pipe(res)
+    } else {
+        res.status(500)
+        console.log('File not found')
+        res.send('File not found')
+    }
+  })
+  router.route("/uploads/:folder/:fileName").get((req, res)=>{
+    const testFolder = './uploads';
+    const folder = req.params.folder;
+    const fileName = req.params.fileName;
+    const path = './uploads/' + folder +  '/' + fileName;
     console.log(path)
     if (fs.existsSync(path)) {
         res.contentType("application/pdf");
@@ -309,7 +347,23 @@ router.route('/getMaterials/:id').get((req, res) =>{
         if(err) console.log(err);
         else res.json(mar);
     }))
-
+  
+})
+router.route('/getMojePredmete/:id').get((req, res) =>{
+    const param = req.params.id;
+    studentCourse.find({username : param} , ((err, mar)=>{
+        if(err) console.log(err);
+        else res.json(mar);
+    }))
+  
+})
+router.route('/getMyCourses').post((req, res) =>{
+    const param = req.body.data;
+    console.log(param)
+    courses.find({akronim : {$in : param}} , ((err, mar)=>{
+        if(err) console.log(err);
+        else res.json(mar);
+    }))
   
 })
 
@@ -349,6 +403,19 @@ router.route('/notification').get((req,res)=>{
      }
     );
   })
+  router.route('/dohvatiSvePredmete').get((req,res)=>{
+    courses.find( {}, (err,c)=>{
+        if(err) console.log(err);
+        else res.json(c);
+     }
+    );
+  })
+
+  router.route('/studentPredmet').post((req, res)=>{
+    let data = req.body.data;
+    studentCourse.collection.insertMany(data);
+    res.send("OK")
+})
 
 router.route('/getZaposleniByUsername').post((req, res)=>{
     let username = req.body.username;

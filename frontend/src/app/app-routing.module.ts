@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin/admin.component';
+import { AzuriranjeVestiComponent } from './azuriranje-vesti/azuriranje-vesti.component';
 import { IstrazivanjaComponent } from './istrazivanja/istrazivanja.component';
 import { KontaktComponent } from './kontakt/kontakt.component';
 import { LoginComponent } from './login/login.component';
@@ -38,7 +39,8 @@ const routes: Routes = [
   {path:"profesor" , component:ProfesorComponent},
   {path:"admin" , component:AdminComponent},
   {path:"istrazivanja" , component:IstrazivanjaComponent},
-  {path:"projekti-katedra" , component:ProjektiKatedraComponent}
+  {path:"projekti-katedra" , component:ProjektiKatedraComponent},
+  {path:"azuriranje-vesti" , component:AzuriranjeVestiComponent}
 ];
 
 @NgModule({

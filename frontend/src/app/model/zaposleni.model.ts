@@ -5,12 +5,12 @@ export class Zaposleni{
     lastname:string;
     address:string;
     contact:string;
-    website:string;
+    site:string;
     about:string;
     degree:string;
     room:number;
     status:number;
     slika:string;
     type:string;
-    courses:Array<string>;
+    courses:Array<Object>;
 }

@@ -7,8 +7,8 @@
                  <tr *ngFor= 'let o of obavestenja'>
                     <td>
                         <h3>{{o.naziv}}</h3>
-                        <p style="font-size: 16px;"> {{o.tekst}}</p> <br/>
-                        <span *ngFor='let n of o.nazivFajla'> <a class="btn btn-link" href="http://localhost:4000/uploads/{{predmet.akronim}}/{{n}}" >Link</a> </span> &nbsp;
+                        <p [ngClass] = "{'red' : checkDate(o) } " style="font-size: 16px;"> {{o.tekst}}</p> <br/>
+                        <span *ngFor='let n of o.nazivFajla'> <a class="btn btn-link" href="http://localhost:4000/uploads/zajednicki/{{n}}" >Link</a> </span> &nbsp;
                         
                     </td>
                  </tr>

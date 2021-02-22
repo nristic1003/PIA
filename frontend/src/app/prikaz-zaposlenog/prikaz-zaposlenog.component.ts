@@ -19,6 +19,7 @@ export class PrikazZaposlenogComponent implements OnInit {
       this.id = params['id']; // (+) converts string 'id' to a number
       this.serviceGet.getZaposleniByUsername(this.id).subscribe((zap:Zaposleni)=>{
         this.zaposleni = zap;
+        console.log(this.zaposleni)
       })
       // In a real app: dispatch action to load the details here.
    });

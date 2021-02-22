@@ -108,15 +108,22 @@
                                             <td>Ukloni</td>
                                         </tr> 
                                     
-                                            <tr *ngFor = 'let p of podaci.matPred'>
+                                            <tr *ngFor = 'let p of podaci.matPred; let index'>
                                                 <td> Predavanje:<br /><a href="http://localhost:4000/uploads/{{predmet.akronim}}/Predavanja/{{p.naziv}}" >{{p.naziv}}</a></td>
                                                 <td> {{p.type}}</td>
                                                 <td> {{p.nastavnik}}</td>
                                                 <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
-                                                <td> <input type="text" name = "p.redosled" [(ngModel)] = "p.redosled" /> </td>
+                                                <td> <input type="text"  name = "{{p.redosled}}" [(ngModel)] = "p.redosled" /> </td>
                                                 <td>{{p.size}}</td>
                                                 <td> <button value="matPred" id="{{p.naziv}}" (click) = "deleteMaterial($event)"  class="btn btn-danger" >Ukloni</button></td>
                                             </tr>
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td colspan="3">
+                                                    <button class="btn btn-primary" (click) = 'redosled()'>Promeni redosled</button>
+                                                </td>
+                                                <td></td>
+                                                </tr>
                                         
                         
                                     </table>
@@ -154,7 +161,7 @@
                                                 <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
                                                 <td> <input type="text" name = "p.redosled" [(ngModel)] = "p.redosled" /> </td>
                                                 <td>{{p.size}}</td>
-                                                <td> <button value="matVezbe" id="{{p.naziv}}" (click) = "deleteMaterial($event)" class="btn btn-danger" >Ukloni</button></td>
+                                                <td><button value="matVezbe" id="{{p.naziv}}" (click) = "deleteMaterial($event)" class="btn btn-danger" >Ukloni</button></td>
                                             </tr>
                                         
                         
@@ -477,7 +484,7 @@
                     <tr>
                         <td style="width: 70%;">{{v.tekst}}</td>
                     
-                        <td><button class="btn btn-primary" value="{{v.id}}" (click) = "azurirajVest($event)">Azuriraj</button></td>
+                        <td><button class="btn btn-primary" value="{{v.id}}" (click) = "azurirajVest(v)">Azuriraj</button></td>
                         
                        <td *ngIf ='v.kreator === profesor;  else elseBlock '> 
                         <button class="btn btn-danger" value="{{v.id}}" (click) = "deleteVest($event)">Izbrisi</button>
