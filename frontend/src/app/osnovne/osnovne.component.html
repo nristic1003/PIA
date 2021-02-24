@@ -1,36 +1,67 @@
-
-
 <div class="container">
-    <h1 style="margin-top: 50px;">Predmeti na katedri : {{id}}</h1>
-    <hr>
+  <h1 style="margin-top: 50px">Predmeti na katedri : {{ id }}</h1>
+  <hr />
 
-    <div *ngFor='let p of predmeti'>
-        <table *ngIf='p.semestar==7' class="table table-bordered">
-            <tr>
-                <td>
-                    Sifra predmeta
-                </td>
-                <td>
-                    Naziv predmeta
-                </td>
-                <td>
-                    Nastavnici:
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    {{p.akronim}}
-                </td>
-                <td>
-                    <a class="nav-link" [routerLink]="['/prikaz-predmeta' ,p.akronim]">{{p.naziv}}</a> 
-                </td>
-                <td>
-                    <span *ngFor = 'let nastavnik of p.nastavnik'> {{nastavnik.predavac}} <br/></span> 
-                </td>
-            </tr>
-        </table>
-    </div>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th colspan="3">Semestar 1</th>
+      </tr>
+    </thead>
+    <tr>
+      <td>Sifra predmeta</td>
+      <td>Naziv predmeta</td>
+      <td>Nastavnici:</td>
+    </tr>
+    <tr *ngFor="let p of predmeti">
+      <td *ngIf="p.semestar == 1">
+        {{ p.akronim }}
+      </td>
+      <td *ngIf="p.semestar == 1">
+        <span *ngIf="checkPredmete(p.akronim); else nijeNaPredmetu">
+          <a class="nav-link" [routerLink]="['/prikaz-predmeta', p.akronim]">{{
+            p.naziv
+          }}</a>
+        </span>
 
-                   
-             
+        <ng-template #nijeNaPredmetu>{{ p.naziv }}</ng-template>
+      </td>
+      <td *ngIf="p.semestar == 1">
+        <span *ngFor="let nastavnik of p.nastavnik">
+          {{ nastavnik.predavac }} <br
+        /></span>
+      </td>
+    </tr>
+  </table>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th colspan="3">Semestar 7</th>
+      </tr>
+    </thead>
+    <tr>
+      <td>Sifra predmeta</td>
+      <td>Naziv predmeta</td>
+      <td>Nastavnici:</td>
+    </tr>
+    <tr *ngFor="let p of predmeti">
+      <td *ngIf="p.semestar == 7">
+        {{ p.akronim }}
+      </td>
+      <td *ngIf="p.semestar == 7">
+        <span *ngIf="checkPredmete(p.akronim); else nijeNaPredmetu">
+          <a class="nav-link" [routerLink]="['/prikaz-predmeta', p.akronim]">{{
+            p.naziv
+          }}</a></span
+        >
+        <ng-template #nijeNaPredmetu>{{ p.naziv }}</ng-template>
+      </td>
+      <td *ngIf="p.semestar == 7">
+        <span *ngFor="let nastavnik of p.nastavnik">
+          {{ nastavnik.predavac }} <br
+        /></span>
+      </td>
+    </tr>
+  </table>
 </div>

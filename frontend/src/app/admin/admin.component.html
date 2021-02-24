@@ -1,261 +1,384 @@
 <div class="container">
-
-    <mat-tab-group dynamicHeight >
-
-        <mat-tab label = "Dodavanje studenta">
-            <h1 align="center">Dodavanje studenta</h1>
-            <div class="row justify-content-center">
-                <div class="col-xl-4">
-                    <div class="form-group">
-                        <label>{{message}}</label>       
-                    </div>
-                    <form>
-                      
-                        <div class="form-group">
-                            <label>Ime:</label>
-                            <input type="text" name="name" class="form-control" [(ngModel)]="name" />
-                        
-                        </div>
-                        <div class="form-group">
-                            <label>Prezime</label>
-                            <input type="text" name="lastname" class="form-control" [(ngModel)]="lastname" />
-                        </div>
-                        <div class="form-group">
-                            <label >Vrsta studija</label>
-                             <select name="type" class="form-control" [(ngModel)]="type">
-                                <option value="d">Osnovne studije</option>
-                                <option value="m">Master studije</option>
-                                <option value="p">Doktorske</option>
-                            </select>
-                          
-                        </div>
-                        <div class="form-group">
-                            <label  class="control-label">Sifra</label>
-                            <input name="password"  class="form-control" [(ngModel)]="password" />
-                          
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Broj Indeksa</label>
-                            <input type="text" name="indexNumber" placeholder="U obliku: GGGG/BBBB" class="form-control" [(ngModel)]="indexNumber" />
-                          
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-primary" (click) = 'dodajStudenta()' >Posalji</button>
-                        </div>
-                    </form>
-                </div>
+  <mat-tab-group dynamicHeight>
+    <mat-tab label="Dodavanje studenta">
+      <h1 align="center">Dodavanje studenta</h1>
+      <div class="row justify-content-center">
+        <div class="col-xl-4">
+          <div class="form-group">
+            <label>{{ message }}</label>
+          </div>
+          <form>
+            <div class="form-group">
+              <label>Ime:</label>
+              <input
+                type="text"
+                name="name"
+                class="form-control"
+                [(ngModel)]="name"
+              />
             </div>
-        
-
-
-        </mat-tab>
-
-        <mat-tab label = "Dodavanje profesora">
-            <h1 align="center">Dodavanje profesora</h1>
-            <div class="row justify-content-center">
-                <div class="col-xl-4">
-                    <form>
-                      
-                        <div class="form-group">
-                            <label>Ime:</label>
-                            <input type="text" name="name" class="form-control" [(ngModel)]="name" />
-                        
-                        </div>
-                        <div class="form-group">
-                            <label>Prezime</label>
-                            <input type="text" name="lastname" class="form-control" [(ngModel)]="lastname" />
-                        </div>
-                        <div class="form-group">
-                            <label>Adresa</label>
-                            <input type="text" name="address" class="form-control" [(ngModel)]="address" />
-                        </div>
-                        <div class="form-group">
-                            <label>Kontakt</label>
-                            <input type="text" name="contact" class="form-control" [(ngModel)]="contact" />
-                        </div>
-                        <div class="form-group">
-                            <label>Sajt</label>
-                            <input type="text" name="site" class="form-control" [(ngModel)]="site" />
-                        </div>
-                        <div class="form-group">
-                            <label>O zaposlenom</label>
-                            <textarea type="text" name="about" class="form-control" [(ngModel)]="about" rows="5" > </textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Zvanje</label>
-                            <input type="text" name="degree" class="form-control" [(ngModel)]="degree" />
-                        </div>
-
-                        <div class="form-group">
-                            <label >Korisnicko ime: </label>
-                            <input type="text" placeholder="U obliku:  piGGGGBBx@student.etf.rs" name="username" class="form-control" [(ngModel)]="username" />
-                       
-                        </div>
-                        <div class="form-group">
-                            <label  class="control-label">Sifra</label>
-                            <input name="password"  class="form-control" [(ngModel)]="password" />
-                          
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Slika: </label>
-                            <input type="file" #fileInput  class="form-control" />
-                          
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-primary" (click) = 'dodajZaposlenog()' >Posalji</button>
-                        </div>
-                    </form>
-                </div>
+            <div class="form-group">
+              <label>Prezime</label>
+              <input
+                type="text"
+                name="lastname"
+                class="form-control"
+                [(ngModel)]="lastname"
+              />
             </div>
-        
-
-
-        </mat-tab>
-
-        <mat-tab label = "Svi studenti">
-            
-            <table class="table table-bordered table-striped" > 
-                <tr>
-                    <td>Korisnicko ima  </td>
-                    <td>Ime  </td>
-                    <td>Prezime </td>
-                    <td>Broj indeksa</td>
-                    <td>Azuriraj</td>
-                    <td>Ukloni</td>
-                </tr>
-                <tr *ngFor = 'let s of students'>
-                    <td>{{s.username}}</td>
-                    <td>{{s.name}}</td>
-                    <td>{{s.lastname}}</td>
-                    <td>{{s.indexNumber}}</td>
-                    <td><button  class="btn btn-primary">Azuriraj</button></td>
-                    <td><button value = {{s.username}} (click) = 'deleteStudent($event)' class="btn btn-danger" >Obrisi</button></td>
-                </tr>
-
-            </table>
-
-        </mat-tab>
-
-        <mat-tab label = "Svi zaposleni">
-            
-            <table class="table table-bordered table-striped" > 
-                <tr>
-                    <td>Korisnicko ima  </td>
-                    <td>Ime  </td>
-                    <td>Prezime </td>
-                    <td>Azuriraj</td>
-                    <td>Ukloni</td>
-                </tr>
-                <tr *ngFor = 'let z of  zaposleni'>
-                    <td>{{z.username}}</td>
-                    <td>{{z.name}}</td>
-                    <td>{{z.lastname}}</td>
-                    <td><button  class="btn btn-primary">Azuriraj</button></td>
-                    <td><button value = {{z.username}} (click) = 'deleteStudent($event)' class="btn btn-danger" >Obrisi</button></td>
-                </tr>
-
-            </table>
-
-        </mat-tab>
-
-        <mat-tab label = "Dodavanje predmeta">
-            <h1 align="center">Dodavanje predmeta</h1>
-            <div class="row justify-content-center">
-                <div class="col-xl-4">
-                    <form>
-                      
-                        <div class="form-group">
-                            <label>Naziv:</label>
-                            <input type="text" name="naziv" class="form-control" [(ngModel)]="naziv" />
-                        
-                        </div>
-                        <div class="form-group">
-                            <label>Semestar</label>
-                            <input type="number" min="1" max="8" name="semestar" class="form-control" [(ngModel)]="semestar" />
-                        </div>
-                        <div class="form-group">
-                            <label>Katedra</label>
-                            <input type="text" name="katedra" placeholder="u obliku: RTI, SI" class="form-control" [(ngModel)]="katedra" />
-                        </div>
-                        <div class="form-group">
-                            <label>Akronim</label>
-                            <input type="text" name="akronim" class="form-control" [(ngModel)]="akronim" />
-                        </div>
-                        <div class="form-group">
-                            <label>Tip</label> <br/>
-                            <input type="radio" name="tip" value="obavezni"   [(ngModel)]="tip" /> &nbsp; <label> Obavezni</label> <br/>
-                            <input type="radio" name="tip" value="izborni"    [(ngModel)]="tip" />&nbsp;&nbsp; <label> Izborni</label>
-                        </div> 
-                        <div class="form-group">
-                            <label>Fond Predavanja</label>
-                            <input type="number" name="fondPredavanja" class="form-control" [(ngModel)]="fondPredavanja" /> 
-                        </div>
-                        <div class="form-group">
-                            <label>Fond Vezbe</label>
-                            <input type="number" name="fondVezbe" class="form-control" [(ngModel)]="fondVezbe" /> 
-                        </div>
-
-                        <div class="form-group">
-                            <label>ESPB</label>
-                            <input type="number" name="ESPB" class="form-control" [(ngModel)]="ESPB" />
-                        </div>
-                        <div class="form-group">
-                            <label  class="control-label">Nastavnici</label>
-                           <select class="form-control" name="naPredmetu" multiple [(ngModel)]='naPredmetu'>
-                                <option *ngFor = 'let z of zaposleni' value="{{z.username}}" >{{z.username}}</option>
-                           </select>
-                          
-                        </div>
-                        
-                        <div class="form-group">
-                            <button class="btn btn-primary" (click) = 'dodajPredmet()' >Posalji</button>
-                        </div>
-                    </form>
-                </div>
+            <div class="form-group">
+              <label>Vrsta studija</label>
+              <select name="type" class="form-control" [(ngModel)]="type">
+                <option value="d">Osnovne studije</option>
+                <option value="m">Master studije</option>
+                <option value="p">Doktorske</option>
+              </select>
             </div>
-        </mat-tab>
-
-        <mat-tab label = "Studenti predmeti">
-            <h1 style="margin-top: 50px;" align="center">Studenti predmeti</h1>
-           <hr>
-
-           <table class="table table-bordered table-striped">
-            <tr>
-                <td>#</td>
-                <td>Korisnicko ime</td>
-                <td>Izaberi</td>
-            </tr>
-            <tbody>
-
-            <tr *ngFor = 'let s of students; let i=index'>
-                <td>{{i+1}}</td>
-                <td>{{s.username}}</td>
-                <td><input type="checkbox" (change)='checkData($event)'  value="{{s.username}}" class="form-control" ></td>
-
-            </tr>
-            </tbody>
-
-           </table>
-
-           <div class="form-group">
-            <label  class="control-label">Nastavnici</label>
-           <select class="form-control" name="izabranPredmet" multiple [(ngModel)]='izabranPredmet'>
-                <option *ngFor = 'let c of sviPredmeti' value="{{c.akronim}}" >{{c.akronim}}</option>
-           </select>
-          
+            <div class="form-group">
+              <label class="control-label">Sifra</label>
+              <input
+                name="password"
+                class="form-control"
+                [(ngModel)]="password"
+              />
+            </div>
+            <div class="form-group">
+              <label class="control-label">Broj Indeksa</label>
+              <input
+                type="text"
+                name="indexNumber"
+                placeholder="U obliku: GGGG/BBBB"
+                class="form-control"
+                [(ngModel)]="indexNumber"
+              />
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary" (click)="dodajStudenta()">
+                Posalji
+              </button>
+            </div>
+          </form>
         </div>
-        <div class="form-group">
-            <button class="btn btn-primary" (click) = 'studentPredmet()' >Posalji</button>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Dodavanje profesora">
+      <h1 align="center">Dodavanje profesora</h1>
+      <div class="row justify-content-center">
+        <div class="col-xl-4">
+          <span>{{ message }}</span>
+          <form>
+            <div class="form-group">
+              <label>Ime:</label>
+              <input
+                type="text"
+                name="name"
+                class="form-control"
+                [(ngModel)]="name"
+              />
+            </div>
+            <div class="form-group">
+              <label>Prezime</label>
+              <input
+                type="text"
+                name="lastname"
+                class="form-control"
+                [(ngModel)]="lastname"
+              />
+            </div>
+            <div class="form-group">
+              <label>Adresa</label>
+              <input
+                type="text"
+                name="address"
+                class="form-control"
+                [(ngModel)]="address"
+              />
+            </div>
+            <div class="form-group">
+              <label>Kontakt</label>
+              <input
+                type="text"
+                name="contact"
+                class="form-control"
+                [(ngModel)]="contact"
+              />
+            </div>
+            <div class="form-group">
+              <label>Sajt</label>
+              <input
+                type="text"
+                name="site"
+                class="form-control"
+                [(ngModel)]="site"
+              />
+            </div>
+            <div class="form-group">
+              <label>O zaposlenom</label>
+              <textarea
+                type="text"
+                name="about"
+                class="form-control"
+                [(ngModel)]="about"
+                rows="5"
+              >
+              </textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Zvanje</label>
+              <input
+                type="text"
+                name="degree"
+                class="form-control"
+                [(ngModel)]="degree"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Korisnicko ime: </label>
+              <input
+                type="text"
+                placeholder="U obliku:  piGGGGBBx@student.etf.rs"
+                name="username"
+                class="form-control"
+                [(ngModel)]="username"
+              />
+            </div>
+            <div class="form-group">
+              <label class="control-label">Sifra</label>
+              <input
+                name="password"
+                class="form-control"
+                [(ngModel)]="password"
+              />
+            </div>
+            <div class="form-group">
+              <label class="control-label">Slika: </label>
+              <input type="file" #fileInput class="form-control" />
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary" (click)="dodajZaposlenog()">
+                Posalji
+              </button>
+            </div>
+          </form>
         </div>
+      </div>
+    </mat-tab>
 
+    <mat-tab label="Svi studenti">
+      <table class="table table-bordered table-striped">
+        <tr>
+          <td>Korisnicko ima</td>
+          <td>Ime</td>
+          <td>Prezime</td>
+          <td>Broj indeksa</td>
+          <td>Azuriraj</td>
+          <td>Ukloni</td>
+        </tr>
+        <tr *ngFor="let s of students">
+          <td>{{ s.username }}</td>
+          <td>{{ s.name }}</td>
+          <td>{{ s.lastname }}</td>
+          <td>{{ s.indexNumber }}</td>
+          <td><button class="btn btn-primary">Azuriraj</button></td>
+          <td>
+            <button
+              value="{{ s.username }}"
+              (click)="deleteStudent($event)"
+              class="btn btn-danger"
+            >
+              Obrisi
+            </button>
+          </td>
+        </tr>
+      </table>
+    </mat-tab>
 
-        </mat-tab>
+    <mat-tab label="Svi zaposleni">
+      <table class="table table-bordered table-striped">
+        <tr>
+          <td>Korisnicko ima</td>
+          <td>Ime</td>
+          <td>Prezime</td>
+          <td>Azuriraj</td>
+          <td>Ukloni</td>
+        </tr>
+        <tr *ngFor="let z of zaposleni">
+          <td>{{ z.username }}</td>
+          <td>{{ z.name }}</td>
+          <td>{{ z.lastname }}</td>
+          <td><button class="btn btn-primary">Azuriraj</button></td>
+          <td>
+            <button
+              value="{{ z.username }}"
+              (click)="deleteStudent($event)"
+              class="btn btn-danger"
+            >
+              Obrisi
+            </button>
+          </td>
+        </tr>
+      </table>
+    </mat-tab>
 
+    <mat-tab label="Dodavanje predmeta">
+      <h1 align="center">Dodavanje predmeta</h1>
+      <div class="row justify-content-center">
+        <div class="col-xl-4">
+          <form>
+            <div class="form-group">
+              <label>Naziv:</label>
+              <input
+                type="text"
+                name="naziv"
+                class="form-control"
+                [(ngModel)]="naziv"
+              />
+            </div>
+            <div class="form-group">
+              <label>Semestar</label>
+              <input
+                type="number"
+                min="1"
+                max="8"
+                name="semestar"
+                class="form-control"
+                [(ngModel)]="semestar"
+              />
+            </div>
+            <div class="form-group">
+              <label>Katedra</label>
+              <input
+                type="text"
+                name="katedra"
+                placeholder="u obliku: RTI, SI"
+                class="form-control"
+                [(ngModel)]="katedra"
+              />
+            </div>
+            <div class="form-group">
+              <label>Akronim</label>
+              <input
+                type="text"
+                name="akronim"
+                class="form-control"
+                [(ngModel)]="akronim"
+              />
+            </div>
+            <div class="form-group">
+              <label>Tip</label> <br />
+              <input
+                type="radio"
+                name="tip"
+                value="obavezni"
+                [(ngModel)]="tip"
+              />
+              &nbsp; <label> Obavezni</label> <br />
+              <input
+                type="radio"
+                name="tip"
+                value="izborni"
+                [(ngModel)]="tip"
+              />&nbsp;&nbsp; <label> Izborni</label>
+            </div>
+            <div class="form-group">
+              <label>Fond Predavanja</label>
+              <input
+                type="number"
+                name="fondPredavanja"
+                class="form-control"
+                [(ngModel)]="fondPredavanja"
+              />
+            </div>
+            <div class="form-group">
+              <label>Fond Vezbe</label>
+              <input
+                type="number"
+                name="fondVezbe"
+                class="form-control"
+                [(ngModel)]="fondVezbe"
+              />
+            </div>
 
-    </mat-tab-group>
+            <div class="form-group">
+              <label>ESPB</label>
+              <input
+                type="number"
+                name="ESPB"
+                class="form-control"
+                [(ngModel)]="ESPB"
+              />
+            </div>
+            <div class="form-group">
+              <label class="control-label">Nastavnici</label>
+              <select
+                class="form-control"
+                name="naPredmetu"
+                multiple
+                [(ngModel)]="naPredmetu"
+              >
+                <option *ngFor="let z of zaposleni" value="{{ z.username }}">
+                  {{ z.username }}
+                </option>
+              </select>
+            </div>
 
+            <div class="form-group">
+              <button class="btn btn-primary" (click)="dodajPredmet()">
+                Posalji
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </mat-tab>
 
+    <mat-tab label="Studenti predmeti">
+      <h1 style="margin-top: 50px" align="center">Studenti predmeti</h1>
+      <hr />
 
+      <table class="table table-bordered table-striped">
+        <tr>
+          <td>#</td>
+          <td>Korisnicko ime</td>
+          <td>Izaberi</td>
+        </tr>
+        <tbody>
+          <tr *ngFor="let s of students; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ s.username }}</td>
+            <td>
+              <input
+                type="checkbox"
+                (change)="checkData($event)"
+                value="{{ s.username }}"
+                class="form-control"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
+      <div class="form-group">
+        <label class="control-label">Nastavnici</label>
+        <select
+          class="form-control"
+          name="izabranPredmet"
+          multiple
+          [(ngModel)]="izabranPredmet"
+        >
+          <option *ngFor="let c of sviPredmeti" value="{{ c.akronim }}">
+            {{ c.akronim }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary" (click)="studentPredmet()">
+          Posalji
+        </button>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </div>

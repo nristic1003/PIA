@@ -8,284 +8,273 @@ import { AdminService } from '../Services/admin.service';
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css']
+  styleUrls: ['./admin.component.css'],
 })
 export class AdminComponent implements OnInit {
+  constructor(private service: AdminService, private router: Router) {}
 
-  constructor(private service:AdminService ,private router:Router) { }
-
-
-  @ViewChild('fileInput' , {static:false}) fileInput : ElementRef;
+  @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
 
   ngOnInit(): void {
-
     let data = JSON.parse(localStorage.getItem('user'));
-    if(data===null || data.type!="a")
-    {
-      console.log("usao")
-      this.router.navigate(['/pocetna'])
+    if (data === null || data.type != 'a') {
+      console.log('usao');
+      this.router.navigate(['/pocetna']);
     }
-      
 
-
-    this.service.dohvatiStudente().subscribe((s:User[])=>{
+    this.service.dohvatiStudente().subscribe((s: User[]) => {
       this.students = s;
-     
-    })
+    });
 
-    this.service.dohvatiZaposlene().subscribe((z:Zaposleni[])=>{
+    this.service.dohvatiZaposlene().subscribe((z: Zaposleni[]) => {
       this.zaposleni = z;
-      
-    })
+    });
 
-    this.service.dohvatiSvePredmete().subscribe((a:Courses[])=>{
+    this.service.dohvatiSvePredmete().subscribe((a: Courses[]) => {
       this.sviPredmeti = a;
-    })
-
-
+    });
   }
 
-  deleteStudent(event)
-  {
+  deleteStudent(event) {
     let name = event.target.value;
-    this.service.obrisiStudenta(name).subscribe((s:any)=>{
-
-    })
+    this.service.obrisiStudenta(name).subscribe((s: any) => {});
   }
 
+  dodajStudenta() {
+    var reg = new RegExp('^[1-2][0-9]{3}[/][0-9]{4}$');
 
-  dodajStudenta()
-  {
-
-    var reg = new RegExp('^[1-2][0-9]{3}[\/][0-9]{4}$')
-
-    let flag = reg.test(this.indexNumber)
-    if(!flag){
-      this.message = "Index nije u ispravnom obliku";
-      return
+    let flag = reg.test(this.indexNumber);
+    if (!flag) {
+      this.message = 'Index nije u ispravnom obliku';
+      return;
     }
-    console.log(this.lastname)
-    if(this.name== undefined || this.lastname==undefined || this.password==undefined || this.type==undefined) {
-      this.message = "Svi podaci moraju biti uneti";
-      return
+    console.log(this.lastname);
+    if (
+      this.name == undefined ||
+      this.lastname == undefined ||
+      this.password == undefined ||
+      this.type == undefined
+    ) {
+      this.message = 'Svi podaci moraju biti uneti';
+      return;
     }
 
-    
+    let username =
+      this.lastname.charAt(0) +
+      this.name.charAt(0) +
+      this.indexNumber.charAt(2) +
+      this.indexNumber.charAt(3) +
+      +this.indexNumber.charAt(5) +
+      +this.indexNumber.charAt(6) +
+      +this.indexNumber.charAt(7) +
+      +this.indexNumber.charAt(8) +
+      this.type +
+      '@student.etf.rs';
 
-    let username = this.lastname.charAt(0) + this.name.charAt(0) + 
-    this.indexNumber.charAt(2)+this.indexNumber.charAt(3)+ +this.indexNumber.charAt(5)+ +this.indexNumber.charAt(6)+ +this.indexNumber.charAt(7)+
-    +this.indexNumber.charAt(8)
-    + this.type + "@student.etf.rs"
+    username = username.toLowerCase();
+    console.log(username);
 
-    username = username.toLowerCase()
-    console.log(username)
-
-
-
-    console.log(this.username)
+    console.log(this.username);
     let data = {
-      "username" : username,
-      "name" : this.name,
-      "lastname" : this.lastname,
-      "password" : this.password,
-      "indexNumber" : this.indexNumber,
-      "status" : "neaktivan",
-      "type" : this.type
-    }
+      username: username,
+      name: this.name,
+      lastname: this.lastname,
+      password: this.password,
+      indexNumber: this.indexNumber,
+      status: 'neaktivan',
+      type: this.type,
+    };
     console.log(data);
-    this.service.dodajStudenta(data).subscribe((a:Response)=>{
-      
-    })
+    this.service.dodajStudenta(data).subscribe((a: Response) => {});
   }
 
+  dodajZaposlenog() {
+    const imageBlob = this.fileInput.nativeElement.files[0];
 
-  dodajZaposlenog()
-  {
-    //const imageBlob =this.fileInput.nativeElement.files[0].name;
-    //
-    console.log(this.username)
+    const formData = new FormData();
+    // var img = new Image();
+
+    // var flag = false;
+    // img.src = URL.createObjectURL(imageBlob);
+    // img.onload = (e: any) => {
+    //   const height = e.path[0].height;
+    //   const width = e.path[0].width;
+
+    //   if (height > 300 || width > 300) {
+    //     this.message =
+    //       'Maksimalna velicina slike je 300x300 px. Trenutna velicina je: ' +
+    //       height +
+    //       'x' +
+    //       width +
+    //       ' px';
+    //     flag = true;
+    //   } else {
+    //     this.message = '';
+    //   }
+    //   console.log(height, width);
+    // };
+
+    // console.log(flag);
+    // if (flag) {
+    //   return;
+    // } else {
+    //   console.log('neene');
+    // }
+    // console.log(img);
+
+    formData.set('file', imageBlob);
+    formData.set('id', 'profesori');
+
+    var imageName;
+
+    if (imageBlob == undefined) imageName = 'about.jpg';
+    else imageName = imageBlob.name;
+
     let data = {
-      "username" : this.username,
-      "name" : this.name,
-      "lastname" : this.lastname,
-      "password" : this.password,
-      "address" : this.address,
-      "about" : this.about,
-      "degree" : this.degree,
-      "site" : this.site,
-      "status" : "aktivan",
-      "contact" : this.contact,
-      "type" : "z",
-      "courses" : []
-    }
+      username: this.username,
+      name: this.name,
+      lastname: this.lastname,
+      password: this.password,
+      address: this.address,
+      about: this.about,
+      degree: this.degree,
+      site: this.site,
+      status: 'aktivan',
+      contact: this.contact,
+      type: 'z',
+      courses: [],
+      image: imageName,
+    };
     console.log(data);
-     this.service.dodajProfesora(data).subscribe((a:Response)=>{
-      
-     })
+    this.service.dodajProfesora(data).subscribe((a: Response) => {});
+
+    if (imageBlob != undefined)
+      this.service.uploadImage(formData).subscribe((a: Response) => {});
   }
 
-
-  dodajPredmet()
-  {
-      let data = {
-        "akronim" : this.akronim,
-        "semestar" : this.semestar,
-        "katedra" : this.katedra,
-        "tip" : this.tip,
-        "fondPredavanja" : this.fondPredavanja,
-        "fondVezbe" : this.fondVezbe,
-        "ESPB" : this.ESPB,
-        "naziv":this.naziv,
-        "nastavnik" : []
-      }
-      this.service.kreirajPredmet(data).subscribe((a:any)=>{
-       
-      })
-      this.createPlan()
-     
+  dodajPredmet() {
+    let data = {
+      akronim: this.akronim,
+      semestar: this.semestar,
+      katedra: this.katedra,
+      tip: this.tip,
+      fondPredavanja: this.fondPredavanja,
+      fondVezbe: this.fondVezbe,
+      ESPB: this.ESPB,
+      naziv: this.naziv,
+      nastavnik: [],
+    };
+    this.service.kreirajPredmet(data).subscribe((a: any) => {});
+    this.createPlan();
   }
 
-  createPlan()
-  {
-      let grupa = []
-     let  nastavnici = []
+  createPlan() {
+    let grupa = [];
+    let nastavnici = [];
 
+    let i = 1;
+    for (let index of this.naPredmetu) {
+      grupa.push('P' + i);
+      nastavnici.push({ predavac: index });
+      i++;
+    }
 
-      let i = 1;
-      for( let index of this.naPredmetu )
-      {
-        grupa.push("P" + i)
-        nastavnici.push({"predavac" : index})
-        i++;
-        
-      }
+    let materials = {
+      matPred: [],
+      matVezbe: [],
+      ispitnaPitanja: [],
+      matLaboratorija: [],
+      akronim: this.akronim,
+    };
 
+    //kuresevi
+    let d = {
+      profesori: this.naPredmetu,
+      akronim: this.akronim,
+      nastavnici: nastavnici,
+      materijali: materials,
+    };
 
-      let materials = {
-        "matPred" : [],
-        "matVezbe" : [],
-        "ispitnaPitanja" : [],
-         "matLaboratorija" : [],
-         "akronim" : this.akronim
-     }
- 
+    this.service.dodajKurseveProfesoru(d).subscribe((a: any) => {});
 
-      //kuresevi
-     let d = {
-       "profesori" : this.naPredmetu,
-       "akronim" : this.akronim,
-        "nastavnici" : nastavnici,
-        "materijali" : materials
-     }
+    // console.log(nastavnici)
+    let data = {
+      nastavnici: nastavnici,
+      akronim: this.akronim,
+      grupa: grupa,
+      naziv: this.naziv,
+    };
 
-     this.service.dodajKurseveProfesoru(d).subscribe((a:any)=>{
-
-     })
-
-
-      // console.log(nastavnici)
-      let data = {
-        "nastavnici" : nastavnici,
-        "akronim"  : this.akronim,
-        "grupa" : grupa,
-        "naziv" : this.naziv,
-      
-      }
-
-      
-      this.service.kreirajPlan(data).subscribe((a:any)=>{
-
-      })
-
-
-  
-      
+    this.service.kreirajPlan(data).subscribe((a: any) => {});
   }
 
-  checkData(event)
-{
- 
-  if(event.target.checked)
-  { 
-    this.nizStudenata.push(event.target.value)
-    console.log(" Pushed " + event.target.value)
-
-  }else
-  {
-    this.nizStudenata.forEach((element,index)=>{
-      if(element==event.target.value) {
-        this.nizStudenata.splice(index,1);
-        console.log(" Poped at index " + index)
-      }
-   });
-  
-  }
-
-}
-
-studentPredmet()
-{
-  console.log(this.izabranPredmet)
-  console.log(this.nizStudenata)
-
-  let dataArray = []
-
-  for(let predmet of this.izabranPredmet )
-  {
-    for(let student of this.nizStudenata )
-    {
-      let d = {
-        "username" : student,
-        "akronim" : predmet
-      }
-
-      dataArray.push(d)
+  checkData(event) {
+    if (event.target.checked) {
+      this.nizStudenata.push(event.target.value);
+      console.log(' Pushed ' + event.target.value);
+    } else {
+      this.nizStudenata.forEach((element, index) => {
+        if (element == event.target.value) {
+          this.nizStudenata.splice(index, 1);
+          console.log(' Poped at index ' + index);
+        }
+      });
     }
   }
 
-  console.log(dataArray)
+  studentPredmet() {
+    console.log(this.izabranPredmet);
+    console.log(this.nizStudenata);
 
-  this.service.studentPredmet(dataArray).subscribe((a:any)=>{
-    
-  })
+    let dataArray = [];
 
+    for (let predmet of this.izabranPredmet) {
+      for (let student of this.nizStudenata) {
+        let d = {
+          username: student,
+          akronim: predmet,
+        };
 
-}
+        dataArray.push(d);
+      }
+    }
 
-sviPredmeti:Courses[];
-izabranPredmet:string[]
+    console.log(dataArray);
 
+    this.service.studentPredmet(dataArray).subscribe((a: any) => {});
+  }
 
-nizStudenata = []
+  sviPredmeti: Courses[];
+  izabranPredmet: string[];
 
-message:string;
+  nizStudenata = [];
 
-username:string;
-name:string;
-lastname:string;
-type:string;
-password:string;
-indexNumber:string;
-address:string;
-site:string;
-about:string;
-degree:string;
-contact:string;
+  message: string;
 
-students : User[];
-zaposleni : Zaposleni[];
+  username: string;
+  name: string;
+  lastname: string;
+  type: string;
+  password: string;
+  indexNumber: string;
+  address: string;
+  site: string;
+  about: string;
+  degree: string;
+  contact: string;
 
+  students: User[];
+  zaposleni: Zaposleni[];
 
-//Predmet
-naPredmetu:string[];
-akronim : string;
-semestar : number;
-katedra : string;
-tip : string;
-fondPredavanja : string;
-fondVezbe : string;
-ESPB : number;
-naziv:string
-
-
+  //Predmet
+  naPredmetu: string[];
+  akronim: string;
+  semestar: number;
+  katedra: string;
+  tip: string;
+  fondPredavanja: string;
+  fondVezbe: string;
+  ESPB: number;
+  naziv: string;
+  flag = false;
 }
