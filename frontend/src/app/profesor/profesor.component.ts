@@ -39,7 +39,24 @@ export class ProfesorComponent implements OnInit {
       this.todo(this.myCourses[0].akronim);
       this.dohvatiNastavnika(this.profesor);
     });
+
+    this.dohvatiMojeSpiskove();
   }
+
+  dohvatiMojeSpiskove() {
+    this.service
+      .dohvatiMojeSpiskove(this.profesor)
+      .subscribe((a: StudentsList[]) => {
+        this.mojiSpiskovi = a;
+        console.log(this.mojiSpiskovi);
+      });
+  }
+
+  zatvoriSpisak(spisak: StudentsList)
+  {
+    this.service.zatvoriSpisak(spisak.naziv).subscribe((s: any) => {});
+  }
+
 
   dohvatiNastavnika(username: String) {
     this.service.getZaposleniByUsername(username).subscribe((us: Zaposleni) => {
@@ -214,6 +231,7 @@ export class ProfesorComponent implements OnInit {
       potrebanFajl: this.potrebanFajl,
       studenti: [],
       trenutniBroj: 0,
+      profesor: this.nastavnik.username,
     };
 
     this.service.createList(data).subscribe((a: any) => {});
@@ -238,6 +256,7 @@ export class ProfesorComponent implements OnInit {
   }
 
   myCourses: Plan[];
+  mojiSpiskovi: StudentsList[];
   predmet: Courses;
   nastavnik: Zaposleni;
   podaci: Materials;

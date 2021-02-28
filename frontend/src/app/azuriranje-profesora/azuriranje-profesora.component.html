@@ -1,0 +1,87 @@
+<h1 style="margin-top: 50px" align="center">Azuriraj profesora</h1>
+<div class="row justify-content-center">
+  <div class="col-xl-4">
+    <form>
+      <div class="form-group">
+        <label>Ime:</label>
+        <input
+          type="text"
+          name="z.name"
+          class="form-control"
+          [(ngModel)]="z.name"
+        />
+      </div>
+      <div class="form-group">
+        <label>Prezime</label>
+        <input
+          type="text"
+          name="z.lastname"
+          class="form-control"
+          [(ngModel)]="z.lastname"
+        />
+      </div>
+      <div class="form-group">
+        <label>Adresa</label>
+        <input
+          type="text"
+          name="z.address"
+          class="form-control"
+          [(ngModel)]="z.address"
+        />
+      </div>
+      <div class="form-group">
+        <label>Kontakt</label>
+        <input
+          type="text"
+          name="z.contact"
+          class="form-control"
+          [(ngModel)]="z.contact"
+        />
+      </div>
+      <div class="form-group">
+        <label>Sajt</label>
+        <input
+          type="text"
+          name="z.site"
+          class="form-control"
+          [(ngModel)]="z.site"
+        />
+      </div>
+      <div class="form-group">
+        <label>O zaposlenom</label>
+        <textarea
+          type="text"
+          name="z.about"
+          class="form-control"
+          [(ngModel)]="z.about"
+          rows="5"
+        >
+        </textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Zvanje</label>
+        <input
+          type="text"
+          name="z.degree"
+          class="form-control"
+          [(ngModel)]="z.degree"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Korisnicko ime: </label>
+        <input
+          type="text"
+          name="z.username"
+          class="form-control"
+          [(ngModel)]="z.username"
+        />
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-primary" (click)="azuriraj()">Posalji</button>
+      </div>
+    </form>
+  </div>
+</div>

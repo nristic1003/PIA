@@ -24,6 +24,9 @@ let StudentsList = new Schema({
     mesto:{
         type:String
     },
+    profesor:{
+        type:String
+    },
     studenti:{
         type:Array
     },

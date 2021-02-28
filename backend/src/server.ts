@@ -134,6 +134,7 @@ router.route("/createList").post((req, res) => {
   console.log(data);
 
   studentsList.collection.insertOne(data);
+  res.send("OK");
 });
 
 router.route("/register").post((req, res) => {
@@ -160,6 +161,44 @@ router.route("/changePass").post((req, res) => {
       else res.status(200).json({ status: "OK" });
     }
   );
+});
+router.route("/azurirajStudenta").post((req, res) => {
+  let u = req.body.data;
+  console.log(u);
+  user.collection.updateOne(
+    { username: req.body.oldUsername },
+    {
+      $set: {
+        name: u.name,
+        lastname: u.lastname,
+        indexNumber: u.indexNumber,
+        status: u.status,
+        type: u.type,
+        username: u.usernamedas,
+      },
+    }
+  );
+  return res.send("OK");
+});
+router.route("/azurirajProfesora").post((req, res) => {
+  let u = req.body.data;
+  console.log(u);
+  user.collection.updateOne(
+    { username: req.body.oldUsername },
+    {
+      $set: {
+        username: u.username,
+        name: u.name,
+        lastname: u.lastname,
+        address: u.address,
+        website: u.site,
+        about: u.about,
+        degree: u.degree,
+        contact: u.contact,
+      },
+    }
+  );
+  return res.send("OK");
 });
 
 router.route("/addToList").post((req, res) => {
@@ -351,6 +390,14 @@ router.route("/getPlan/:id").get((req, res) => {
     else res.json(pl);
   });
 });
+router.route("/dohvatiMojeSpiskove/:id").get((req, res) => {
+  const param = req.params.id;
+  console.log("Dohvati moje spiskove" + param);
+  studentsList.find({ profesor: param }, (err, pl) => {
+    if (err) console.log(err);
+    else res.json(pl);
+  });
+});
 
 router.route("/dohvatiSpiskove/:id").get((req, res) => {
   const param = req.params.id;
@@ -382,6 +429,15 @@ router.route("/getMyCourses").post((req, res) => {
     if (err) console.log(err);
     else res.json(mar);
   });
+});
+router.route("/zatvoriSpisak").post((req, res) => {
+  const param = req.body.data;
+  console.log(param);
+  studentsList.collection.updateOne(
+    { naziv: param },
+    { $set: { otvoren: false } }
+  );
+  return res.send("OK");
 });
 
 router.route("/login").post((req, res) => {
@@ -426,6 +482,11 @@ router.route("/studentPredmet").post((req, res) => {
   studentCourse.collection.insertMany(data);
   res.send("OK");
 });
+router.route("/insertFromCsv").post((req, res) => {
+  let data = req.body.data;
+  user.collection.insertMany(data);
+  res.send("OK");
+});
 
 router.route("/getZaposleniByUsername").post((req, res) => {
   let username = req.body.username;
@@ -456,6 +517,15 @@ router.route("/getPredmetByAkronim").post((req, res) => {
   let akronim = req.body.akronim;
   const userRegex = new RegExp(akronim, "i");
   courses.findOne({ akronim: userRegex }, (err, courses) => {
+    if (err) console.log(err);
+    else res.json(courses);
+  });
+});
+router.route("/predmetiMaster").post((req, res) => {
+  let akronim = req.body.akronim;
+  const userRegex = new RegExp(akronim, "i");
+  console.log("Predmeti master");
+  courses.find({ akronim: userRegex }, (err, courses) => {
     if (err) console.log(err);
     else res.json(courses);
   });

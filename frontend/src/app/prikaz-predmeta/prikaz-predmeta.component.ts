@@ -25,7 +25,7 @@ export class PrikazPredmetaComponent implements OnInit {
   ngOnInit(): void {
     this.sub = this.route.params.subscribe((params) => {
       this.id = params['id']; // (+) converts string 'id' to a number
-
+      console.log(this.id);
       this.mojiPredmeti = JSON.parse(localStorage.getItem('mojiPredmeti'));
       if (!this.checkPredmete(this.id)) {
         this.router.navigate(['/pocetna']);
@@ -48,6 +48,8 @@ export class PrikazPredmetaComponent implements OnInit {
   }
 
   checkPredmete(p: string) {
+    var user = JSON.parse(localStorage.getItem('user'));
+    if (user.type == 'a' || user.type == 'z') return true;
     if (this.mojiPredmeti == null) return false;
     var x = this.mojiPredmeti.includes(p);
     if (x) return true;
@@ -79,6 +81,7 @@ export class PrikazPredmetaComponent implements OnInit {
   dohvatiPredavanja() {
     this.serviceGet.getMaterials(this.id).subscribe((m: Materials) => {
       this.podaci = m;
+      console.log(this.podaci);
       this.podaci.matPred.sort((a, b) => a.redosled - b.redosled);
     });
   }

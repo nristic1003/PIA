@@ -21,16 +21,17 @@ import { StudentComponent } from './student/student.component';
 import { PrikazZaposlenogComponent } from './prikaz-zaposlenog/prikaz-zaposlenog.component';
 import { PrikazPredmetaComponent } from './prikaz-predmeta/prikaz-predmeta.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatButtonModule} from '@angular/material/button';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTabsModule } from '@angular/material/tabs';
 import { ProfesorComponent } from './profesor/profesor.component';
 import { PromenaLozinkeComponent } from './promena-lozinke/promena-lozinke.component';
 import { AdminComponent } from './admin/admin.component';
 import { IstrazivanjaComponent } from './istrazivanja/istrazivanja.component';
 import { ProjektiKatedraComponent } from './projekti-katedra/projekti-katedra.component';
 import { AzuriranjeVestiComponent } from './azuriranje-vesti/azuriranje-vesti.component';
-
-
+import { AzurirajStudentaComponent } from './azuriraj-studenta/azuriraj-studenta.component';
+import { AzuriranjeProfesoraComponent } from './azuriranje-profesora/azuriranje-profesora.component';
+import { NgxCsvParserModule } from 'ngx-csv-parser';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,9 @@ import { AzuriranjeVestiComponent } from './azuriranje-vesti/azuriranje-vesti.co
     AdminComponent,
     IstrazivanjaComponent,
     ProjektiKatedraComponent,
-    AzuriranjeVestiComponent
+    AzuriranjeVestiComponent,
+    AzurirajStudentaComponent,
+    AzuriranjeProfesoraComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,9 +68,10 @@ import { AzuriranjeVestiComponent } from './azuriranje-vesti/azuriranje-vesti.co
     BrowserAnimationsModule,
     BrowserModule,
     MatButtonModule,
-    MatTabsModule
+    MatTabsModule,
+    NgxCsvParserModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

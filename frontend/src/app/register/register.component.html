@@ -1,43 +1,60 @@
 <div class="container">
-
-    <h1 style="margin-top: 40px;" align="center">Registracija</h1>
-    <div class="row justify-content-center">
-        <div class="col-xl-4">
-                <div class="form-group">
-                    <label>{{message}}</label>       
-                </div>
-            <form>
-                <div class="form-group">
-                    <label>Ime:</label>
-                    <input type="text" name="name" class="form-control" [(ngModel)]="name" />       
-                </div>
-                <div class="form-group">
-                    <label>Prezime</label>
-                    <input type="text" name="lastname" class="form-control" [(ngModel)]="lastname" />
-                </div>
-                <div class="form-group">
-                    <label >Vrsta studija</label>
-                     <select name="type" class="form-control" [(ngModel)]="type">
-                        <option value="d">Osnovne studije</option>
-                        <option value="m">Master studije</option>
-                        <option value="p">Doktorske</option>
-                    </select>
-                  
-                </div>
-                <div class="form-group">
-                    <label  class="control-label">Sifra</label>
-                    <input name="password"  class="form-control" [(ngModel)]="password" />
-                  
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Broj Indeksa</label>
-                    <input type="text" name="indexNumber" placeholder="U obliku: GGGG/BBBB" class="form-control" [(ngModel)]="indexNumber" />
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary" (click)='register()' >Posalji</button>
-                </div>
-            </form>
+  <h1 style="margin-top: 40px" align="center">Registracija</h1>
+  <div class="row justify-content-center">
+    <div class="col-xl-4">
+      <div class="form-group">
+        <label>{{ message }}</label>
+      </div>
+      <form>
+        <div class="form-group">
+          <label>Ime:</label>
+          <input
+            type="text"
+            name="name"
+            class="form-control"
+            [(ngModel)]="name"
+          />
         </div>
+        <div class="form-group">
+          <label>Prezime</label>
+          <input
+            type="text"
+            name="lastname"
+            class="form-control"
+            [(ngModel)]="lastname"
+          />
+        </div>
+        <div class="form-group">
+          <label>Vrsta studija</label>
+          <select name="type" class="form-control" [(ngModel)]="type">
+            <option value="d">Osnovne studije</option>
+            <option value="m">Master studije</option>
+            <option value="p">Doktorske</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Sifra</label>
+          <input
+            type="password"
+            name="password"
+            class="form-control"
+            [(ngModel)]="password"
+          />
+        </div>
+        <div class="form-group">
+          <label class="control-label">Broj Indeksa</label>
+          <input
+            type="text"
+            name="indexNumber"
+            placeholder="U obliku: GGGG/BBBB"
+            class="form-control"
+            [(ngModel)]="indexNumber"
+          />
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary" (click)="register()">Posalji</button>
+        </div>
+      </form>
     </div>
-
+  </div>
 </div>

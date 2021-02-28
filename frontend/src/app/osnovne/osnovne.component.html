@@ -37,6 +37,70 @@
   <table class="table table-bordered">
     <thead>
       <tr>
+        <th colspan="3">Semestar 2</th>
+      </tr>
+    </thead>
+    <tr>
+      <td>Sifra predmeta</td>
+      <td>Naziv predmeta</td>
+      <td>Nastavnici:</td>
+    </tr>
+    <tr *ngFor="let p of predmeti">
+      <td *ngIf="p.semestar == 2">
+        {{ p.akronim }}
+      </td>
+      <td *ngIf="p.semestar == 2">
+        <span *ngIf="checkPredmete(p.akronim); else nijeNaPredmetu">
+          <a class="nav-link" [routerLink]="['/prikaz-predmeta', p.akronim]">{{
+            p.naziv
+          }}</a>
+        </span>
+
+        <ng-template #nijeNaPredmetu>{{ p.naziv }}</ng-template>
+      </td>
+      <td *ngIf="p.semestar == 2">
+        <span *ngFor="let nastavnik of p.nastavnik">
+          {{ nastavnik.predavac }} <br
+        /></span>
+      </td>
+    </tr>
+  </table>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th colspan="3">Semestar 3</th>
+      </tr>
+    </thead>
+    <tr>
+      <td>Sifra predmeta</td>
+      <td>Naziv predmeta</td>
+      <td>Nastavnici:</td>
+    </tr>
+    <tr *ngFor="let p of predmeti">
+      <td *ngIf="p.semestar == 3">
+        {{ p.akronim }}
+      </td>
+      <td *ngIf="p.semestar == 3">
+        <span *ngIf="checkPredmete(p.akronim); else nijeNaPredmetu">
+          <a class="nav-link" [routerLink]="['/prikaz-predmeta', p.akronim]">{{
+            p.naziv
+          }}</a>
+        </span>
+
+        <ng-template #nijeNaPredmetu>{{ p.naziv }}</ng-template>
+      </td>
+      <td *ngIf="p.semestar == 3">
+        <span *ngFor="let nastavnik of p.nastavnik">
+          {{ nastavnik.predavac }} <br
+        /></span>
+      </td>
+    </tr>
+  </table>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
         <th colspan="3">Semestar 7</th>
       </tr>
     </thead>

@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgxCsvParser, NgxCSVParserError } from 'ngx-csv-parser';
 import { Courses } from '../model/courses.model';
 import { User } from '../model/user.model';
 import { Zaposleni } from '../model/zaposleni.model';
@@ -11,9 +12,50 @@ import { AdminService } from '../Services/admin.service';
   styleUrls: ['./admin.component.css'],
 })
 export class AdminComponent implements OnInit {
-  constructor(private service: AdminService, private router: Router) {}
+  constructor(
+    private service: AdminService,
+    private router: Router,
+    private ngxCsvParser: NgxCsvParser
+  ) {}
 
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
+
+  csvRecords: any[] = [];
+
+  @ViewChild('fileImportInput', { static: false }) fileImportInput: any;
+
+  // Your applications input change listener for the CSV File
+  fileChangeListener($event: any): void {
+    // Select the files from the event
+    const files = $event.srcElement.files;
+
+    // Parse the file you want to select for the operation along with the configuration
+    this.ngxCsvParser
+      .parse(files[0], { header: true, delimiter: ',' })
+      .pipe()
+      .subscribe(
+        (result: Array<any>) => {
+          console.log('Result', result);
+          this.csvRecords = result;
+          this.insertCSV();
+        },
+        (error: NgxCSVParserError) => {
+          console.log('Error', error);
+        }
+      );
+  }
+
+  insertCSV() {
+    console.log(this.csvRecords);
+
+    for (let i = 0; i < this.csvRecords.length; i++) {
+      this.csvRecords[i]['status'] = 'aktivan';
+    }
+
+    console.log(this.csvRecords);
+
+    this.service.insertFromCsv(this.csvRecords).subscribe(() => {});
+  }
 
   ngOnInit(): void {
     let data = JSON.parse(localStorage.getItem('user'));
@@ -86,6 +128,19 @@ export class AdminComponent implements OnInit {
     };
     console.log(data);
     this.service.dodajStudenta(data).subscribe((a: Response) => {});
+  }
+
+  azuriranjeStudenta(s: User) {
+    console.log(s);
+    localStorage.setItem('student', JSON.stringify(s));
+    this.router.navigate(['/azuriraj-studenta']);
+  }
+
+  azurirajNastavnika(z: Zaposleni)
+  {
+    console.log(z);
+    localStorage.setItem('profesor', JSON.stringify(z));
+    this.router.navigate(['/azuriranje-profesora']);
   }
 
   dodajZaposlenog() {

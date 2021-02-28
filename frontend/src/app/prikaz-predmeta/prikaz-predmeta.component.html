@@ -72,7 +72,7 @@
           </tr>
           <tr>
             <th scope="row">Propozicije</th>
-            <td colspan="3">{{ predmet.propozicije }}</td>
+            <td colspan="3">{{ predmet.cilj }}</td>
           </tr>
           <tr>
             <th scope="row">Nacin polaganja</th>
@@ -403,7 +403,14 @@
           <table class="table table-striped">
             <tr>
               <td>izaberite fajl</td>
-              <td><input type="file" #fileInput class="form-control" /></td>
+              <td>
+                <input
+                  type="file"
+                  #fileInput
+                  class="form-control"
+                  accept=".zip,.7z"
+                />
+              </td>
             </tr>
             <tr>
               <td colspan="2">
@@ -417,32 +424,34 @@
       </div>
 
       <div *ngFor="let s of students">
-        <form>
-          <table class="table table-striped table-bordered">
-            <tr>
-              <td>{{ s.naziv }} , {{ s.mesto }}</td>
-            </tr>
-            <tr>
-              <td>
-                {{ s.termin | date: "short" }}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <button
-                  value="{{ s.naziv }}"
-                  class="btn btn-success"
-                  (click)="dodajMe($event)"
-                >
-                  Dodaj me
-                </button>
-              </td>
-            </tr>
-            <tr *ngFor="let student of s.studenti">
-              <td>{{ student.username }}</td>
-            </tr>
-          </table>
-        </form>
+        <div *ngIf="s.otvoren">
+          <form>
+            <table class="table table-striped table-bordered">
+              <tr>
+                <td>{{ s.naziv }} , {{ s.mesto }}</td>
+              </tr>
+              <tr>
+                <td>
+                  {{ s.termin | date: "short" }}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <button
+                    value="{{ s.naziv }}"
+                    class="btn btn-success"
+                    (click)="dodajMe($event)"
+                  >
+                    Dodaj me
+                  </button>
+                </td>
+              </tr>
+              <tr *ngFor="let student of s.studenti">
+                <td>{{ student.username }}</td>
+              </tr>
+            </table>
+          </form>
+        </div>
       </div>
     </mat-tab>
   </mat-tab-group>

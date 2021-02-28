@@ -1,75 +1,103 @@
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-    <a class="navbar-brand" href="#">Angular Bootstrap Demo</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
-      aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-      <ul class="navbar-nav mr-auto">
-  
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/pocetna">Pocetna</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/zaposleni">Zaposleni</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="/obavestenja">Obavestenja</a>
-          </li>
+  <a class="navbar-brand" href="#">RTI Katedra</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarCollapse"
+    aria-controls="navbarCollapse"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/pocetna">Pocetna</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/zaposleni">Zaposleni</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/obavestenja">Obavestenja</a>
+      </li>
 
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Osnovne studije </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item"  [routerLink]="['/osnovne', 'RTI' ]">RTI</a>
-              <a class="dropdown-item"  [routerLink]="['/osnovne', 'SI']">SI</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" [routerLink]="['/osnovne', 'ostalo']">Ostali odseci</a>
-            </div>
-          </li>
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdown"
+          role="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+          >Osnovne studije
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" [routerLink]="['/osnovne', 'RTI']">RTI</a>
+          <a class="dropdown-item" [routerLink]="['/osnovne', 'SI']">SI</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" [routerLink]="['/osnovne', 'ostalo']"
+            >Ostali odseci</a
+          >
+        </div>
+      </li>
 
-    
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/master-studije">Master Studije</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/projekti-katedra">Projekti</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Nauka </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item"  routerLink= "/istrazivanja" >Istrazivanja</a>
-              <a class="dropdown-item"  routerLink= "/projekti">Projekti</a>
-            </div>
-          </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/master-studije">Master Studije</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/projekti-katedra">Projekti</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdown"
+          role="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+          >Nauka
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" routerLink="/istrazivanja">Istrazivanja</a>
+          <a class="dropdown-item" routerLink="/projekti">Projekti</a>
+        </div>
+      </li>
 
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/kontakt">Kontakt</a>
-          </li>
-          <li class="nav-item">
-            <a *ngIf='checkType()' class="nav-link" routerLink="/profesor">Profesor</a>
-          </li>
-          <li class="nav-item">
-            <a *ngIf='checkAdmin()' class="nav-link" routerLink="/admin">Admin</a>
-          </li>
-          <li class="nav-item">
-            <a *ngIf='checkStudent()' class="nav-link" routerLink="/student">Student</a>
-          </li>
-
-      </ul>
-      <ul class="navbar-nav mr-5" *ngIf ='!checkLogged(); else elseBlock'> 
-        <li class="nav-item">
-            <a class="nav-link" routerLink="/login">Login</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink ='/register'>Register</a>
-        </li> 
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/kontakt">Kontakt</a>
+      </li>
+      <li class="nav-item">
+        <a *ngIf="checkType()" class="nav-link" routerLink="/profesor"
+          >Profesor</a
+        >
+      </li>
+      <li class="nav-item">
+        <a *ngIf="checkAdmin()" class="nav-link" routerLink="/admin">Admin</a>
+      </li>
+      <li class="nav-item">
+        <a *ngIf="checkStudent()" class="nav-link" routerLink="/student"
+          >Student</a
+        >
+      </li>
+    </ul>
+    <ul class="navbar-nav mr-5" *ngIf="!checkLogged(); else elseBlock">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/login">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/register">Register</a>
+      </li>
     </ul>
 
     <ul class="navbar-nav mr-5">
-    <ng-template #elseBlock>
-        <span class="text-light mr-5" >{{getUsername()}}</span>
-        <button class='btn btn-danger' (click)='logout()'>Log out</button>
+      <ng-template #elseBlock>
+        <span class="text-light mr-5">{{ getUsername() }}</span>
+        <button class="btn btn-danger" (click)="logout()">Log out</button>
       </ng-template>
     </ul>
-    </div>
-  </nav>
+  </div>
+</nav>

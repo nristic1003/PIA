@@ -20,8 +20,10 @@ export class OsnovneComponent implements OnInit {
   ngOnInit(): void {
     this.sub = this.route.params.subscribe((params) => {
       this.id = params['id']; // (+) converts string 'id' to a number
+      console.log(this.id);
       this.serviceGet.getPredmeti(this.id).subscribe((pred: Courses[]) => {
         this.predmeti = pred;
+
         this.predmeti.sort((a, b) => a.semestar - b.semestar);
         console.log(this.predmeti);
       });
@@ -38,6 +40,9 @@ export class OsnovneComponent implements OnInit {
   }
 
   checkPredmete(p: string) {
+    var user = JSON.parse(localStorage.getItem('user'));
+    if (user == undefined) return false;
+    if (user.type == 'a' || user.type == 'z') return true;
     if (this.mojiPredmeti == null) return false;
     var x = this.mojiPredmeti.includes(p);
     if (x) return true;

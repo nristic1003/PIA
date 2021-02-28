@@ -65,6 +65,29 @@ export class AdminService {
     return this.http.post(`${this.uri}/studentPredmet`, d);
   }
 
+  azurirajStudenta(data, oldUsername) {
+    let d = {
+      data: data,
+      oldUsername: oldUsername,
+    };
+    return this.http.post(`${this.uri}/azurirajStudenta`, d);
+  }
+
+  azurirajProfesora(data, oldUsername) {
+    let d = {
+      data: data,
+      oldUsername: oldUsername,
+    };
+    return this.http.post(`${this.uri}/azurirajProfesora`, d);
+  }
+
+  insertFromCsv(data: any[]) {
+    let d = {
+      data: data,
+    };
+    return this.http.post(`${this.uri}/insertFromCsv`, d);
+  }
+
   uploadImage(formData: FormData) {
     var id;
     id = formData.get('id');

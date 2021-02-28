@@ -1,9 +1,17 @@
 <div class="container">
   <mat-tab-group dynamicHeight>
     <mat-tab label="Dodavanje studenta">
-      <h1 align="center">Dodavanje studenta</h1>
+      <h1 style="margin-top: 50px" align="center">Dodavanje studenta</h1>
       <div class="row justify-content-center">
         <div class="col-xl-4">
+          <input
+            type="file"
+            #fileImportInput
+            name="File Upload"
+            id="csvFileUpload"
+            (change)="fileChangeListener($event)"
+          />
+
           <div class="form-group">
             <label>{{ message }}</label>
           </div>
@@ -40,6 +48,7 @@
                 name="password"
                 class="form-control"
                 [(ngModel)]="password"
+                type="password"
               />
             </div>
             <div class="form-group">
@@ -63,7 +72,7 @@
     </mat-tab>
 
     <mat-tab label="Dodavanje profesora">
-      <h1 align="center">Dodavanje profesora</h1>
+      <h1 style="margin-top: 50px"align="center">Dodavanje profesora</h1>
       <div class="row justify-content-center">
         <div class="col-xl-4">
           <span>{{ message }}</span>
@@ -139,7 +148,7 @@
               <label>Korisnicko ime: </label>
               <input
                 type="text"
-                placeholder="U obliku:  piGGGGBBx@student.etf.rs"
+                placeholder="U obliku:  piGGGGBBx@etf.rs"
                 name="username"
                 class="form-control"
                 [(ngModel)]="username"
@@ -151,6 +160,7 @@
                 name="password"
                 class="form-control"
                 [(ngModel)]="password"
+                type="password"
               />
             </div>
             <div class="form-group">
@@ -182,7 +192,11 @@
           <td>{{ s.name }}</td>
           <td>{{ s.lastname }}</td>
           <td>{{ s.indexNumber }}</td>
-          <td><button class="btn btn-primary">Azuriraj</button></td>
+          <td>
+            <button class="btn btn-primary" (click)="azuriranjeStudenta(s)">
+              Azuriraj
+            </button>
+          </td>
           <td>
             <button
               value="{{ s.username }}"
@@ -197,9 +211,9 @@
     </mat-tab>
 
     <mat-tab label="Svi zaposleni">
-      <table class="table table-bordered table-striped">
+      <table s class="table table-bordered table-striped">
         <tr>
-          <td>Korisnicko ima</td>
+          <td>Korisnicko ime</td>
           <td>Ime</td>
           <td>Prezime</td>
           <td>Azuriraj</td>
@@ -209,7 +223,11 @@
           <td>{{ z.username }}</td>
           <td>{{ z.name }}</td>
           <td>{{ z.lastname }}</td>
-          <td><button class="btn btn-primary">Azuriraj</button></td>
+          <td>
+            <button class="btn btn-primary" (click)="azurirajNastavnika(z)">
+              Azuriraj
+            </button>
+          </td>
           <td>
             <button
               value="{{ z.username }}"

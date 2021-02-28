@@ -37,6 +37,12 @@ export class GetDataService {
     };
     return this.http.post(`${this.uri}/getPredmetByAkronim`, data);
   }
+  predmetiMaster(akronim: String) {
+    const data = {
+      akronim: akronim,
+    };
+    return this.http.post(`${this.uri}/predmetiMaster`, data);
+  }
 
   sendDataToServer(formData: FormData) {
     var id;
@@ -49,7 +55,6 @@ export class GetDataService {
       headers: headers,
     });
   }
-
 
   uploadSpisak(formData: FormData) {
     var id;
@@ -139,6 +144,21 @@ export class GetDataService {
   getMojePredmete(data: String) {
     return this.http.get(`${this.uri}/getMojePredmete/${data}`);
   }
+  dohvatiMojeSpiskove(data: String) {
+    console.log(data);
+    return this.http.get(`${this.uri}/dohvatiMojeSpiskove/${data}`);
+  }
+
+    
+  zatvoriSpisak(data:string)  {
+    let d = {
+      data: data,
+    };
+    return this.http.post(`${this.uri}/zatvoriSpisak`, d);
+  }
+
+
+
   getMyCourses(data) {
     let d = {
       data: data,

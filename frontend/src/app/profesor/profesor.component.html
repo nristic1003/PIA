@@ -1,545 +1,938 @@
 <div class="container">
-    <mat-tab-group dynamicHeight >
-        <mat-tab label="Predmeti">
-            <div class="row justify-content-center">
-                <h2 class="">Uredjivanje predmeta</h2>
-            </div>
-        
-            <form>
-                <table class="table table-striped table-bordered">
-                        <tr>
-                            <td colspan="3">Izaberite predmet</td>
-                            <td colspan="3"> 
-                                <select (change)="todo($event.target.value)">
-                                    <option value="{{p.akronim}}" *ngFor = 'let p of myCourses'>{{p.naziv}} - {{p.akronim}}</option>
-                                </select>
-                            </td>
-                        </tr>
-                    
-                    <tr>
-                    <td colspan="6">
-                        <mat-tab-group mat-stretch-tabs>
-                            <td>
-                            <mat-tab label = "O predmetu">
-                                <table class="table table-striped"> 
-                                <tr>
-                                    <td><b>Status predmeta:</b></td>
-                                    <td>
-                                        <select class="form-control" name="predmet.tip" [(ngModel)] ="predmet.tip">    
-                                            <option>izborni</option>
-                                            <option>obavezni</option>
-                                        </select>
-                                    </td>
-                                    <td><b>Sifra predmeta</b></td>
-                                    <td><input name="{{predmet.akronim}}" [(ngModel)] = "predmet.akronim"  type="text" placeholder="sifra predmeta" /></td>
-                                </tr>
-                                <tr>
-                                    <td><b>ESPB</b></td>
-                                    <td >  <input name="predmet.ESPB" [(ngModel)] = "predmet.ESPB" value="{{predmet.ESPB}}" type="number" /></td>
-                                    <td><b>Lab vezbe iz predmeta:</b></td>
-                                    <td >  
-                                        <select class="form-control"  name="predmet.lab" [(ngModel)] = "predmet.lab">
-                                            <option value="DA">DA</option>
-                                            <option value="NE">NE</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><b>Vidljivost materijala</b></td>
-                                    <td><input type="checkbox" class="form-control" name="predmet.ispitVidljiv" [(ngModel)]='predmet.ispitVidljiv'/> Ispit</td>
-                                    <td><input type="checkbox" class="form-control" name="predmet.labVidljiv" [(ngModel)]='predmet.labVidljiv'/> Lab</td>
-                                    <td><input type="checkbox" class="form-control" name="predmet.projekatVidljiv" [(ngModel)]='predmet.projekatVidljiv'/> Projekat</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Termin Predavanja: </b></td>
-                                    <td >  <input name="predmet.terPred" [(ngModel)] = "predmet.terPred"  type="datetime-local" /></td>
-                                    <td><b>Termin vezbe:</b></td>
-                                    <td><input name="predmet.terVezbe" [(ngModel)] = "predmet.terVezbe"  type="datetime-local" /></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4"><b> Uslov</b></td>
-                                
-                                </tr>
-                                <tr>
-                                    <td colspan="4"> 
-                                        <textarea name = "predmet.nacinPol" [(ngModel)]="predmet.nacinPol" class="form-control rounded-1"  rows="5"></textarea>
-                    
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4"><b> Cilj Predmeta</b></td>
-                                
-                                </tr>
-                                <tr>
-                                    <td colspan="4"> 
-                                        <textarea name = "predmet.cilj" class="form-control rounded-1"  rows="5" [(ngModel)] = "predmet.cilj"></textarea>
-                    
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4"> <button (click) = "updatePodataka()" value="Sacuvaj" class="btn btn-success">Sacuvaj</button> </td>
-                                </tr>
+  <mat-tab-group dynamicHeight>
+    <mat-tab label="Predmeti">
+      <div class="row justify-content-center">
+        <h2 class="">Uredjivanje predmeta</h2>
+      </div>
 
-                            </table>
-                            </mat-tab>
-                        
+      <form>
+        <table class="table table-striped table-bordered">
+          <tr>
+            <td colspan="3">Izaberite predmet</td>
+            <td colspan="3">
+              <select (change)="todo($event.target.value)">
+                <option value="{{ p.akronim }}" *ngFor="let p of myCourses">
+                  {{ p.naziv }} - {{ p.akronim }}
+                </option>
+              </select>
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="6">
+              <mat-tab-group mat-stretch-tabs>
+                <td>
+                  <mat-tab label="O predmetu">
+                    <table class="table table-striped">
+                      <tr>
+                        <td><b>Status predmeta:</b></td>
+                        <td>
+                          <select
+                            class="form-control"
+                            name="predmet.tip"
+                            [(ngModel)]="predmet.tip"
+                          >
+                            <option>izborni</option>
+                            <option>obavezni</option>
+                          </select>
+                        </td>
+                        <td><b>Sifra predmeta</b></td>
+                        <td>
+                          <input
+                            name="{{ predmet.akronim }}"
+                            [(ngModel)]="predmet.akronim"
+                            type="text"
+                            placeholder="sifra predmeta"
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><b>ESPB</b></td>
+                        <td>
+                          <input
+                            name="predmet.ESPB"
+                            [(ngModel)]="predmet.ESPB"
+                            value="{{ predmet.ESPB }}"
+                            type="number"
+                          />
+                        </td>
+                        <td><b>Lab vezbe iz predmeta:</b></td>
+                        <td>
+                          <select
+                            class="form-control"
+                            name="predmet.lab"
+                            [(ngModel)]="predmet.lab"
+                          >
+                            <option value="DA">DA</option>
+                            <option value="NE">NE</option>
+                          </select>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><b>Vidljivost materijala</b></td>
+                        <td>
+                          <input
+                            type="checkbox"
+                            class="form-control"
+                            name="predmet.ispitVidljiv"
+                            [(ngModel)]="predmet.ispitVidljiv"
+                          />
+                          Ispit
                         </td>
                         <td>
-                            <mat-tab label = "Predavanja">
-                                <form>
-
-                                    <table class="table table-bordered">
-                                        <tr>
-                                            <td><input type="file" #fileInput3  /></td>
-                                            <td> <button class="btn btn-primary" name="Predavanja"  value="matPred" type="submit"  (click)="onSubmit($event)">Upload</button></td>
-                                        </tr>
-                                    </table>
-
-
-                                
-                                    <table class="table table-striped table-bordered">
-                                        <tr>
-                                            <td>Fajl</td>
-                                            <td>Ekstenzija</td>
-                                            <td>Nastavnik</td>
-                                            <td>Datum</td>
-                                            <td>Redosled</td>
-                                            <td>Velicina u KB</td>
-                                            <td>Ukloni</td>
-                                        </tr> 
-                                    
-                                            <tr *ngFor = 'let p of podaci.matPred; let index'>
-                                                <td> Predavanje:<br /><a href="http://localhost:4000/uploads/{{predmet.akronim}}/Predavanja/{{p.naziv}}" >{{p.naziv}}</a></td>
-                                                <td> {{p.type}}</td>
-                                                <td> {{p.nastavnik}}</td>
-                                                <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
-                                                <td> <input type="text"  name = "{{p.redosled}}" [(ngModel)] = "p.redosled" /> </td>
-                                                <td>{{p.size}}</td>
-                                                <td> <button value="matPred" id="{{p.naziv}}" (click) = "deleteMaterial($event)"  class="btn btn-danger" >Ukloni</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3"></td>
-                                                <td colspan="3">
-                                                    <button class="btn btn-primary" (click) = 'redosled()'>Promeni redosled</button>
-                                                </td>
-                                                <td></td>
-                                                </tr>
-                                        
-                        
-                                    </table>
-                                </form>
-
-                            </mat-tab>
+                          <input
+                            type="checkbox"
+                            class="form-control"
+                            name="predmet.labVidljiv"
+                            [(ngModel)]="predmet.labVidljiv"
+                          />
+                          Lab
                         </td>
                         <td>
-                            <mat-tab label = "Vezbe">
-                                <form>
-                                    
-                                    <table class="table table-bordered">
-                                        <tr>
-                                            <td><input type="file" #fileInput4  /></td>
-                                            <td> <button class="btn btn-primary"  value="matVezbe" type="submit"  (click)="onSubmit($event)">Upload</button></td>
-                                        </tr>
-                                    </table>
-
-
-                                    <table class="table table-striped table-bordered">
-                                        <tr>
-                                            <td>Fajl</td>
-                                            <td>Ekstenzija</td>
-                                            <td>Nastavnik</td>
-                                            <td>Datum</td>
-                                            <td>Redosled</td>
-                                            <td>Velicina u KB</td>
-                                            <td>Ukloni</td>
-                                        </tr> 
-                                    
-                                            <tr *ngFor = 'let p of podaci.matVezbe'>
-                                                <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/Vezbe/{{p.naziv}}" >{{p.naziv}}</a></td>
-                                                <td> {{p.type}}</td>
-                                                <td> {{p.nastavnik}}</td>
-                                                <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
-                                                <td> <input type="text" name = "p.redosled" [(ngModel)] = "p.redosled" /> </td>
-                                                <td>{{p.size}}</td>
-                                                <td><button value="matVezbe" id="{{p.naziv}}" (click) = "deleteMaterial($event)" class="btn btn-danger" >Ukloni</button></td>
-                                            </tr>
-                                        
-                        
-                                    </table>
-                                </form>
-
-                            </mat-tab>
+                          <input
+                            type="checkbox"
+                            class="form-control"
+                            name="predmet.projekatVidljiv"
+                            [(ngModel)]="predmet.projekatVidljiv"
+                          />
+                          Projekat
                         </td>
+                      </tr>
+                      <tr>
+                        <td><b>Termin Predavanja: </b></td>
                         <td>
-                            <mat-tab  label = "Ispitna pitanja">
-                                <form>
-                                    
-                                    <table class="table table-bordered">
-                                        <tr>
-                                            <td><input type="file" #fileInput5  /></td>
-                                            <td> <button class="btn btn-primary"  value="ispitnaPitanja" type="submit"  (click)="onSubmit($event)">Upload</button></td>
-                                        </tr>
-                                    </table>
-                                    <table class="table table-striped table-bordered">
-                                        <tr>
-                                            <td>Fajl</td>
-                                            <td>Ekstenzija</td>
-                                            <td>Nastavnik</td>
-                                            <td>Datum</td>
-                                            <td>Redosled</td>
-                                            <td>Velicina u KB</td>
-                                            <td>Ukloni</td>
-                                        </tr> 
-                                    
-                                            <tr *ngFor = 'let p of podaci.ispitnaPitanja'>
-                                                <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/Ispit/{{p.naziv}}" >{{p.naziv}}</a></td>
-                                                <td> {{p.type}}</td>
-                                                <td> {{p.nastavnik}}</td>
-                                                <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
-                                                <td> <input type="text" name = "p.redosled" [(ngModel)] = "p.redosled" /> </td>
-                                                <td>{{p.size}}</td>
-                                                <td> <button value="ispitnaPitanja" id="{{p.naziv}}" (click) = "deleteMaterial($event)" class="btn btn-danger" >Ukloni</button></td>
-                                            </tr>
-                                        
-                        
-                                    </table>
-                                </form>
-
-                            </mat-tab>
-                            
+                          <input
+                            name="predmet.terPred"
+                            [(ngModel)]="predmet.terPred"
+                            type="datetime-local"
+                          />
                         </td>
+                        <td><b>Termin vezbe:</b></td>
                         <td>
-                            <mat-tab label = "Laboratorija">
-                             <div *ngIf = 'predmet.lab=="DA"; else NemaLabVezbi'>
-                                <form>  
-                                    
-                                        <table class="table table-striped table-bordered">
-                                            <tr>
-                                                <th><span>Naslov lab vezbe:</span></th>
-                                                <td><input  class="form-control" type="text" name="naslovLab" [(ngModel)] = "naslovLab"  /> </td>
-                                            </tr>
-                                            <tr>
-                                                <th><span>Vrednost u poenima</span></th>
-                                                <td><input  class="form-control" type="number" name="vrednostLab" [(ngModel)] = "vrednostLab"  /> </td>
-                                            </tr>
-                                            <tr>
-                                                <th colspan="2"><span>Tekst lab vezbe </span></th>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">
-                                                    <textarea class="form-control rounded-1"  rows="5" name="tekstLab" [(ngModel)] = 'tekstLab' ></textarea>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2"> <button class="btn btn-success" (click) = "objaviLabVest()">Objavi </button></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>Izaberite fajl</td>
-                                                <td>Upload</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td><input type="file" #fileInput  /></td>
-                                                <td> <button class="btn btn-primary"  value="matLaboratorija" type="submit"  (click)="onSubmit($event)">Upload</button></td>
-                                            </tr>
-
-                                        </table>
-
-                                        <table class="table table-striped table-bordered">
-                                            <tr>
-                                                <td>Fajl</td>
-                                                <td>Ekstenzija</td>
-                                                <td>Nastavnik</td>
-                                                <td>Datum</td>
-                                                <td>Redosled</td>
-                                                <td>Velicina u KB</td>
-                                                <td>Ukloni</td>
-                                            </tr> 
-                                        
-                                                <tr *ngFor = 'let p of podaci.matLaboratorija'>
-                                                    <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/Laboratorija/{{p.naziv}}" >{{p.naziv}}</a></td>
-                                                    <td> {{p.type}}</td>
-                                                    <td> {{p.nastavnik}}</td>
-                                                    <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
-                                                    <td> <input type="text" name = "p.redosled" [(ngModel)] = "p.redosled" /> </td>
-                                                    <td>{{p.size}}</td>
-                                                    <td> <button value="ispitnaPitanja" id="{{p.naziv}}" (click) = "deleteMaterial($event)" class="btn btn-danger" >Ukloni</button></td>
-                                                </tr>
-                                            
-                            
-                                        </table>
-                                        
-                                        
-                                    </form>
-                                    </div>
-
-                                    <ng-template #NemaLabVezbi>
-                                        <h3>Nema lab vezbi iz ovog predmeta</h3>
-                                    </ng-template>
-
-                            </mat-tab>
-                            
+                          <input
+                            name="predmet.terVezbe"
+                            [(ngModel)]="predmet.terVezbe"
+                            type="datetime-local"
+                          />
                         </td>
-                        <td>
-                            <mat-tab label = "Projekat">
-                                <form>  
-                                        <table class="table table-striped table-bordered">
-                                            <tr>
-                                                <th><span>Naslov projekat:</span></th>
-                                                <td><input  class="form-control" type="text" name="naslovProjekat" [(ngModel)] = "naslovProjekat"  /> </td>
-                                            </tr>
-                                            <tr>
-                                                <th><span>Vrednost u poenima</span></th>
-                                                <td><input  class="form-control" type="number" name="vrednostProjekat" [(ngModel)] = "vrednostProjekat"  /> </td>
-                                            </tr>
-                                            <tr>
-                                                <th colspan="2"><span>Tekst Projekat  </span></th>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">
-                                                    <textarea class="form-control rounded-1"  rows="5" name="tekstProjekat" [(ngModel)] = 'tekstProjekat' ></textarea>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2"> <button class="btn btn-success" (click) = "objaviProjekatVest()">Objavi </button></td>
-                                            </tr>
-                                        <tr>
-                                            <td>Izaberite fajl</td>
-                                            <td>Upload</td>
-                                        </tr>
-
-                                        <tr>
-                                            <td><input type="file" #fileInput2  /></td>
-                                            <td> <button class="btn btn-primary"  value="matProjekat" type="submit"  (click)="onSubmit($event)">Upload</button></td>
-                                        </tr>
-
-                                    </table>
-
-                                  
-                                        <table class="table table-striped table-bordered">
-                                            <tr>
-                                                <td>Fajl</td>
-                                                <td>Ekstenzija</td>
-                                                <td>Nastavnik</td>
-                                                <td>Datum</td>
-                                                <td>Redosled</td>
-                                                <td>Velicina u KB</td>
-                                                <td>Ukloni</td>
-                                            </tr> 
-                                        
-                                                <tr *ngFor = 'let p of podaci.matProjekat'>
-                                                    <td> Predavanje:<a href="http://localhost:4000/uploads/{{predmet.akronim}}/Projekat/{{p.naziv}}" >{{p.naziv}}</a></td>
-                                                    <td> {{p.type}}</td>
-                                                    <td> {{p.nastavnik}}</td>
-                                                    <td> {{p.datum | date: 'dd/MM/yyyy' }}</td>
-                                                    <td> <input type="text" name = "p.redosled" [(ngModel)] = "p.redosled" /> </td>
-                                                    <td>{{p.size}}</td>
-                                                    <td> <button value="ispitnaPitanja" id="{{p.naziv}}" (click) = "deleteMaterial($event)" class="btn btn-danger" >Ukloni</button></td>
-                                                </tr>
-                                            
-                            
-                                        </table>
-                                    
-                                    
-                                    
-                                </form>
-
-                            </mat-tab>
-                            
+                      </tr>
+                      <tr>
+                        <td colspan="4"><b> Uslov</b></td>
+                      </tr>
+                      <tr>
+                        <td colspan="4">
+                          <textarea
+                            name="predmet.nacinPol"
+                            [(ngModel)]="predmet.nacinPol"
+                            class="form-control rounded-1"
+                            rows="5"
+                          ></textarea>
                         </td>
-                        </mat-tab-group>
-                    </td>
-                    </tr>
-               
-                    
-                    
-                </table>
-               
-            </form>
-        
-
-        </mat-tab>
-
-        <mat-tab label="Profil" mat-stretch-tabs>
-            <div class="container">
-    
-                <table class="table" id="tableInfo">
-                    <div class="row">
-                     <table class="table table-responsive-xl">
-                     <thead>
-                         <tr>
-                         <th scope="col" colspan="3" style="font-size: 25px;">Information about  </th>
-                         </tr>
-                     </thead>
-                     <tbody>
-                 
-                         <tr>
-                             <td rowspan="10" width="200">
-                                 <img src="assets\images\avatar.png" alt="sadd" width="200"/>
-                             </td>
-                         </tr>
-                 
-                         <tr>
-                         <td>Username</td>
-                         <td><input name="nastavnik.username" [(ngModel)]="nastavnik.username" type="input" ></td>
-                         </tr>
-                 
-                         <tr>
-                         <td>First Name</td>
-                         <td><input name="nastavnik.name" [(ngModel)]="nastavnik.name" type="input" ></td>
-                         </tr>
-                 
-                         <tr>
-                         <td>Last Name</td>
-                         <td><input name="nastavnik.lastname" [(ngModel)]="nastavnik.lastname" type="input" ></td>
-                         </tr>
-                 
-                         <tr>
-                         <td>About</td>
-                         <td> <textarea name = "nastavnik.about" class="form-control rounded-1"  rows="5" [(ngModel)] = "nastavnik.about"></textarea></td>
-                         </tr>
-                         
-                         <tr>
-                         <td>Address</td>
-                         <td><input name="nastavnik.address" [(ngModel)]="nastavnik.address" type="input" rows="10" ></td>
-                         </tr>
-                         
-                         <tr>
-                         <td>Degree</td>
-                         <td><input name="nastavnik.degree" [(ngModel)]="nastavnik.degree" type="input" ></td>
-                         </tr>
-                         <tr>
-                         <td>Room</td>
-                         <td><input name="nastavnik.room" [(ngModel)]="nastavnik.room" type="input" ></td>
-                         </tr>
-                         <tr>
-                        <td></td>
-                        <td><button (click) = "updateInfoNastavnik()" class="btn btn-success" > Save</button></td>
-                        </tr>
-                         
-                        
-                         
-                     </tbody>
-                     </table>
-                 </div>
-                 </table>
-            
-            
-            </div>
-
-        </mat-tab>
-
-        <mat-tab label="Dodavanje Vesti" mat-stretch-tabs>
-            <form>
-                    <table class="table table-bordered">
-                        
-                        <tr>
-                            <td><h3>Naslov:</h3></td>
-                            <td><input  class="form-control" type="text" name="naslovVesti" [(ngModel)] = "naslovVesti"  /> </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"><span>Tekst vesti </span></td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <textarea class="form-control rounded-1"  rows="5" name="tekstVesti" [(ngModel)] = 'tekstVesti' ></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Izaberite predmete:</td>
-                            <td>
-                                <lable *ngFor = 'let p of myCourses'>
-                                    <input (change)='checkData($event)' type="checkbox"  name="{{p.akronim}}" value="{{p.akronim}}">
-                                    {{p.akronim}} &nbsp;
-                                </lable>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Izaberite datum:</td>
-                            <td> 
-                                <input type="date" class="form-control" name="datumObjave" [(ngModel)] = 'datumObjave'  />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Izaberite fajlove:
-                            </td>
-                            <input type="file" multiple #inputMultiple >
-                        </tr>
-                        <tr>
-                            <td colspan="2"><button class="btn btn-primary" (click)='uploadMultiple()'>Upload</button></td>
-                        </tr>
+                      </tr>
+                      <tr>
+                        <td colspan="4"><b> Cilj Predmeta</b></td>
+                      </tr>
+                      <tr>
+                        <td colspan="4">
+                          <textarea
+                            name="predmet.cilj"
+                            class="form-control rounded-1"
+                            rows="5"
+                            [(ngModel)]="predmet.cilj"
+                          ></textarea>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="4">
+                          <button
+                            (click)="updatePodataka()"
+                            value="Sacuvaj"
+                            class="btn btn-success"
+                          >
+                            Sacuvaj
+                          </button>
+                        </td>
+                      </tr>
                     </table>
-            </form>
-        </mat-tab>
+                  </mat-tab>
+                </td>
+                <td>
+                  <mat-tab label="Predavanja">
+                    <form>
+                      <table class="table table-bordered">
+                        <tr>
+                          <td><input type="file" #fileInput3 /></td>
+                          <td>
+                            <button
+                              class="btn btn-primary"
+                              name="Predavanja"
+                              value="matPred"
+                              type="submit"
+                              (click)="onSubmit($event)"
+                            >
+                              Upload
+                            </button>
+                          </td>
+                        </tr>
+                      </table>
 
-        <mat-tab label="Sve vesti">
-           <h2>Vesti na predmetu {{predmet.naziv}}</h2>
-           <div *ngFor = 'let v of predmet.obavestenja'>
-                <table class="table table-bordered"> 
-                    <tr>
-                        <th colspan="3">{{v.naziv}}</th>
-                    </tr>
-                    <tr>
-                        <td style="width: 70%;">{{v.tekst}}</td>
-                    
-                        <td><button class="btn btn-primary" value="{{v.id}}" (click) = "azurirajVest(v)">Azuriraj</button></td>
-                        
-                       <td *ngIf ='v.kreator === profesor;  else elseBlock '> 
-                        <button class="btn btn-danger" value="{{v.id}}" (click) = "deleteVest($event)">Izbrisi</button>
-                        <ng-template #elseBlock></ng-template>
-                       </td>
+                      <table class="table table-striped table-bordered">
+                        <tr>
+                          <td>Fajl</td>
+                          <td>Ekstenzija</td>
+                          <td>Nastavnik</td>
+                          <td>Datum</td>
+                          <td>Redosled</td>
+                          <td>Velicina u KB</td>
+                          <td>Ukloni</td>
+                        </tr>
 
-                    </tr>
-                </table>
-           </div>
-          
+                        <tr *ngFor="let p of podaci.matPred; let index">
+                          <td>
+                            Predavanje:<br /><a
+                              href="http://localhost:4000/uploads/{{
+                                predmet.akronim
+                              }}/Predavanja/{{ p.naziv }}"
+                              >{{ p.naziv }}</a
+                            >
+                          </td>
+                          <td>{{ p.type }}</td>
+                          <td>{{ p.nastavnik }}</td>
+                          <td>{{ p.datum | date: "dd/MM/yyyy" }}</td>
+                          <td>
+                            <input
+                              type="text"
+                              name="{{ p.redosled }}"
+                              [(ngModel)]="p.redosled"
+                            />
+                          </td>
+                          <td>{{ p.size }}</td>
+                          <td>
+                            <button
+                              value="matPred"
+                              id="{{ p.naziv }}"
+                              (click)="deleteMaterial($event)"
+                              class="btn btn-danger"
+                            >
+                              Ukloni
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="3"></td>
+                          <td colspan="3">
+                            <button
+                              class="btn btn-primary"
+                              (click)="redosled()"
+                            >
+                              Promeni redosled
+                            </button>
+                          </td>
+                          <td></td>
+                        </tr>
+                      </table>
+                    </form>
+                  </mat-tab>
+                </td>
+                <td>
+                  <mat-tab label="Vezbe">
+                    <form>
+                      <table class="table table-bordered">
+                        <tr>
+                          <td><input type="file" #fileInput4 /></td>
+                          <td>
+                            <button
+                              class="btn btn-primary"
+                              value="matVezbe"
+                              type="submit"
+                              (click)="onSubmit($event)"
+                            >
+                              Upload
+                            </button>
+                          </td>
+                        </tr>
+                      </table>
 
-        </mat-tab>
+                      <table class="table table-striped table-bordered">
+                        <tr>
+                          <td>Fajl</td>
+                          <td>Ekstenzija</td>
+                          <td>Nastavnik</td>
+                          <td>Datum</td>
+                          <td>Redosled</td>
+                          <td>Velicina u KB</td>
+                          <td>Ukloni</td>
+                        </tr>
 
+                        <tr *ngFor="let p of podaci.matVezbe">
+                          <td>
+                            Predavanje:<a
+                              href="http://localhost:4000/uploads/{{
+                                predmet.akronim
+                              }}/Vezbe/{{ p.naziv }}"
+                              >{{ p.naziv }}</a
+                            >
+                          </td>
+                          <td>{{ p.type }}</td>
+                          <td>{{ p.nastavnik }}</td>
+                          <td>{{ p.datum | date: "dd/MM/yyyy" }}</td>
+                          <td>
+                            <input
+                              type="text"
+                              name="p.redosled"
+                              [(ngModel)]="p.redosled"
+                            />
+                          </td>
+                          <td>{{ p.size }}</td>
+                          <td>
+                            <button
+                              value="matVezbe"
+                              id="{{ p.naziv }}"
+                              (click)="deleteMaterial($event)"
+                              class="btn btn-danger"
+                            >
+                              Ukloni
+                            </button>
+                          </td>
+                        </tr>
+                      </table>
+                    </form>
+                  </mat-tab>
+                </td>
+                <td>
+                  <mat-tab label="Ispitna pitanja">
+                    <form>
+                      <table class="table table-bordered">
+                        <tr>
+                          <td><input type="file" #fileInput5 /></td>
+                          <td>
+                            <button
+                              class="btn btn-primary"
+                              value="ispitnaPitanja"
+                              type="submit"
+                              (click)="onSubmit($event)"
+                            >
+                              Upload
+                            </button>
+                          </td>
+                        </tr>
+                      </table>
+                      <table class="table table-striped table-bordered">
+                        <tr>
+                          <td>Fajl</td>
+                          <td>Ekstenzija</td>
+                          <td>Nastavnik</td>
+                          <td>Datum</td>
+                          <td>Redosled</td>
+                          <td>Velicina u KB</td>
+                          <td>Ukloni</td>
+                        </tr>
 
-        <mat-tab label="Spisak">
+                        <tr *ngFor="let p of podaci.ispitnaPitanja">
+                          <td>
+                            Predavanje:<a
+                              href="http://localhost:4000/uploads/{{
+                                predmet.akronim
+                              }}/Ispit/{{ p.naziv }}"
+                              >{{ p.naziv }}</a
+                            >
+                          </td>
+                          <td>{{ p.type }}</td>
+                          <td>{{ p.nastavnik }}</td>
+                          <td>{{ p.datum | date: "dd/MM/yyyy" }}</td>
+                          <td>
+                            <input
+                              type="text"
+                              name="p.redosled"
+                              [(ngModel)]="p.redosled"
+                            />
+                          </td>
+                          <td>{{ p.size }}</td>
+                          <td>
+                            <button
+                              value="ispitnaPitanja"
+                              id="{{ p.naziv }}"
+                              (click)="deleteMaterial($event)"
+                              class="btn btn-danger"
+                            >
+                              Ukloni
+                            </button>
+                          </td>
+                        </tr>
+                      </table>
+                    </form>
+                  </mat-tab>
+                </td>
+                <td>
+                  <mat-tab label="Laboratorija">
+                    <div *ngIf="predmet.lab == 'DA'; else NemaLabVezbi">
+                      <form>
+                        <table class="table table-striped table-bordered">
+                          <tr>
+                            <th><span>Naslov lab vezbe:</span></th>
+                            <td>
+                              <input
+                                class="form-control"
+                                type="text"
+                                name="naslovLab"
+                                [(ngModel)]="naslovLab"
+                              />
+                            </td>
+                          </tr>
+                          <tr>
+                            <th><span>Vrednost u poenima</span></th>
+                            <td>
+                              <input
+                                class="form-control"
+                                type="number"
+                                name="vrednostLab"
+                                [(ngModel)]="vrednostLab"
+                              />
+                            </td>
+                          </tr>
+                          <tr>
+                            <th colspan="2"><span>Tekst lab vezbe </span></th>
+                          </tr>
+                          <tr>
+                            <td colspan="2">
+                              <textarea
+                                class="form-control rounded-1"
+                                rows="5"
+                                name="tekstLab"
+                                [(ngModel)]="tekstLab"
+                              ></textarea>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="2">
+                              <button
+                                class="btn btn-success"
+                                (click)="objaviLabVest()"
+                              >
+                                Objavi
+                              </button>
+                            </td>
+                          </tr>
 
-            <h2>Spisak za predmet {{predmet.naziv}}</h2>
-        <form>
-            <table class="table table-bordered"> 
+                          <tr>
+                            <td>Izaberite fajl</td>
+                            <td>Upload</td>
+                          </tr>
+
+                          <tr>
+                            <td><input type="file" #fileInput /></td>
+                            <td>
+                              <button
+                                class="btn btn-primary"
+                                value="matLaboratorija"
+                                type="submit"
+                                (click)="onSubmit($event)"
+                              >
+                                Upload
+                              </button>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <table class="table table-striped table-bordered">
+                          <tr>
+                            <td>Fajl</td>
+                            <td>Ekstenzija</td>
+                            <td>Nastavnik</td>
+                            <td>Datum</td>
+                            <td>Redosled</td>
+                            <td>Velicina u KB</td>
+                            <td>Ukloni</td>
+                          </tr>
+
+                          <tr *ngFor="let p of podaci.matLaboratorija">
+                            <td>
+                              Predavanje:<a
+                                href="http://localhost:4000/uploads/{{
+                                  predmet.akronim
+                                }}/Laboratorija/{{ p.naziv }}"
+                                >{{ p.naziv }}</a
+                              >
+                            </td>
+                            <td>{{ p.type }}</td>
+                            <td>{{ p.nastavnik }}</td>
+                            <td>{{ p.datum | date: "dd/MM/yyyy" }}</td>
+                            <td>
+                              <input
+                                type="text"
+                                name="p.redosled"
+                                [(ngModel)]="p.redosled"
+                              />
+                            </td>
+                            <td>{{ p.size }}</td>
+                            <td>
+                              <button
+                                value="ispitnaPitanja"
+                                id="{{ p.naziv }}"
+                                (click)="deleteMaterial($event)"
+                                class="btn btn-danger"
+                              >
+                                Ukloni
+                              </button>
+                            </td>
+                          </tr>
+                        </table>
+                      </form>
+                    </div>
+
+                    <ng-template #NemaLabVezbi>
+                      <h3>Nema lab vezbi iz ovog predmeta</h3>
+                    </ng-template>
+                  </mat-tab>
+                </td>
+                <td>
+                  <mat-tab label="Projekat">
+                    <form>
+                      <table class="table table-striped table-bordered">
+                        <tr>
+                          <th><span>Naslov projekat:</span></th>
+                          <td>
+                            <input
+                              class="form-control"
+                              type="text"
+                              name="naslovProjekat"
+                              [(ngModel)]="naslovProjekat"
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <th><span>Vrednost u poenima</span></th>
+                          <td>
+                            <input
+                              class="form-control"
+                              type="number"
+                              name="vrednostProjekat"
+                              [(ngModel)]="vrednostProjekat"
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <th colspan="2"><span>Tekst Projekat </span></th>
+                        </tr>
+                        <tr>
+                          <td colspan="2">
+                            <textarea
+                              class="form-control rounded-1"
+                              rows="5"
+                              name="tekstProjekat"
+                              [(ngModel)]="tekstProjekat"
+                            ></textarea>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="2">
+                            <button
+                              class="btn btn-success"
+                              (click)="objaviProjekatVest()"
+                            >
+                              Objavi
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Izaberite fajl</td>
+                          <td>Upload</td>
+                        </tr>
+
+                        <tr>
+                          <td><input type="file" #fileInput2 /></td>
+                          <td>
+                            <button
+                              class="btn btn-primary"
+                              value="matProjekat"
+                              type="submit"
+                              (click)="onSubmit($event)"
+                            >
+                              Upload
+                            </button>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <table class="table table-striped table-bordered">
+                        <tr>
+                          <td>Fajl</td>
+                          <td>Ekstenzija</td>
+                          <td>Nastavnik</td>
+                          <td>Datum</td>
+                          <td>Redosled</td>
+                          <td>Velicina u KB</td>
+                          <td>Ukloni</td>
+                        </tr>
+
+                        <tr *ngFor="let p of podaci.matProjekat">
+                          <td>
+                            Predavanje:<a
+                              href="http://localhost:4000/uploads/{{
+                                predmet.akronim
+                              }}/Projekat/{{ p.naziv }}"
+                              >{{ p.naziv }}</a
+                            >
+                          </td>
+                          <td>{{ p.type }}</td>
+                          <td>{{ p.nastavnik }}</td>
+                          <td>{{ p.datum | date: "dd/MM/yyyy" }}</td>
+                          <td>
+                            <input
+                              type="text"
+                              name="p.redosled"
+                              [(ngModel)]="p.redosled"
+                            />
+                          </td>
+                          <td>{{ p.size }}</td>
+                          <td>
+                            <button
+                              value="ispitnaPitanja"
+                              id="{{ p.naziv }}"
+                              (click)="deleteMaterial($event)"
+                              class="btn btn-danger"
+                            >
+                              Ukloni
+                            </button>
+                          </td>
+                        </tr>
+                      </table>
+                    </form>
+                  </mat-tab>
+                </td>
+              </mat-tab-group>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </mat-tab>
+
+    <mat-tab label="Profil" mat-stretch-tabs>
+      <div class="container">
+        <table class="table" id="tableInfo">
+          <div class="row">
+            <table class="table table-responsive-xl">
+              <thead>
                 <tr>
-                    <td><b>Limit</b></td>
-                    <td><input type="number" placeholder="maksimalni broj studenata" class="form-control" name="limit" [(ngModel)]="limit" /> </td>
-                    <td><b>Datum odrzavanja:  </b></td>
-                    <td><input name="datumOdrzavanja" [(ngModel)]= "datumOdrzavanja" type="datetime-local" class="form-control"></td>
+                  <th scope="col" colspan="3" style="font-size: 25px">
+                    Information about
+                  </th>
                 </tr>
+              </thead>
+              <tbody>
                 <tr>
-                    <td >  <b>Otvori prijavu</b></td>
-                    <td >  <input name="otvorenaPrijava" [(ngModel)]= "otvorenaPrijava"  type="checkbox" class="form-control"></td>
-              
-                   <td><b>Datum kraja prijave:  </b></td>
-                    <td><input name="datumKraja" [(ngModel)]= "datumKraja" type="datetime-local" class="form-control"></td>
-                </tr>
-                <tr> 
-                    <td><b>Mesto </b></td>
-                    <td><input name="mestoOdrzavanja" [(ngModel)]= "mestoOdrzavanja" type="text" class="form-control" ></td>
-                    <td><b>Potreban fajl?</b></td>
-                    <td colspan="2">  <input name="potrebanFajl" [(ngModel)]= "potrebanFajl" type="checkbox" class="form-control"></td>
-                </tr>
-               
-                <tr>
-                    <td colspan="2"><b>Naziv spiska</b></td>
-                    <td colspan="2"><input name="nazivSpiska" [(ngModel)]= "nazivSpiska" type="text" class="form-control"></td>
-                </tr>
-                <tr>
-                    <td colspan="4"> <button class="btn btn-success" (click) = 'createList()' >Otvori Spisak</button> </td>
+                  <td rowspan="10" width="200">
+                    <img
+                      src="assets\images\avatar.png"
+                      alt="sadd"
+                      width="200"
+                    />
+                  </td>
                 </tr>
 
+                <tr>
+                  <td>Username</td>
+                  <td>
+                    <input
+                      name="nastavnik.username"
+                      [(ngModel)]="nastavnik.username"
+                      type="input"
+                    />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>First Name</td>
+                  <td>
+                    <input
+                      name="nastavnik.name"
+                      [(ngModel)]="nastavnik.name"
+                      type="input"
+                    />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Last Name</td>
+                  <td>
+                    <input
+                      name="nastavnik.lastname"
+                      [(ngModel)]="nastavnik.lastname"
+                      type="input"
+                    />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>About</td>
+                  <td>
+                    <textarea
+                      name="nastavnik.about"
+                      class="form-control rounded-1"
+                      rows="5"
+                      [(ngModel)]="nastavnik.about"
+                    ></textarea>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Address</td>
+                  <td>
+                    <input
+                      name="nastavnik.address"
+                      [(ngModel)]="nastavnik.address"
+                      type="input"
+                      rows="10"
+                    />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Degree</td>
+                  <td>
+                    <input
+                      name="nastavnik.degree"
+                      [(ngModel)]="nastavnik.degree"
+                      type="input"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Room</td>
+                  <td>
+                    <input
+                      name="nastavnik.room"
+                      [(ngModel)]="nastavnik.room"
+                      type="input"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>
+                    <button
+                      (click)="updateInfoNastavnik()"
+                      class="btn btn-success"
+                    >
+                      Save
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
             </table>
-        </form>
+          </div>
+        </table>
+      </div>
+    </mat-tab>
 
-        </mat-tab>
+    <mat-tab label="Dodavanje Vesti" mat-stretch-tabs>
+      <form>
+        <table class="table table-bordered">
+          <tr>
+            <td><h3>Naslov:</h3></td>
+            <td>
+              <input
+                class="form-control"
+                type="text"
+                name="naslovVesti"
+                [(ngModel)]="naslovVesti"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2"><span>Tekst vesti </span></td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <textarea
+                class="form-control rounded-1"
+                rows="5"
+                name="tekstVesti"
+                [(ngModel)]="tekstVesti"
+              ></textarea>
+            </td>
+          </tr>
+          <tr>
+            <td>Izaberite predmete:</td>
+            <td>
+              <lable *ngFor="let p of myCourses">
+                <input
+                  (change)="checkData($event)"
+                  type="checkbox"
+                  name="{{ p.akronim }}"
+                  value="{{ p.akronim }}"
+                />
+                {{ p.akronim }} &nbsp;
+              </lable>
+            </td>
+          </tr>
+          <tr>
+            <td>Izaberite datum:</td>
+            <td>
+              <input
+                type="date"
+                class="form-control"
+                name="datumObjave"
+                [(ngModel)]="datumObjave"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Izaberite fajlove:</td>
+            <input type="file" multiple #inputMultiple />
+          </tr>
+          <tr>
+            <td colspan="2">
+              <button class="btn btn-primary" (click)="uploadMultiple()">
+                Upload
+              </button>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </mat-tab>
 
+    <mat-tab label="Sve vesti">
+      <h2>Vesti na predmetu {{ predmet.naziv }}</h2>
+      <div *ngFor="let v of predmet.obavestenja">
+        <table class="table table-bordered">
+          <tr>
+            <th colspan="3">{{ v.naziv }}</th>
+          </tr>
+          <tr>
+            <td style="width: 70%">{{ v.tekst }}</td>
 
-    </mat-tab-group>
+            <td>
+              <button
+                class="btn btn-primary"
+                value="{{ v.id }}"
+                (click)="azurirajVest(v)"
+              >
+                Azuriraj
+              </button>
+            </td>
 
-    
+            <td *ngIf="v.kreator === profesor; else elseBlock">
+              <button
+                class="btn btn-danger"
+                value="{{ v.id }}"
+                (click)="deleteVest($event)"
+              >
+                Izbrisi
+              </button>
+              <ng-template #elseBlock></ng-template>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </mat-tab>
 
+    <mat-tab label="Spisak">
+      <h2>Spisak za predmet {{ predmet.naziv }}</h2>
+      <form>
+        <table class="table table-bordered">
+          <tr>
+            <td><b>Limit</b></td>
+            <td>
+              <input
+                type="number"
+                placeholder="maksimalni broj studenata"
+                class="form-control"
+                name="limit"
+                [(ngModel)]="limit"
+              />
+            </td>
+            <td><b>Datum odrzavanja: </b></td>
+            <td>
+              <input
+                name="datumOdrzavanja"
+                [(ngModel)]="datumOdrzavanja"
+                type="datetime-local"
+                class="form-control"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td><b>Otvori prijavu</b></td>
+            <td>
+              <input
+                name="otvorenaPrijava"
+                [(ngModel)]="otvorenaPrijava"
+                type="checkbox"
+                class="form-control"
+              />
+            </td>
+
+            <td><b>Datum kraja prijave: </b></td>
+            <td>
+              <input
+                name="datumKraja"
+                [(ngModel)]="datumKraja"
+                type="datetime-local"
+                class="form-control"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td><b>Mesto </b></td>
+            <td>
+              <input
+                name="mestoOdrzavanja"
+                [(ngModel)]="mestoOdrzavanja"
+                type="text"
+                class="form-control"
+              />
+            </td>
+            <td><b>Potreban fajl?</b></td>
+            <td colspan="2">
+              <input
+                name="potrebanFajl"
+                [(ngModel)]="potrebanFajl"
+                type="checkbox"
+                class="form-control"
+              />
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="2"><b>Naziv spiska</b></td>
+            <td colspan="2">
+              <input
+                name="nazivSpiska"
+                [(ngModel)]="nazivSpiska"
+                type="text"
+                class="form-control"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4">
+              <button class="btn btn-success" (click)="createList()">
+                Otvori Spisak
+              </button>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </mat-tab>
+    <mat-tab label="Moji Spiskovi">
+      <h2 style="margin-top: 50px">Moji spiskovi</h2>
+      <form>
+        <table class="table table-bordered">
+          <tr>
+            <td>#</td>
+            <td>Naziv</td>
+            <td>Datum kraja</td>
+            <td>Zatvori</td>
+          </tr>
+          <tr *ngFor="let spisak of mojiSpiskovi; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ spisak.naziv }}</td>
+            <td>{{ spisak.vremeKraja | date: "short" }}</td>
+            <td><button class="btn btn-danger" (click) = "zatvoriSpisak(spisak)">Zatvori</button></td>
+          </tr>
+        </table>
+      </form>
+    </mat-tab>
+  </mat-tab-group>
 </div>

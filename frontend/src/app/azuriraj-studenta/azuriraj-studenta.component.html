@@ -1,0 +1,63 @@
+<h1 align="center">Azuriranje studenta</h1>
+<div class="row justify-content-center">
+  <div class="col-xl-4">
+    <form>
+      <div class="form-group">
+        <label>Ime:</label>
+        <input
+          type="text"
+          name="name"
+          class="form-control"
+          [(ngModel)]="s.name"
+        />
+      </div>
+      <div class="form-group">
+        <label>Prezime</label>
+        <input
+          type="text"
+          name="lastname"
+          class="form-control"
+          [(ngModel)]="s.lastname"
+        />
+      </div>
+      <div class="form-group">
+        <label>Vrsta studija</label>
+        <select name="s.type" class="form-control" [(ngModel)]="s.type">
+          <option value="d">Osnovne studije</option>
+          <option value="m">Master studije</option>
+          <option value="p">Doktorske</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="control-label">Sifra</label>
+        <input
+          name="s.password"
+          class="form-control"
+          [(ngModel)]="s.password"
+          type="s.password"
+        />
+      </div>
+      <div class="form-group">
+        <label class="control-label">Broj Indeksa</label>
+        <input
+          type="text"
+          name="s.indexNumber"
+          placeholder="U obliku: GGGG/BBBB"
+          class="form-control"
+          [(ngModel)]="s.indexNumber"
+        />
+      </div>
+      <div class="form-group">
+        <label class="control-label">Status</label>
+        <select class="form-control" name="s.status" [(ngModel)]="s.status">
+          <option value="aktivan">Aktivan</option>
+          <option value="neaktivan">Neaktivan</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-primary" (click)="azuriraj()">Posalji</button>
+      </div>
+    </form>
+  </div>
+</div>
